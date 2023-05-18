@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  email:
+    image: ncc15c/email
+    command: tail -f /var/log/mail.log
+    ports:
+      - 80:80
+      - 587:587
+      - 993:993
+      - 995:995

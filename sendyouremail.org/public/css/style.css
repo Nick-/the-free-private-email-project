@@ -1,0 +1,219 @@
+html {
+
+    font-family: 'Courier New', monospace;
+
+}
+body {
+    margin: 0;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  #ingame {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #gameCanvasHolder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background:black;
+  }
+
+  #gameCanvasHolder canvas {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+
+
+@media (max-aspect-ratio: 1/1) {
+  #gameCanvasHolder canvas {
+    width: 100%;
+  }
+}
+@media (min-aspect-ratio: 1/1) {
+  #gameCanvasHolder canvas {
+    height: 100%;
+  }
+}
+
+  #full-screen-dialog {
+    background:black;
+    color:white;
+    height:100%;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+    display: none;
+  }
+
+  .full-screen-dialog-option {
+    cursor: pointer;
+    border:1px solid white;
+    padding: 10px 20px;
+    margin-top: 10px;
+  }
+
+  .full-screen-dialog-option:hover {
+    color:yellow;
+  }
+
+  #chatbox {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: 200px;
+    background: rgba(0,0,0,.9);
+    border-top-right-radius: 10px;
+  }
+
+  #menu {
+    position: fixed;
+    bottom:0;
+    top:0;
+    right:0;
+    width: 25%;
+    background: rgba(0,0,0,.9);
+  }
+  #hud {
+    position: fixed;
+    height: 100px;
+    top:0;
+    left:0;
+    width: 25%;
+    background: rgba(0,0,0,.9); 
+    border-bottom-right-radius: 10px;
+    color:white;
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+
+  #gold-value {
+    color:gold;
+    display: inline;
+  }
+  #silver-value {
+    color:silver;
+    display: inline;
+  }
+  #health-value {
+    color:red;
+    display: inline;
+  }
+  #energy-value {
+    color:orange;
+    display: inline;;
+  }
+  #menu-icons-holder {
+    position:absolute;
+    bottom:0;
+  }
+
+  .menu-icon {
+    background:#0f1214;
+    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .menu-icon-selected {
+    background:#1b1f21;
+  }
+
+  .menu-icon:hover {
+    background:#23292e;
+  }
+
+  img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  .menu-icon img {
+    width: 32px;
+    height: 32px;
+  }
+  .menu-content {
+    position:absolute;
+    bottom: calc(64px);
+    width: 100%;
+    color:white;
+    top: 0;
+    padding-top: 10px;
+  }
+  #chatbox-input {
+    color:white;
+    background:none;
+    outline: 0;
+    padding-left:5px;
+    position: absolute;
+    border: none;
+    border-top:1px solid white;
+    height:2em;
+    line-height:2em;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .home-menu-button {
+    border: 1px solid white;
+    cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin:auto;
+    margin-top:5px;
+    width:90%;
+  }
+  #home-menu {
+    text-align: center;
+  }
+  #home-menu h2 {
+    margin-bottom: 0;
+  }
+
+  .online-player-div {
+    background: #111;
+    cursor:pointer;
+  }
+
+  @media (min-width: 0px) {
+    span { font-size: 1rem; }
+    .tiny-text {
+        font-size:.8rem;
+    }
+  }
+  
+  @media (min-width: 400px) {
+    span { font-size: calc(1rem + 1vw); }
+    .tiny-text { font-size: calc(.8rem + 1vw); }
+  }
+  
+  @media (min-width: 1001px){
+    span { font-size: 1.75rem; }
+    .tiny-text { font-size: 1.5rem; }
+  }

@@ -1,0 +1,59 @@
+Return-Path: <the.official.rise.game@gmail.com>
+Delivered-To: nick@rise-game.com
+Received: from rise-game.com
+	by 16a319928c7f with LMTP
+	id S4IEIluIZmScAQAAd5gAWg
+	(envelope-from <the.official.rise.game@gmail.com>)
+	for <nick@rise-game.com>; Thu, 18 May 2023 20:19:39 +0000
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	by rise-game.com (Postfix) with ESMTPS id 7F061C3735
+	for <nick@rise-game.com>; Thu, 18 May 2023 20:19:39 +0000 (UTC)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-19a13476ffeso1818695fac.0
+        for <nick@rise-game.com>; Thu, 18 May 2023 13:19:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684441179; x=1687033179;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=E4BgKXzAP7ktwwSqgizjSWjlwkd2dyacXkgdZbR1ksA=;
+        b=TC/OIMlFiWFRH3m5RTeQuvDrnQoE1p/8/mxj2D0gdbIgybX+xDNGIxEv9F9ClypUeX
+         Lik2YrBYKag8voDrGpiBMwDD7zLjGvdisA8MnB6gPWJndqzkjjo7sSobNYNmDyb4+IaW
+         61xAMTc02A9gWXZu56KWNTdlrsvIvZ1BzfWsfVwRXDFknkj+Mhl2LDBn1g7xoP6mEpBp
+         ZBWabfLb1kpnG1cevuBajYLz+HKAjcDOpeELXrgnWFQZ3/+MK7aAef1FJ7+Hj+a12Hhf
+         udDWntfkGavGZ3vnTQqii4WV/y7EB6fpfZGO0Vz97Hb6mu4o/l4zhB/uOUJVhpCtcAIC
+         I7qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684441179; x=1687033179;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E4BgKXzAP7ktwwSqgizjSWjlwkd2dyacXkgdZbR1ksA=;
+        b=OzJzIKbKoCzY86OuLH4IxkCXJTnXkizL4se5+AanU6MN5gUlN+7Oaxmi3j3xbLRkNs
+         exb+ZsEl2iYET1os0v/UGBQ64rkHcqzlhFqRn9psyIYoT2DAFBUjdN0TSzEgxqia+FNA
+         LrU4+hLR+dN4SARON2olOMPcTxLzZLv0yVPeFS24lBFBeHjEVJ92eptyKdHwmxh3xoca
+         Uffx03FsLLIkp6nhME9fnjQVW/ueEW50ajGH+m4ksqnL30kRznojF9LfUGFaTAKmFy2p
+         6P4wntzbHhNw+f+6wZ4TnY1AWYgbMcRjttzWOd2yz9lUoCwpyH+m84gf0ppGph3SEcIl
+         Fdzw==
+X-Gm-Message-State: AC+VfDx7gukrpTBlKepLl2ESkKoT6AR4Lfr9L+mHKfH+bZGDK/hvtkmb
+	mm/eXCk/g02Jf2UF/JqsLLz+hWwAz2ScW0VyfLtXI3uX
+X-Google-Smtp-Source: ACHHUZ7LYcP3vK64+B8CFxLGr3rRzqkK65pwzixIUemc3Vw0wRcGjx3y3fVTSyPPpuTHDquoKkUhd+uTDmNNtjC2RZ8=
+X-Received: by 2002:a9d:69ce:0:b0:6a8:b659:d46e with SMTP id
+ v14-20020a9d69ce000000b006a8b659d46emr1859403oto.8.1684434897596; Thu, 18 May
+ 2023 11:34:57 -0700 (PDT)
+MIME-Version: 1.0
+From: Sir Lancelot <the.official.rise.game@gmail.com>
+Date: Thu, 18 May 2023 14:34:46 -0400
+Message-ID: <CAHoucrQwdcBPwDx63hPyuRoO3-MTjFccLKT-RgG8RQ=QCZ_3FQ@mail.gmail.com>
+Subject: T1
+To: nick@rise-game.com
+Content-Type: multipart/alternative; boundary="000000000000b7f50805fbfc0f12"
+
+--000000000000b7f50805fbfc0f12
+Content-Type: text/plain; charset="UTF-8"
+
+T1
+
+--000000000000b7f50805fbfc0f12
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="auto">T1</div>
+
+--000000000000b7f50805fbfc0f12--

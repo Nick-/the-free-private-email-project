@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  ncc15c/email:
+    ports:
+      - "587:587"
+      - "993:993"
+      - "995:995"
+    volumes:
+      - mail-volume:/mailvol
