@@ -25,6 +25,6 @@ CREATE TABLE `virtual_aliases` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (domain_id) REFERENCES virtual_domains(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO mailserver.virtual_domains (name) VALUES ('rise-game.com');
-INSERT INTO mailserver.virtual_users (domain_id, password , email) VALUES ('1', 'hash', 'nick@rise-game.com');
+INSERT INTO mailserver.virtual_domains (name) VALUES ('cheapbusiness.email');
+INSERT INTO mailserver.virtual_users (domain_id, password , email) VALUES ('1', 'hash', 'nick@cheapbusiness.email');
 

@@ -1,15 +1,15 @@
-Received: from rise-game.com
+Received: from cheapbusiness.email
 	by 16a319928c7f with LMTP
 	id mGd+CdyHZmSXAQAAd5gAWg
 	(envelope-from <the.official.rise.game@gmail.com>)
-	for <nick@rise-game.com>; Thu, 18 May 2023 20:17:32 +0000
+	for <nick@cheapbusiness.email>; Thu, 18 May 2023 20:17:32 +0000
 Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	by rise-game.com (Postfix) with ESMTPS id 2560DC3731
-	for <nick@rise-game.com>; Thu, 18 May 2023 20:17:32 +0000 (UTC)
+	by cheapbusiness.email (Postfix) with ESMTPS id 2560DC3731
+	for <nick@cheapbusiness.email>; Thu, 18 May 2023 20:17:32 +0000 (UTC)
 Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-64d293746e0so729915b3a.2
-        for <nick@rise-game.com>; Thu, 18 May 2023 13:17:32 -0700 (PDT)
+        for <nick@cheapbusiness.email>; Thu, 18 May 2023 13:17:32 -0700 (PDT)
 From: "Sir Lancelot" <the.official.rise.game@gmail.com>
-To: <nick@rise-game.com>
+To: <nick@cheapbusiness.email>
 Subject: Test
 Date: Thu, 18 May 2023 15:47:49 -0400
 Message-ID: <CAHoucrR+LLXAfwVfdhFqTGbpMOXQ6zDOmmwWSawJ+nWQ30d3wA@mail.gmail.com>

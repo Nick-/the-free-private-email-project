@@ -28,8 +28,8 @@ RUN postconf -n
 #RUN mkdir -p /etc/opendkim/keys 
 #RUN chown -R opendkim:opendkim /etc/opendkim
 #RUN chmod  744 /etc/opendkim/keys 
-#RUN mkdir /etc/opendkim/keys/rise-game.com 
-#RUN opendkim-genkey -b 2048 -d radd.tech -D /etc/opendkim/keys/rise-game.com -s default -v 
-#RUN chown opendkim:opendkim /etc/opendkim/keys/rise-game.com/default.private
+#RUN mkdir /etc/opendkim/keys/cheapbusiness.email 
+#RUN opendkim-genkey -b 2048 -d cheapbusiness.email -D /etc/opendkim/keys/cheapbusiness.email -s default -v 
+#RUN chown opendkim:opendkim /etc/opendkim/keys/cheapbusiness.email/default.private
 COPY s.sh /s.sh
 #ENTRYPOINT ["bash", "start-mailserver.sh" ]

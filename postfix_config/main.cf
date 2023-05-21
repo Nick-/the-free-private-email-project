@@ -23,8 +23,8 @@ compatibility_level = 2
 
 # TLS parameters
 
-smtpd_tls_cert_file=/etc/letsencrypt/live/rise-game.com/fullchain.pem
-smtpd_tls_key_file=/etc/letsencrypt/live/rise-game.com/privkey.pem
+smtpd_tls_cert_file=/etc/letsencrypt/live/cheapbusiness.email/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/cheapbusiness.email/privkey.pem
 
 smtpd_use_tls=yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
@@ -74,7 +74,7 @@ smtpd_relay_restrictions =
         permit_sasl_authenticated,
         defer_unauth_destination
 
-myhostname = rise-game.com
+myhostname = cheapbusiness.email
 mydomain = $myhostname
 myorigin = $myhostname
 mydestination = localhost 

@@ -34,12 +34,38 @@ app.listen(process.env.HTTP_PORT, () =>
 app.get('/', (req, res) => {
     (async function () {
 
-        user_data = await User.getUserData(
-            req.cookies['email'], req.cookies['auth_key']);
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
 
         res.render('index', {
             user_data: user_data,
             currentYear: new Date().getFullYear(),
         });
     })()
+});
+
+app.post('/add-email-domain', (req, res) => {
+	
+});
+app.post('/add-email-user', (req, res) => {
+
+});
+app.post('/change-email-password', (req, res) => {
+
+});
+app.post('/register', (req, res) => {
+	(async function () {
+	console.log("Registering...");
+        registration_response = await Util.registerUser(
+            req.body.email, req.body.password, DB.con);
+		res.send(registration_response);
+    })()
+
+});
+app.post('/login', (req, res) => {
+ (async function () {
+	login_response = await Util.loginUser(
+            req.body.email, req.body.password, DB.con);
+                res.send(login_response);
+	})()
 });

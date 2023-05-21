@@ -1,3 +1,6 @@
+const crypto = require('crypto');
+const moment = require('moment-timezone');
+moment().tz("America/New_York").format();
 
 function isStrJSON(str) {
     try {
@@ -84,8 +87,66 @@ Date.prototype.addDays = function (days) {
     return date;
 }
 
+async function getUserData(email, key, con) {
+
+    return new Promise(resolve => {
+        //console.log("Attempting to auth with " + email + " and " + key)
+        if (email == "" || key == "" || email === undefined || key === undefined) {
+            resolve(-1)
+            return
+        }
+        q = "SELECT * FROM users WHERE email = '" + email + "' AND auth_key = '" + key + "'";
+        con.query(q, (error, result) => {
+            if (error) {
+                console.log(error)
+                resolve(-1);
+            }
+            if (result[0] != null) {
+                if (result[0].auth_key == key) {
+                    let exp = new Date(result[0].auth_expiration);
+                    if (exp > new Date()) {
+                        resolve(JSON.parse(JSON.stringify(result[0])));
+                    } else {
+                         console.log("Key expired:", exp)
+                        resolve(-1)
+                    }
+                } else {
+                     console.log("Invalid Key")
+                    resolve(-1);
+                }
+            } else {
+                console.log("No email and key match")
+                resolve(-1);
+            }
+        });
+    });
+}
+async function registerUser(e,p,c) {
+	 return new Promise(resolve => {
+	    var token = crypto.randomBytes(64).toString('hex');
+    var exp = moment(new Date().addDays(365)).format('YYYY-MM-DD HH:mm:ss');
+
+	 var q1 = "INSERT into users(email, password, auth_key, auth_expiration) VALUES (?,?,?,?)";
+    c.query(q1, [e, p, token, exp], (error, result) => {
+        if (error) {
+            console.log(error)
+		resolve({status: "failed", error: error})
+        } else {
+        	resolve({status: "success", auth_key: token})
+	}
+    });
+	 });
+}
+async function loginUser(e,p,c) {
+ 	return new Promise(resolve => {
+ 		var q = "";
+	});
+}
 
 module.exports = {
+	registerUser,
+	loginUser,
+	getUserData,
     isJSON,
     removeAllInstances,
     getRandomString,

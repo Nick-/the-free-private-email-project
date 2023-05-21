@@ -7,4 +7,6 @@ usermod -d /var/lib/mysql/ mysql
 #mysql < mailDB.sql
 postfix start
 dovecot
-tail -f /var/log/mail.log
+cd cheapbusiness.email
+nohup node WebServer.js 2> /dev/null &
+#tail -f /var/log/mail.log
