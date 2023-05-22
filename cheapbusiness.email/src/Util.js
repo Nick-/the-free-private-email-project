@@ -103,7 +103,7 @@ async function getUserData(email, key, con) {
             }
             if (result[0] != null) {
                 if (result[0].auth_key == key) {
-                    let exp = new Date(result[0].auth_expiration);
+                    let exp = new Date(result[0].auth_exp);
                     if (exp > new Date()) {
                         resolve(JSON.parse(JSON.stringify(result[0])));
                     } else {
@@ -126,20 +126,42 @@ async function registerUser(e,p,c) {
 	    var token = crypto.randomBytes(64).toString('hex');
     var exp = moment(new Date().addDays(365)).format('YYYY-MM-DD HH:mm:ss');
 
-	 var q1 = "INSERT into users(email, password, auth_key, auth_expiration) VALUES (?,?,?,?)";
+	 var q1 = "INSERT into users(email, password, auth_key, auth_exp, domain_ids) VALUES (?,?,?,?,'')";
     c.query(q1, [e, p, token, exp], (error, result) => {
         if (error) {
-            console.log(error)
-		resolve({status: "failed", error: error})
+            //console.log(error)
+            var clientErrorMessage = ""
+            if(error.toString().includes("Duplicate entry")) {
+                clientErrorMessage = "That user already exists."
+            }
+		resolve({status: "failed", error: clientErrorMessage})
         } else {
-        	resolve({status: "success", auth_key: token})
+        	resolve({status: "success", auth_key: token, email: e})
 	}
     });
 	 });
 }
 async function loginUser(e,p,c) {
+
+    var token = crypto.randomBytes(64).toString('hex');
+    var exp = moment(new Date().addDays(365)).format('YYYY-MM-DD HH:mm:ss');
+
  	return new Promise(resolve => {
- 		var q = "";
+ 		var q = "UPDATE users SET auth_key = ?, auth_exp = ? WHERE email = ? and password = ?";
+         c.query(q, [token, exp, e, p], (error, result) => {
+            if (error) {
+                //console.log(error)
+                var clientErrorMessage = "Login Failed!"
+            resolve({status: "failed", error: clientErrorMessage})
+            } else {
+
+                if(result.affectedRows == 0) {
+                    resolve({status: "failed", error: "Invalid Username / Password"})
+                } else {
+                    resolve({status: "success", auth_key: token, email: e})
+                }
+            }
+        });
 	});
 }
 

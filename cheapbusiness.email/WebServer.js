@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-require('dotenv').config({ path: './app.env' })
+require('dotenv').config({ path: path.join(__dirname,'/app.env') })
 
 const Util = require("./src/Util.js");
 const DB = require("./src/DB.js");

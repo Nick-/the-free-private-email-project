@@ -1,137 +1,83 @@
 <html>
-    <head>
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="author" content="Nicholas Conrad">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/style.css">
-        <title>Professional Business Email</title>
-        <link rel="shortcut icon" type="image/png" href='/img/favicon.png'>
-        <meta name="referrer" content="no-referrer-when-downgrade" />
-    </head>
-    <body>
-	<header>
-		<h1>Cheap Business Email</h1>
-	</header
 
-        {{#ifeq user_data -1}}
-        <div id="login-screen" class="centered">
-        	<form id='login-form'>
-			<h2>Login</h2>
-			<input type='email' name='email' placeholder='Email'/>
-			<input type='password' name='password' placeholder='Password'/>
-			<input type='submit'/>
-		</form>
-		<form id='register-form'>
-			<h2>Register</h2>
-			<input type='email' name='email' placeholder='Email'/>
-			<input type='password' name='password' placeholder='Password'/>
-                        <input type='submit'/>
-		</form>
-		
-	</div>
-	{{else}}
+<head>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Nicholas Conrad">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Professional Business Email</title>
+  <link rel="icon" type="image/x-icon" href='/img/favicon.ico'>
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+</head>
 
-		<div id="portal">
-			<div id="account-summary">
-			Welcome!
-			My Plan: Free	
-			Storage: 0/0GB
-			Domains: 0/1
-			Users: 0/5
-			</div>
+<body>
+  <header>
+    <h1>Cheap Business Email</h1>
+  </header>
 
-		<div id="domain-list">{{selected_domain}}</div>
+  {{#ifeq user_data -1}}
+  <div id="login-screen" class="centered">
+    <form id='login-form'>
+      <h2>Login</h2>
+      <input type='email' name='email' placeholder='Email' /><br>
+      <input type='password' name='password' placeholder='Password' /><br>
+      <input type='submit' /><br>
+      <span class="show-register" onclick="showRegister()">Dont't Have an Account? Register Now</span>
+    </form>
+    <form id='register-form'>
+      <h2>Register</h2>
+      <input type='email' name='email' placeholder='Email' /><br>
+      <input type='password' name='password' placeholder='Password' /><br>
+      <input type='submit' /><br>
+      <span class="show-login" onclick="showLogin()">Already Have an Account? Login Now</span>
+    </form>
 
+  </div>
+  {{else}}
 
+  <div id="portal">
+    <div id="account-summary">
+      Welcome!
+      Account Email: {{user_data.email}}<br>
+      My Plan: Free<br>
+      Storage: 0/0GB<br>
+      Domains: 0/1<br>
+      Users: 0/5
+    </div>
 
-		<div id="no-domains">
-<img src="/img/no-domains.webp"/>		
-		</div>
+    <div id="domain-list">{{selected_domain}}</div>
 
-		<div id="email-users>
-<div class="email-user">
- nick@rise-game.com
- Created: 0/0/00
- Storage: 120MB
-<div class='change-pass'>
-key icon
-</div> 
+    <div id="no-domains">
+      <img src="/img/no-domains.webp" />
+    </div>
 
-</div>
-</div>	
-		
+    <div id="email-users">
+      <!--<div class="email-user">
+        nick@rise-game.com
+        Created: 0/0/00
+        Storage: 120MB
+        <div class='change-pass'>
+          key icon
+        </div>
 
+      </div>-->
+    </div>
+  </div>
 
-	</div>
-<footer>
-Privacy Policy
-Terms of Service
-</footer>
+  {{/ifeq}}
 
+  <footer>
+    Privacy Policy
+    Terms of Service
+    {{#ifeq user_data -1}}
+    {{else}}
+    <span class="logout-txt" onclick="logout()">Logout</span>
+    {{/ifeq}}
+  </footer>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src='/js/core.js'></script>
+</body>
 
-        {{/ifeq}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-
-	<script>
-
-             var registerForm = document.getElementById("register-form");
-                registerForm.addEventListener("submit", function(e) {
-                        e.preventDefault();
-                        register(registerForm);
-                        return false;
-                });
-
-function register(form) {
-    var un = form.email.value;
-    var pw = form.password.value;
-var formData = {
-      email: un,
-      password: pw
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "/register",
-      data: formData,
-      dataType: "json",
-      encode: true,
-    }).done(function (data) {
-      console.log(data);
-    });
-	console.log("Submitting Registration")
-}
-
-
-		var loginForm = document.getElementById("login-form");
-		loginForm.addEventListener("submit", function(e) {
-			e.preventDefault();
-        		login(loginForm);
-			return false;
-	     	});
-
-function login(form) {
- var un = form.email.value;
-    var pw = form.password.value;
-var formData = {
-      email: un,
-      password: pw
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "/login",
-      data: formData,
-      dataType: "json",
-      encode: true,
-    }).done(function (data) {
-      console.log(data);
-    });
-
-
-}
-	</script>
-        <script src='/js/core.js'></script>
-    </body>
 </html>
