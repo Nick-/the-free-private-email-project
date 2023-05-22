@@ -1,3 +1,6 @@
+const { Resolver } = require('node:dns');
+var resolver = new Resolver()
+resolver.setServers(['8.8.8.8']) //Google's
 const crypto = require('crypto');
 const moment = require('moment-timezone');
 moment().tz("America/New_York").format();
@@ -165,7 +168,126 @@ async function loginUser(e,p,c) {
 	});
 }
 
+//TODO: Add DNS Validation
+function addEmailDomain(user_data, domain, c) {
+    return new Promise(resolve => {
+        if(user_data == -1) {
+            resolve({status: "failed", error:"Failed to authenticate request."})
+        } else if(domain == "") {
+            resolve({status: "failed", error:"Please Specify a domain"})
+        } else {
+
+            var token = crypto.randomBytes(64).toString('hex');
+
+            var q = "INSERT INTO virtual_domains(name, owner_uid, dns_txt_code) VALUES(?, ?, ?)";
+            c.query(q, [domain, user_data.uid, token], (error, result) => {
+                if (error) {
+                    //console.log(error)
+                    var clientErrorMessage = ""
+                    if(error.toString().includes("Duplicate entry")) {
+                        clientErrorMessage = "That domain already exists."
+                    }
+                resolve({status: "failed", error: clientErrorMessage})
+                } else {
+                    resolve({status: "success", domain: domain, token: token})
+            }
+            });
+        }
+
+
+    });
+}
+function getDomainsForUID(user_data, c) {
+    return new Promise(resolve => {
+        if(user_data == -1) {
+            resolve(-1)
+        } else {
+            var q = "SELECT * FROM virtual_domains WHERE owner_uid = ?";
+            c.query(q, [user_data.uid], (error, results) => {
+                if (error) {
+                    console.log(error)
+                    resolve(-1)
+                } else {
+                    resolve(results)
+                }
+            });
+        }
+    });
+}
+
+function verifyEmailDomain(user_data, domain, c) {
+    console.log("RESOLVER:", resolver.getServers())
+    return new Promise(resolve => {
+        if(user_data == -1) {
+            resolve({status: "failed", error: "Authentification Error"})
+        } else {
+            var q = "SELECT * FROM virtual_domains WHERE name = ?";
+            
+            c.query(q, [domain], (error, results) => {
+                if (error) {
+                    console.log(error)
+                    resolve({status: "failed", error: "Error looking up domain info in DB"})
+                } else {
+                    var dns_txt_key = results[0].dns_txt_code;
+                    
+                    resolver.resolve(domain, "TXT", function(err, txt_records) {
+                        if(err) {
+                            resolve({status: "failed", error: "Error looking up DNS.."});
+                        } else {
+                            var txt_verification_exists = false;
+                            for(var i = 0; i < txt_records.length; i++) {
+                                console.log(txt_records[i])
+                                if(txt_records[i] == dns_txt_key) {
+                                    txt_verification_exists = true;
+                                    break;
+                                }
+                            }
+                            if(!txt_verification_exists) {
+                                resolve({status: "failed", error: "TXT verification not set"})
+                            } else {
+
+                                console.log("STEP " + domain)
+                                //check MX record
+                                resolver.resolve(domain, "MX", function(err, mx_records) {
+                                    var mx_record_exists = false;
+                                    for(var i = 0; i < mx_records.length; i++) {
+                                        console.log(mx_records[i])
+                                        if(mx_records[i].exchange == "cheapbusiness.email") {
+                                            mx_record_exists = true;
+                                            break;
+                                        }
+                                    }
+                                    if(!mx_record_exists) {
+                                        resolve({status: "failed", error: "MX verification not set"})
+                                    } else {
+                                        console.log("STEPf " + domain)
+                                        //update verification status in DB
+                                        var q = "UPDATE virtual_domains SET dns_verified = 1 WHERE name = ?";
+                                        c.query(q, [domain], (error, results) => {
+                                            if (error) {
+                                                console.log(error)
+                                                resolve({status: "failed", error: "DNS Valid but failed to update status in DB"})
+                                            } else {
+                                                resolve({status: "success", domain: domain})
+                                            }
+                                        });
+                                        
+                                    }
+                                });
+                            }
+                        }
+                    })
+
+                }
+            });
+        }
+    })
+}
+
 module.exports = {
+    verifyEmailDomain,
+    getDomainsForUID,
+    addEmailDomain,
 	registerUser,
 	loginUser,
 	getUserData,

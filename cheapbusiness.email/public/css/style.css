@@ -1,3 +1,6 @@
+body {
+    margin: 0
+}
 #login-screen {
     position: fixed;
     background: url('/img/bg.jpg');
@@ -39,7 +42,34 @@
     margin-top: 5px;
 }
 
-.logout-txt {
+.logout-txt, .add-domain {
     text-decoration: underline;
     cursor: pointer;
+}
+#no-domains {
+    display: none;
+}
+footer {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+}
+
+.my_domain {
+    background: black;
+    color: white;
+}
+.my_domain div {
+    display: inline-block;
+
+}
+#dvis {
+    display: none;
+    background: black;
+    position: absolute;
+    color: white;
+    word-break: break-all;
+    text-align: center;
+    width: calc(100% - 20px);
+    padding: 10px;
 }

@@ -35,41 +35,81 @@
 
   </div>
   {{else}}
-
+  <div id="dvis">
+    <h2>Domain Verification Instructions</h2>
+    <div id="verify-domain-name"></div>
+    Add / Change MX record:<br>
+    Name: @<br>
+    Value: cheapbusiness.email<br><br>
+    Add TXT record:<br>
+    Name: @<br>
+    Value: <span id="dns-txt-key"></span>
+    <button onclick="validateDomain()">Validate Domain</button>
+  </div>
   <div id="portal">
     <div id="account-summary">
-      Welcome!
+      Welcome!<br>
       Account Email: {{user_data.email}}<br>
       My Plan: Free<br>
       Storage: 0/0GB<br>
       Domains: 0/1<br>
       Users: 0/5
     </div>
+    <div class="client-settings">
+            IMAP: Port 993<br>
+            POP3: Port 995<br>
+            SMTP: 587<br>
+            Password Type: Encrypted
+          </div>
 
-    <div id="domain-list">{{selected_domain}}</div>
+    <div id="domain-list">
+      {{#each my_domains}}
+      <div class="my_domain">
+        <div class="my_domain_name">
+        {{name}}
+        </div>
+
+        <div class="my_domain_verified">
+
+          {{#ifeq dns_verified 1}}
+            Verified
+          {{else}}
+            <div onclick='showDomainVerificationInstructions("{{name}}","{{dns_txt_code}}")'>Not Verified</div>
+          {{/ifeq}}
+        </div>
+{{#ifeq dns_verified 1}}
+          <br>
+          <br>
+            <div id="my_domain_email_users">
+              <input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}" placeholder="user"/>@{{name}}<br>
+              <button onclick="addEmailUser({{id}})">Add Email User</button>
+          <!--<div class="email-user">
+            nick@rise-game.com
+            Created: 0/0/00
+            Storage: 120MB
+            <div class='change-pass'>
+              key icon
+            </div>
+
+          </div>-->
+        </div>
+  {{/ifeq}}
+        </div>
+      {{/each}}
+      </div>
+    <span class="add-domain" onclick="addDomain()">Add Domain</span>
 
     <div id="no-domains">
       <img src="/img/no-domains.webp" />
     </div>
 
-    <div id="email-users">
-      <!--<div class="email-user">
-        nick@rise-game.com
-        Created: 0/0/00
-        Storage: 120MB
-        <div class='change-pass'>
-          key icon
-        </div>
 
-      </div>-->
-    </div>
   </div>
 
   {{/ifeq}}
 
   <footer>
-    Privacy Policy
-    Terms of Service
+    Privacy Policy | Terms of Service |
     {{#ifeq user_data -1}}
     {{else}}
     <span class="logout-txt" onclick="logout()">Logout</span>

@@ -37,7 +37,10 @@ app.get('/', (req, res) => {
         user_data = await Util.getUserData(
             req.cookies['email'], req.cookies['auth_key'], DB.con);
 
+        my_domains = await Util.getDomainsForUID(user_data, DB.con);
+
         res.render('index', {
+            my_domains: my_domains,
             user_data: user_data,
             currentYear: new Date().getFullYear(),
         });
@@ -45,8 +48,31 @@ app.get('/', (req, res) => {
 });
 
 app.post('/add-email-domain', (req, res) => {
-	
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            add_domain_response = await Util.addEmailDomain(
+                user_data, req.body.domain, DB.con);
+            res.send(add_domain_response);
+    })()
+
 });
+
+app.post('/verify-email-domain', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            verify_domain_response = await Util.verifyEmailDomain(
+                user_data, req.body.domain, DB.con);
+            res.send(verify_domain_response);
+    })()
+
+});
+
 app.post('/add-email-user', (req, res) => {
 
 });

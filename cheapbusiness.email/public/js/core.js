@@ -84,9 +84,13 @@ function login(form) {
         dataType: "json",
         encode: true,
     }).done(function (data) {
-        setCookie("email", data.email, 30)
-        setCookie("auth_key", data.auth_key, 30);
-        window.location.reload();
+        if(data.status == "success") {
+            setCookie("email", data.email, 30)
+            setCookie("auth_key", data.auth_key, 30);
+            window.location.reload();
+        } else {
+            alert(data.error)
+        }
     });
 }
 
@@ -103,4 +107,85 @@ function logout() {
     setCookie("email", "", -1)
     setCookie("auth_key", "", -1);
     window.location.reload();
+}
+
+function addDomain() {
+    var domain = prompt("What is the new domain?")
+    if(domain == "" || domain == null) return;
+    var formData = {
+        domain: domain
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/add-email-domain",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            //Show instructions for verifying domain
+            showDomainVerificationInstructions(data.domain,data.token)
+
+        } else {
+            alert(data.error)
+        }
+    });
+}
+
+function validateDomain() {
+    var domain = document.getElementById("verify-domain-name").innerHTML;
+    var formData = {
+        domain: domain
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/verify-email-domain",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert(data.domain + " was successfully validated!")
+            
+        } else {
+            alert(data.error)
+        }
+    });
+}
+
+var domainVerificationInstructionScreen = document.getElementById("dvis");
+function showDomainVerificationInstructions(domain,txt_key) {
+    document.getElementById("dns-txt-key").innerHTML = txt_key;
+    document.getElementById("verify-domain-name").innerHTML = domain;
+    domainVerificationInstructionScreen.style.display = "block";
+}
+
+function addEmailUser(domain_id) {
+    var full_email = ""
+    var addEmailUserInput = document.getElementsByClassName("add-email-user-input")
+    for(var i = 0; i < addEmailUserInput.length; i++) {
+        if(addEmailUserInput[i].dataset.id == domain_id) {
+            full_email = addEmailUserInput[i].value + "@" + addEmailUserInput[i].dataset.domain
+        }
+    }
+
+    var formData = {
+        full_email: full_email
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/add-email-user",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            window.location.reload();
+        } else {
+            alert(data.error)
+        }
+    });
 }
