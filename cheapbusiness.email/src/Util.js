@@ -1,4 +1,4 @@
-const { Resolver } = require('node:dns');
+const { Resolver } = require('dns');
 const { exec } = require("child_process");
 var resolver = new Resolver()
 resolver.setServers(['8.8.8.8']) //Google's
