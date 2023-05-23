@@ -286,9 +286,6 @@ async function verifyEmailDomain(user_data, domain, c) {
     })
 }
 async function addEmailUser(user_data, full_email, password, c) {
-
-
-    console.log("ENcryptin password " + password)
     return new Promise(resolve => {
         if (full_email == "" || password == "" || full_email === undefined || password === undefined) {
             resolve(-1)
@@ -298,8 +295,6 @@ async function addEmailUser(user_data, full_email, password, c) {
             resolve({status: "failed", error: "Authentification Error"})
         } else {
             //first, get encrypted password via script..
-
-            
             exec("doveadm pw -s SHA512-CRYPT -p "+password+" | cut -c 15-", (error, stdout, stderr) => {
                 if (error) {
                     console.log(`error: ${error.message}`);
@@ -319,12 +314,19 @@ async function addEmailUser(user_data, full_email, password, c) {
                         console.log(error)
                         resolve({status: "failed", error: "Error looking up domain info in DB"})
                     } else {
-                        console.log("Got email id " + results[0].id + " and hash " + hashedPass)
+                        console.log("Got email id " + results[0].id + " and hash " + hashedPass + " for email " + full_email)
+                        var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email) VALUES (?, ?, ?)"
+                        c.query(ceuq, [results[0].id, hashedPass, full_email], (error, results) => {
+                            if (error) {
+                                console.log(error)
+                                resolve({status: "failed", error: "Error creating mail user!"})
+                            } else {
+                                resolve({status: "success"})
+                            }
+                        });
                     }
-                })
-                
+                })   
             });
-
         }
     });
 }
