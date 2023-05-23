@@ -218,7 +218,7 @@ function addEmailUser(domain_id) {
     var addEmailUserPassword = document.getElementsByClassName("add-email-user-password")
     for(var i = 0; i < addEmailUserPassword.length; i++) {
         if(addEmailUserPassword[i].dataset.id == domain_id) {
-            full_email = addEmailUserPassword[i].value + "@" + addEmailUserPassword[i].dataset.domain
+            password = addEmailUserPassword[i].value
         }
     }
 

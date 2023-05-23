@@ -79,6 +79,9 @@ app.post('/add-email-user', (req, res) => {
         user_data = await Util.getUserData(
             req.cookies['email'], req.cookies['auth_key'], DB.con);
 
+            console.log("EMAIL:", req.body.full_email)
+            console.log(req.body.password)
+
             aeu_response = await Util.addEmailUser(
                 user_data, req.body.full_email, req.body.password, DB.con);
             res.send(aeu_response);
