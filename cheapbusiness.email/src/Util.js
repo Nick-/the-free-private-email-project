@@ -1,7 +1,9 @@
 const { Resolver } = require('node:dns');
+const { exec } = require("child_process");
 var resolver = new Resolver()
 resolver.setServers(['8.8.8.8']) //Google's
 const crypto = require('crypto');
+var Dovehash = require('dovehash');
 const moment = require('moment-timezone');
 moment().tz("America/New_York").format();
 
@@ -168,8 +170,7 @@ async function loginUser(e,p,c) {
 	});
 }
 
-//TODO: Add DNS Validation
-function addEmailDomain(user_data, domain, c) {
+async function addEmailDomain(user_data, domain, c) {
     return new Promise(resolve => {
         if(user_data == -1) {
             resolve({status: "failed", error:"Failed to authenticate request."})
@@ -215,7 +216,8 @@ function getDomainsForUID(user_data, c) {
     });
 }
 
-function verifyEmailDomain(user_data, domain, c) {
+async function verifyEmailDomain(user_data, domain, c) {
+    console.log("Validating " + domain + " for user: " + user_data.email)
     console.log("RESOLVER:", resolver.getServers())
     return new Promise(resolve => {
         if(user_data == -1) {
@@ -235,12 +237,13 @@ function verifyEmailDomain(user_data, domain, c) {
                             resolve({status: "failed", error: "Error looking up DNS.."});
                         } else {
                             var txt_verification_exists = false;
+                            var spf_record_exists = false;
                             for(var i = 0; i < txt_records.length; i++) {
                                 console.log(txt_records[i])
                                 if(txt_records[i] == dns_txt_key) {
                                     txt_verification_exists = true;
-                                    break;
                                 }
+                                //TODO: Validate SPF?
                             }
                             if(!txt_verification_exists) {
                                 resolve({status: "failed", error: "TXT verification not set"})
@@ -283,8 +286,40 @@ function verifyEmailDomain(user_data, domain, c) {
         }
     })
 }
+async function addEmailUser(user_data, full_email, password, c) {
+    if (full_email == "" || password == "" || full_email === undefined || password === undefined) {
+        resolve(-1)
+        return
+    }
+
+    console.log("ENcryptin password " + password)
+    return new Promise(resolve => {
+        if(user_data == -1) {
+            resolve({status: "failed", error: "Authentification Error"})
+        } else {
+            //first, get encrypted password via script..
+
+            
+            exec("doveadm pw -s SHA512-CRYPT -p "+password+" | cut -c 15-", (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    resolve({status: "failed", error: "Failed to Generate Password"})
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`HashedPass: ${stdout}`);
+                
+            });
+
+        }
+    });
+}
 
 module.exports = {
+    addEmailUser,
     verifyEmailDomain,
     getDomainsForUID,
     addEmailDomain,

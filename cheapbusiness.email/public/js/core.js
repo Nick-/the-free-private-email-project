@@ -134,7 +134,7 @@ function addDomain() {
 }
 
 function validateDomain() {
-    var domain = document.getElementById("verify-domain-name").innerHTML;
+    var domain = document.getElementById("verify-domain-name").textContent.split(" ")[1];
     var formData = {
         domain: domain
     };
@@ -148,31 +148,83 @@ function validateDomain() {
     }).done(function (data) {
         if(data.status == "success") {
             alert(data.domain + " was successfully validated!")
-            
+            window.location.reload()
         } else {
             alert(data.error)
         }
     });
 }
 
+var headerPrompt = document.getElementById("prompt")
 var domainVerificationInstructionScreen = document.getElementById("dvis");
+var bottomButton = document.getElementById("bottom-button");
+var my_domains = document.getElementsByClassName("my_domain");
+var my_domain_panels = document.getElementsByClassName("domain_panel");
+
+
 function showDomainVerificationInstructions(domain,txt_key) {
     document.getElementById("dns-txt-key").innerHTML = txt_key;
-    document.getElementById("verify-domain-name").innerHTML = domain;
+    document.getElementById("verify-domain-name").innerHTML = "For <span style='color:gold'>" + domain + "</span>";
     domainVerificationInstructionScreen.style.display = "block";
+}
+function closeValidateDomain() {
+    domainVerificationInstructionScreen.style.display = "none"
+}
+
+function gotoDomainList() {
+    headerPrompt.innerHTML = "Select a Domain";
+    bottomButton.innerHTML = "Add Domain";
+    bottomButton.onclick = addDomain;
+
+    for(var i = 0; i < my_domains.length; i++) {
+            my_domains[i].style.display = "block"
+    }
+
+    for(var i = 0; i < my_domain_panels.length; i++) {
+            my_domain_panels[i].style.display = "none"
+    }
+
+}
+
+function showDomainPanel(id) {
+    headerPrompt.innerHTML = "Domain Management";
+    bottomButton.innerHTML = "Back";
+    bottomButton.onclick = gotoDomainList;
+    
+    for(var i = 0; i < my_domains.length; i++) {
+        if(my_domains[i].dataset.id != id) {
+            my_domains[i].style.display = "none"
+        } 
+    }
+
+    for(var i = 0; i < my_domain_panels.length; i++) {
+        if(my_domain_panels[i].dataset.id == id) {
+            my_domain_panels[i].style.display = "block"
+        } 
+    }
 }
 
 function addEmailUser(domain_id) {
-    var full_email = ""
-    var addEmailUserInput = document.getElementsByClassName("add-email-user-input")
-    for(var i = 0; i < addEmailUserInput.length; i++) {
-        if(addEmailUserInput[i].dataset.id == domain_id) {
-            full_email = addEmailUserInput[i].value + "@" + addEmailUserInput[i].dataset.domain
+    var full_email = "";
+    var password = "";
+
+    var addEmailUserEmail = document.getElementsByClassName("add-email-user-input")
+    for(var i = 0; i < addEmailUserEmail.length; i++) {
+        if(addEmailUserEmail[i].dataset.id == domain_id) {
+            full_email = addEmailUserEmail[i].value + "@" + addEmailUserEmail[i].dataset.domain
+        }
+    }
+
+    var addEmailUserPassword = document.getElementsByClassName("add-email-user-password")
+    for(var i = 0; i < addEmailUserPassword.length; i++) {
+        if(addEmailUserPassword[i].dataset.id == domain_id) {
+            full_email = addEmailUserPassword[i].value + "@" + addEmailUserPassword[i].dataset.domain
         }
     }
 
     var formData = {
-        full_email: full_email
+        full_email: full_email,
+        password: password
     };
 
     $.ajax({
@@ -183,9 +235,12 @@ function addEmailUser(domain_id) {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
-            window.location.reload();
+            //window.location.reload();
+            alert("Success!")
+            //Modify UI
         } else {
             alert(data.error)
         }
     });
 }
+

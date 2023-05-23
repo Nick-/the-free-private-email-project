@@ -74,6 +74,15 @@ app.post('/verify-email-domain', (req, res) => {
 });
 
 app.post('/add-email-user', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            aeu_response = await Util.addEmailUser(
+                user_data, req.body.full_email, req.body.password, DB.con);
+            res.send(aeu_response);
+    })()
 
 });
 app.post('/change-email-password', (req, res) => {
