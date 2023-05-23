@@ -3,7 +3,6 @@ const { exec } = require("child_process");
 var resolver = new Resolver()
 resolver.setServers(['8.8.8.8']) //Google's
 const crypto = require('crypto');
-var Dovehash = require('dovehash');
 const moment = require('moment-timezone');
 moment().tz("America/New_York").format();
 
