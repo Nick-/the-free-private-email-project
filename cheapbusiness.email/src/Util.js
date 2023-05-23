@@ -286,13 +286,14 @@ async function verifyEmailDomain(user_data, domain, c) {
     })
 }
 async function addEmailUser(user_data, full_email, password, c) {
-    if (full_email == "" || password == "" || full_email === undefined || password === undefined) {
-        resolve(-1)
-        return
-    }
+
 
     console.log("ENcryptin password " + password)
     return new Promise(resolve => {
+        if (full_email == "" || password == "" || full_email === undefined || password === undefined) {
+            resolve(-1)
+            return
+        }
         if(user_data == -1) {
             resolve({status: "failed", error: "Authentification Error"})
         } else {
