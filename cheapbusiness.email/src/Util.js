@@ -308,9 +308,20 @@ async function addEmailUser(user_data, full_email, password, c) {
                 }
                 if (stderr) {
                     console.log(`stderr: ${stderr}`);
+                    resolve({status: "failed", error: "Failed to Generate Password"})
                     return;
                 }
-                console.log(`HashedPass: ${stdout}`);
+                var hashedPass = (`${stdout}`).trim();
+
+                var q = "SELECT id FROM virtual_domains WHERE name = ?"
+                c.query(q, [full_email.split("@")[1]], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                        resolve({status: "failed", error: "Error looking up domain info in DB"})
+                    } else {
+                        console.log("Got email id " + results[0].id + " and hash " + hashedPass)
+                    }
+                })
                 
             });
 
