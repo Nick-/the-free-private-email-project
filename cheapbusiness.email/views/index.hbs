@@ -58,7 +58,7 @@
       My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
       Storage: <b>0/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
       Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}∞{{else}}∞{{/ifeq}}</b><br>
-      Users: <b>0/∞</b>
+      Users: <b><span id="my_email_users_length"></span>/∞</b>
     </div>
     <div id="portal-content">
       <!--<div class="client-settings">
@@ -100,18 +100,10 @@
             <div id="my_domain_email_users">
               <input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}"
                 placeholder="user" />@{{name}}<br>
-                <input class="add-email-user-password" data-id="{{id}}" data-domain="{{name}}"
+                <input type="password" "add-email-user-password" data-id="{{id}}" data-domain="{{name}}"
                 placeholder="password" /><br>
               <button onclick="addEmailUser({{id}})">Add Email User</button>
-              <!--<div class="email-user">
-                    nick@rise-game.com
-                    Created: 0/0/00
-                    Storage: 120MB
-                    <div class='change-pass'>
-                      key icon
-                    </div>
-
-                  </div>-->
+             
             </div>
           </div>
         </div>
@@ -131,11 +123,51 @@
     | <span class="logout-txt" onclick="logout()">Logout ({{{user_data.email}}})</span>
     {{/ifeq}}
   </footer>
+ <!--<div class="email-user">
+                    nick@rise-game.com
+                    Created: 0/0/00
+                    Storage: 120MB
+                    <div class='change-pass'>
+                      key icon
+                    </div>
 
+                  </div>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script>
+
+
+    var my_domain_panels = document.getElementsByClassName("domain_panel");
     var my_email_users = {{{my_email_users}}};
-    console.log("uh", my_email_users)
+      //load email users into panels
+    document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
+    console.log("Loading email users:", my_email_users)
+    
+    for(var d = 0; d < my_domain_panels.length; d++) {
+      for(var i = 0; i < my_email_users.length; i++) {
+        if(my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
+          var emailUserDiv = document.createElement("div")
+          emailUserDiv.classList.add("email-user")
+          var emailUserNameDiv = document.createElement("div")
+          emailUserNameDiv.classList.add("email-user-full-email")
+          emailUserNameDiv.innerHTML = my_email_users[i].email
+          emailUserDiv.appendChild(emailUserNameDiv);
+
+          var emailUserCreatedAtDiv = document.createElement("div")
+          emailUserCreatedAtDiv.classList.add("email-user-created-at")
+          emailUserCreatedAtDiv.innerHTML = my_email_users[i].created_at;
+          emailUserDiv.appendChild(emailUserCreatedAtDiv);
+
+          var emailUserStorageDiv = document.createElement("div")
+          emailUserStorageDiv.classList.add("email-user-storage")
+          emailUserStorageDiv.innerHTML = my_email_users[i].storage_used;
+          emailUserDiv.appendChild(emailUserStorageDiv);
+
+          my_domain_panels[d].appendChild(emailUserDiv)
+        }
+    }
+    }
+
+    
   </script>
   <script src='/js/core.js'></script>
 </body>

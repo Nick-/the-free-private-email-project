@@ -119,7 +119,6 @@ async function getUserData(email, key, con) {
                     resolve(-1);
                 }
             } else {
-                console.log("No email and key match")
                 resolve(-1);
             }
         });
@@ -333,13 +332,18 @@ async function addEmailUser(user_data, full_email, password, c) {
 async function getEmailUsersForUser(domains, c) {
     return new Promise(resolve => {
 
+        if(domains == -1) {
+            resolve(-1)
+            return;
+        }
+
         var my_domain_ids = "";
         for(var i = 0; i < domains.length; i++) {
             my_domain_ids = my_domain_ids + domains[i].id + ","
         }
         my_domain_ids = my_domain_ids.substring(0, my_domain_ids.length - 1)
 
-        var q = "SELECT email from virtual_users WHERE domain_id IN ("+my_domain_ids+")";
+        var q = "SELECT email, domain_id from virtual_users WHERE domain_id IN ("+my_domain_ids+")";
  
         c.query(q, [], (error, results) => {
             if (error) {
@@ -347,6 +351,13 @@ async function getEmailUsersForUser(domains, c) {
                 resolve({status: "failed", error: "Error looking up domain users in DB"})
             } else {
                 console.log("Got emails:", results)
+                for(var i = 0; i < results.length; i++) {
+                    var storage_used = "?GB";
+
+
+
+                    results[i].storage_used = storage_used;
+                }
                 resolve(results)
             }
         });

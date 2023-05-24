@@ -159,7 +159,7 @@ var headerPrompt = document.getElementById("prompt")
 var domainVerificationInstructionScreen = document.getElementById("dvis");
 var bottomButton = document.getElementById("bottom-button");
 var my_domains = document.getElementsByClassName("my_domain");
-var my_domain_panels = document.getElementsByClassName("domain_panel");
+
 
 
 function showDomainVerificationInstructions(domain,txt_key) {
@@ -203,8 +203,6 @@ function showDomainPanel(id) {
         } 
     }
 
-    //load domains into panel
-    console.log("Loading email users:", my_email_users)
 }
 
 function addEmailUser(domain_id) {
@@ -238,9 +236,10 @@ function addEmailUser(domain_id) {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
-            //window.location.reload();
+        
             alert("Success!")
-            //Modify UI
+            window.location.reload();
+            //Modify UI without reload
         } else {
             alert(data.error)
         }
