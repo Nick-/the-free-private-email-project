@@ -358,8 +358,12 @@ async function getEmailUsersForUser(domains, c) {
                     var domain = results[i].email.split("@")[1]
                     var email_storage_path = '/var/mail/vhosts/' + domain + "/" + uname + "/"
                     console.log("Getting size for " + email_storage_path)
-                    storage_used = fastFolderSizeSync(email_storage_path)
 
+                    try {
+                    storage_used = fastFolderSizeSync(email_storage_path)
+                    } catch(e) {
+                        console.log("Failed to get folder size for " + results[i].email)
+                    }
                     results[i].storage_used = storage_used;
                 }
                 console.log("Done Getting Email Users")
