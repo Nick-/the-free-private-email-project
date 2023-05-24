@@ -202,6 +202,9 @@ function showDomainPanel(id) {
             my_domain_panels[i].style.display = "block"
         } 
     }
+
+    //load domains into panel
+    console.log("Loading email users:", my_email_users)
 }
 
 function addEmailUser(domain_id) {

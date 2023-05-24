@@ -330,8 +330,30 @@ async function addEmailUser(user_data, full_email, password, c) {
         }
     });
 }
+async function getEmailUsersForUser(domains, c) {
+    return new Promise(resolve => {
 
+        var my_domain_ids = "";
+        for(var i = 0; i < domains.length; i++) {
+            my_domain_ids = my_domain_ids + domains[i].id + ","
+        }
+        my_domain_ids = my_domain_ids.substring(0, my_domain_ids.length - 1)
+
+        var q = "SELECT email from virtual_users WHERE domain_id IN ("+my_domain_ids+")";
+ 
+        c.query(q, [], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({status: "failed", error: "Error looking up domain users in DB"})
+            } else {
+                console.log("Got emails:", results)
+                resolve(results)
+            }
+        });
+    });
+}
 module.exports = {
+    getEmailUsersForUser,
     addEmailUser,
     verifyEmailDomain,
     getDomainsForUID,

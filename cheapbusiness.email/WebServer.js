@@ -39,7 +39,10 @@ app.get('/', (req, res) => {
 
         my_domains = await Util.getDomainsForUID(user_data, DB.con);
 
+        my_email_users = await Util.getEmailUsersForUser(my_domains, DB.con)
+        
         res.render('index', {
+            my_email_users: JSON.stringify(my_email_users),
             my_domains: my_domains,
             user_data: user_data,
             currentYear: new Date().getFullYear(),
