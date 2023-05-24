@@ -146,6 +146,10 @@ header h1 {
     color: red;
     font-size: .8em;
 }
+.email-user {
+    border: 1px solid white;
+    margin-top: 10px;
+}
 @media only screen and (max-width: 640px) {
     #account-summary {
         right: 0;

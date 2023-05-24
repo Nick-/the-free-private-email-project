@@ -154,12 +154,12 @@
 
           var emailUserCreatedAtDiv = document.createElement("div")
           emailUserCreatedAtDiv.classList.add("email-user-created-at")
-          emailUserCreatedAtDiv.innerHTML = my_email_users[i].created_at;
+          emailUserCreatedAtDiv.innerHTML = "Created at: <span style='color:gold'>" + my_email_users[i].created_at + "</span>";
           emailUserDiv.appendChild(emailUserCreatedAtDiv);
 
           var emailUserStorageDiv = document.createElement("div")
           emailUserStorageDiv.classList.add("email-user-storage")
-          emailUserStorageDiv.innerHTML = my_email_users[i].storage_used;
+          emailUserStorageDiv.innerHTML = "Storage Used: " + my_email_users[i].storage_used;
           emailUserDiv.appendChild(emailUserStorageDiv);
 
           my_domain_panels[d].appendChild(emailUserDiv)

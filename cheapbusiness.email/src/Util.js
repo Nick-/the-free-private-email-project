@@ -4,6 +4,7 @@ var resolver = new Resolver()
 resolver.setServers(['8.8.8.8']) //Google's
 const crypto = require('crypto');
 const moment = require('moment-timezone');
+const fastFolderSizeSync = require('fast-folder-size/sync')
 moment().tz("America/New_York").format();
 
 function isStrJSON(str) {
@@ -343,7 +344,7 @@ async function getEmailUsersForUser(domains, c) {
         }
         my_domain_ids = my_domain_ids.substring(0, my_domain_ids.length - 1)
 
-        var q = "SELECT email, domain_id from virtual_users WHERE domain_id IN ("+my_domain_ids+")";
+        var q = "SELECT email, domain_id, created_at from virtual_users WHERE domain_id IN ("+my_domain_ids+")";
  
         c.query(q, [], (error, results) => {
             if (error) {
@@ -353,11 +354,15 @@ async function getEmailUsersForUser(domains, c) {
                 console.log("Got emails:", results)
                 for(var i = 0; i < results.length; i++) {
                     var storage_used = "?GB";
-
-
+                    var uname = results[i].email.split("@")[0]
+                    var domain = results[i].email.split("@")[1]
+                    var email_storage_path = '/var/mail/vhosts/' + domain + "/" + uname + "/"
+                    console.log("Getting size for " + email_storage_path)
+                    storage_used = fastFolderSizeSync(email_storage_path)
 
                     results[i].storage_used = storage_used;
                 }
+                console.log("Done Getting Email Users")
                 resolve(results)
             }
         });
