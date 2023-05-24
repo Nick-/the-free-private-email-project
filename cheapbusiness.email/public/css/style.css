@@ -150,6 +150,24 @@ header h1 {
     border: 1px solid white;
     margin-top: 10px;
 }
+.add-email-user-input {
+    background:none;
+    color:white;
+    height: 50px;
+}
+.add-email-user-password {
+    background:none;
+    color:white;
+    height: 50px;
+}
+.add-email-user-submit {
+    background:none;
+    color:white;
+    height: 50px;
+    margin-top:10px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
 @media only screen and (max-width: 640px) {
     #account-summary {
         right: 0;
