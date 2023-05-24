@@ -287,7 +287,7 @@ async function verifyEmailDomain(user_data, domain, c) {
 async function addEmailUser(user_data, full_email, password, c) {
     return new Promise(resolve => {
         if (full_email == "" || password == "" || full_email === undefined || password === undefined) {
-            resolve(-1)
+            resolve({status: "failed", error: "Empty Data"})
             return
         }
         if(user_data == -1) {
