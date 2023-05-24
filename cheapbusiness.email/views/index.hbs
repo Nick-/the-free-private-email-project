@@ -56,7 +56,7 @@
   <div id="portal">
     <div id="account-summary">
       My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
-      Storage: <b>0/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
+      Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
       Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}∞{{else}}∞{{/ifeq}}</b><br>
       Users: <b><span id="my_email_users_length"></span>/∞</b>
     </div>
@@ -135,6 +135,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script>
 
+function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
 
     var my_domain_panels = document.getElementsByClassName("domain_panel");
     var my_email_users = {{{my_email_users}}};
@@ -142,6 +153,8 @@
     document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
     console.log("Loading email users:", my_email_users)
     
+    var total_email_user_storage = 0;
+
     for(var d = 0; d < my_domain_panels.length; d++) {
       for(var i = 0; i < my_email_users.length; i++) {
         if(my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
@@ -159,13 +172,17 @@
 
           var emailUserStorageDiv = document.createElement("div")
           emailUserStorageDiv.classList.add("email-user-storage")
-          emailUserStorageDiv.innerHTML = "Storage Used: " + my_email_users[i].storage_used;
+          emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_users[i].storage_used);
+          total_email_user_storage = total_email_user_storage + my_email_users[i].storage_used
+
           emailUserDiv.appendChild(emailUserStorageDiv);
 
           my_domain_panels[d].appendChild(emailUserDiv)
         }
     }
     }
+
+    document.getElementById("total-email-user-storage").innerHTML = formatBytes(total_email_user_storage);
 
     
   </script>
