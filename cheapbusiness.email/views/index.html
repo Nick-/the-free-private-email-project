@@ -1,0 +1,222 @@
+<html>
+
+<head>
+  <meta name="description" content="">
+  <meta name="keywords" content="free email,custom domain email">
+  <meta name="author" content="Nicholas Conrad">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Professional Business Email</title>
+  <link rel="icon" type="image/x-icon" href='/img/favicon.ico'>
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+</head>
+
+<body>
+  <header>
+    <h1>
+<img src="/img/favicon.ico"/>
+<em>Cheap</em> Business Email</h1>
+{{#ifeq user_data -1}}
+{{else}}
+    <div class="logout-txt" onclick="logout()">Logout</div>                 {{/ifeq}}
+  </header>
+
+  {{#ifeq user_data -1}}
+  <div id="login-screen" class="centered">
+    <form id='login-form'>
+      <h2>Portal Login</h2>
+      <input type='email' name='email' placeholder='Email' /><br>
+      <input type='password' name='password' placeholder='Password' /><br>
+      <input type='submit' /><br>
+      <div class="show-register" onclick="showRegister()">Dont't Have an Account? Register Now</div>
+    </form>
+
+    <form id='register-form'>
+      <h2>Get Your Professional Business Email for Free!</h2>
+     
+<ul style="text-align:left">
+<li>1 Custom Domain Name</li>
+<li>Up to 5 Users</li>
+<li>5GB Storage</li>
+<li><em style="color:red">Limited Time Only</em></li>
+</ul>
+ <input type='email' name='email' placeholder='Email' /><br>
+      <input type='password' name='password' placeholder='Password' /><br>
+      <input type='submit' value="Get Started Now" /><br>
+
+<div style="margin-top: 5px">
+<em>No credit card required</em>
+ </div>
+      <div class="show-login" onclick="showLogin()">Already Have an Account? Login Now</div>
+
+
+    </form>
+
+  
+</div>
+  {{else}}
+  <div id="dvis">
+    <h2>Domain Verification</h2>
+    <div id="verify-domain-name"></div>
+    <div id="delete-unverified-domain">
+	    Cancel Domain Verification                                                           </div>
+    <br>
+    1) Add / Change MX record:<br>
+    Name: @<br>
+    Value: cheapbusiness.email<br><br>
+    2) Add TXT record:<br>
+    Name: @<br>
+    Value: <span id="dns-txt-key"></span><br><br>
+    3) Add TXT record:<br>
+    Name: @<br>
+    Value: v=spf1 mx ~all<br>
+    <button onclick="validateDomain()">Validate Domain</button>
+    <button onclick="closeValidateDomain()">Close</button>
+  </div>
+  <div id="portal">
+    <div id="account-summary">
+<span>Account Email: <b>{{user_data.email}}</b></span><br>
+      My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
+      Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
+      Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}∞{{else}}∞{{/ifeq}}</b><br>
+      Users: <b><span id="my_email_users_length"></span>/∞</b>
+    </div>
+    <div id="portal-content">
+      <!--<div class="client-settings">
+            IMAP: Port 993<br>
+            POP3: Port 995<br>
+            SMTP: 587<br>
+            Password Type: Encrypted
+          </div> -->
+      {{#ifeq my_domains.length 0}}
+      <h2>You Have No Domains</h2>
+      <div id="bottom-button" onclick="addDomain()">Add Domain</div>
+      {{else}}
+      <h2 id="prompt">Select a Domain</h2>
+      <div id="domain-list">
+    <div id="bottom-button" onclick="addDomain()">Add Domain</div>
+	      {{#each my_domains}}
+
+        <div class="my_domain" data-id="{{id}}">
+
+          {{#ifeq dns_verified 1}}
+          <div class="my_domain_name" onclick='showDomainPanel("{{id}}")'>
+            {{name}}
+            <br>
+            <div class="my_domain_verified">
+              <div class="domain-verified">Verified</div>
+            </div>
+          </div>
+          {{else}}
+          <div class="my_domain_name" onclick='showDomainVerificationInstructions("{{name}}","{{dns_txt_code}}")'>
+		  {{name}} <br>
+            <div class="my_domain_verified">
+              <div class='domain-not-verified'>Not Verified</div>
+            </div>
+          </div>
+          {{/ifeq}}
+
+
+          <div class="domain_panel" data-id="{{id}}">
+
+		  <div id="add-email-user">
+<input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}"  
+						     placeholder="user@{{name}}" />
+              <button class='add-email-user-submit' onclick="addEmailUser({{id}})">Add Email User</button>
+</div>
+
+            <div id="my_domain_email_users">
+             
+            </div>
+
+	    <div class="delete-domain" onclick="deleteDomain({{name}})">
+		    DELETE DOMAIN
+	    </div>
+	  </div>
+
+	</div>
+        {{/each}}
+      </div>
+      {{/ifeq}}
+    </div>
+  </div>
+
+  {{/ifeq}}
+
+<div id="tos">
+
+</div
+<div id="pp">
+
+</div>
+
+  <footer>
+    <span style="text-decoration:underline" onclick="showPP()">Privacy Policy</span> | <span style="text-decoration:underline"  onclick="showTOS()">Terms of Service</span>
+  </footer>
+ <!--<div class="email-user">
+                    nick@rise-game.com
+                    Created: 0/0/00
+                    Storage: 120MB
+                    <div class='change-pass'>
+                      key icon
+                    </div>
+
+                  </div>-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script>
+
+function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
+    var my_domain_panels = document.getElementsByClassName("domain_panel");
+    var my_email_users = {{{my_email_users}}};
+      //load email users into panels
+    document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
+    console.log("Loading email users:", my_email_users)
+    
+    var total_email_user_storage = 0;
+
+    for(var d = 0; d < my_domain_panels.length; d++) {
+      for(var i = 0; i < my_email_users.length; i++) {
+        if(my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
+          var emailUserDiv = document.createElement("div")
+          emailUserDiv.classList.add("email-user")
+          var emailUserNameDiv = document.createElement("div")
+          emailUserNameDiv.classList.add("email-user-full-email")
+          emailUserNameDiv.innerHTML = my_email_users[i].email
+          emailUserDiv.appendChild(emailUserNameDiv);
+
+          var emailUserCreatedAtDiv = document.createElement("div")
+          emailUserCreatedAtDiv.classList.add("email-user-created-at")
+          emailUserCreatedAtDiv.innerHTML = "Created at: <span style='color:gold'>" + my_email_users[i].created_at + "</span>";
+          emailUserDiv.appendChild(emailUserCreatedAtDiv);
+
+          var emailUserStorageDiv = document.createElement("div")
+          emailUserStorageDiv.classList.add("email-user-storage")
+          emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_users[i].storage_used);
+          total_email_user_storage = total_email_user_storage + my_email_users[i].storage_used
+
+          emailUserDiv.appendChild(emailUserStorageDiv);
+
+          my_domain_panels[d].appendChild(emailUserDiv)
+        }
+    }
+    }
+
+    document.getElementById("total-email-user-storage").innerHTML = formatBytes(total_email_user_storage);
+
+    
+  </script>
+  <script src='/js/core.js'></script>
+</body>
+
+</html>

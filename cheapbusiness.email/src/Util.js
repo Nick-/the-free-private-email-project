@@ -363,6 +363,11 @@ async function getEmailUsersForUser(domains, c) {
             return;
         }
 
+
+	if(domains.length == 0) {
+          resolve([])
+	return;
+	}
         var my_domain_ids = "";
         for(var i = 0; i < domains.length; i++) {
             my_domain_ids = my_domain_ids + domains[i].id + ","
@@ -397,7 +402,25 @@ async function getEmailUsersForUser(domains, c) {
         });
     });
 }
+async function removeEmailDomain(user_data, domain, c) {
+return new Promise(resolve => {
+ if(user_data == -1) {
+resolve({status: "failed", error: "Authentification Error"})
+ } else {
+ var dq = "DELETE FROM virtual_domains WHERE name = ?";
+c.query(dq, [domain], (error, results) => {
+	            if (error) {
+	             resolve({status: "failed", error: "Error deleting domain in DB"})
+
+		    } else {
+		resolve({status: "success"})
+		    }
+})
+ }
+});
+}
 module.exports = {
+	removeEmailDomain,
     getEmailUsersForUser,
     addEmailUser,
     verifyEmailDomain,

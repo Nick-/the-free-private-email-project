@@ -13,33 +13,53 @@
 
 <body>
   <header>
-    <h1><em>Cheap</em> Business Email</h1>
-    <div id="header-menu">
-    </div>
+    <h1>
+<img src="/img/favicon.ico"/>
+<em>Cheap</em> Business Email</h1>
+{{#ifeq user_data -1}}
+{{else}}
+    <div class="logout-txt" onclick="logout()">Logout</div>                 {{/ifeq}}
   </header>
 
   {{#ifeq user_data -1}}
   <div id="login-screen" class="centered">
     <form id='login-form'>
-      <h2>Login</h2>
+      <h2>Portal Login</h2>
       <input type='email' name='email' placeholder='Email' /><br>
       <input type='password' name='password' placeholder='Password' /><br>
       <input type='submit' /><br>
       <div class="show-register" onclick="showRegister()">Dont't Have an Account? Register Now</div>
     </form>
+
     <form id='register-form'>
-      <h2>Register</h2>
-      <input type='email' name='email' placeholder='Email' /><br>
+      <h2>Get Your Professional Business Email for Free!</h2>
+     
+<ul style="text-align:left">
+<li>1 Custom Domain Name</li>
+<li>Up to 5 Users</li>
+<li>5GB Storage</li>
+<li><em style="color:red">Limited Time Only</em></li>
+</ul>
+ <input type='email' name='email' placeholder='Email' /><br>
       <input type='password' name='password' placeholder='Password' /><br>
-      <input type='submit' /><br>
+      <input type='submit' value="Get Started Now" /><br>
+
+<div style="margin-top: 5px">
+<em>No credit card required</em>
+ </div>
       <div class="show-login" onclick="showLogin()">Already Have an Account? Login Now</div>
+
+
     </form>
 
-  </div>
+  
+</div>
   {{else}}
   <div id="dvis">
     <h2>Domain Verification</h2>
     <div id="verify-domain-name"></div>
+    <div id="delete-unverified-domain">
+	    Cancel Domain Verification                                                           </div>
     <br>
     1) Add / Change MX record:<br>
     Name: @<br>
@@ -55,6 +75,7 @@
   </div>
   <div id="portal">
     <div id="account-summary">
+<span>Account Email: <b>{{user_data.email}}</b></span><br>
       My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
       Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
       Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}∞{{else}}∞{{/ifeq}}</b><br>
@@ -69,10 +90,12 @@
           </div> -->
       {{#ifeq my_domains.length 0}}
       <h2>You Have No Domains</h2>
+      <div id="bottom-button" onclick="addDomain()">Add Domain</div>
       {{else}}
       <h2 id="prompt">Select a Domain</h2>
       <div id="domain-list">
-        {{#each my_domains}}
+    <div id="bottom-button" onclick="addDomain()">Add Domain</div>
+	      {{#each my_domains}}
 
         <div class="my_domain" data-id="{{id}}">
 
@@ -86,8 +109,7 @@
           </div>
           {{else}}
           <div class="my_domain_name" onclick='showDomainVerificationInstructions("{{name}}","{{dns_txt_code}}")'>
-            {{name}}
-            <br>
+		  {{name}} <br>
             <div class="my_domain_verified">
               <div class='domain-not-verified'>Not Verified</div>
             </div>
@@ -97,31 +119,39 @@
 
           <div class="domain_panel" data-id="{{id}}">
 
-            <div id="my_domain_email_users">
-              <input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}"
-                placeholder="user" />@{{name}}<br>
-                <input type="password" class="add-email-user-password" data-id="{{id}}" data-domain="{{name}}"
-                placeholder="password" /><br>
+		  <div id="add-email-user">
+<input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}"  
+						     placeholder="user@{{name}}" />
               <button class='add-email-user-submit' onclick="addEmailUser({{id}})">Add Email User</button>
+</div>
+
+            <div id="my_domain_email_users">
              
             </div>
-          </div>
-        </div>
+
+	    <div class="delete-domain" onclick="deleteDomain({{name}})">
+		    DELETE DOMAIN
+	    </div>
+	  </div>
+
+	</div>
         {{/each}}
       </div>
       {{/ifeq}}
-      <div id="bottom-button" onclick="addDomain()">Add Domain</div>
     </div>
   </div>
 
   {{/ifeq}}
 
+<div id="tos">
+
+</div
+<div id="pp">
+
+</div>
+
   <footer>
-    Privacy Policy | Terms of Service | About Us | Blog | FAQs | Pricing
-    {{#ifeq user_data -1}}
-    {{else}}
-    | <span class="logout-txt" onclick="logout()">Logout ({{{user_data.email}}})</span>
-    {{/ifeq}}
+    <span style="text-decoration:underline" onclick="showPP()">Privacy Policy</span> | <span style="text-decoration:underline"  onclick="showTOS()">Terms of Service</span>
   </footer>
  <!--<div class="email-user">
                     nick@rise-game.com

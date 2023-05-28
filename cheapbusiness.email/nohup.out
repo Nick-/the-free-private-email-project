@@ -2714,3 +2714,433 @@ Connection Lost... Resetting.
 Connected to MySQL Database: mailserver
 Listening for HTTP on port 8080!
 Connected to MySQL Database: mailserver
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module '/cheapbusiness.email/WrbServer.js'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)
+    at internal/main/run_main_module.js:17:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Registering...
+Registering...
+Registering...
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Got emails: []
+Done Getting Email Users
+Registering...
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Error: Failed to lookup view "index" in views directory "/cheapbusiness.email/views"
+    at Function.render (/cheapbusiness.email/node_modules/express/lib/application.js:597:17)
+    at ServerResponse.render (/cheapbusiness.email/node_modules/express/lib/response.js:1039:7)
+    at /cheapbusiness.email/WebServer.js:44:13
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Got emails: [
+  {
+    email: 'webmaster@cheapbusiness.email',
+    domain_id: 10,
+    created_at: '2023-05-24 16:41:00'
+  }
+]
+Getting size for /var/mail/vhosts/cheapbusiness.email/webmaster/
+Done Getting Email Users
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: []
+Done Getting Email Users
+Validating test.com for user: nicholasconrad@icloud.com
+RESOLVER: [ '8.8.8.8' ]
+[ '55d34914-636b-4a56-b349-fdb9f2c1eaca' ]
+[
+  'google-site-verification=kW9t2V_S7WjOX57zq0tP8Ae_WJhRwUcZoqpdEkvuXJk'
+]
+Got emails: []
+Done Getting Email Users
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+    at Packet.asError (/cheapbusiness.email/node_modules/mysql2/lib/packets/packet.js:728:17)
+    at Query.execute (/cheapbusiness.email/node_modules/mysql2/lib/commands/command.js:29:26)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:488:32)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10) {
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  sqlMessage: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1",
+  sql: 'SELECT email, domain_id, created_at from virtual_users WHERE domain_id IN ()'
+}
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+    at Packet.asError (/cheapbusiness.email/node_modules/mysql2/lib/packets/packet.js:728:17)
+    at Query.execute (/cheapbusiness.email/node_modules/mysql2/lib/commands/command.js:29:26)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:488:32)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10) {
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  sqlMessage: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1",
+  sql: 'SELECT email, domain_id, created_at from virtual_users WHERE domain_id IN ()'
+}
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+[ERROR]: TypeError: Cannot read property 'toLowerCase' of undefined
+    at /cheapbusiness.email/src/Util.js:179:22
+    at new Promise (<anonymous>)
+    at Object.addEmailDomain (/cheapbusiness.email/src/Util.js:173:12)
+    at /cheapbusiness.email/WebServer.js:58:46
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)

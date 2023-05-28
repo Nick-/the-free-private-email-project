@@ -31,7 +31,30 @@ registerForm.addEventListener("submit", function (e) {
     return false;
 });
 }
+function deleteDomain(domain) {
+ if(confirm("Are you sure you wish to delete "+domain+"?")) {
+  var formData = {
 
+	          domain: domain
+	      };
+
+	     $.ajax({
+		             type: "POST",
+		             url: "/delete-email-domain",
+		             data: formData,
+		             dataType: "json",
+		             encode: true,
+		         }).done(function (data) {
+       if(data.status == "success") {
+	        window.location.reload();
+        } else {
+	           alert(data.error)
+
+								         }
+				     });
+ }
+ 
+}
 function register(form) {
     var un = form.email.value;
     var pw = form.password.value;
@@ -125,8 +148,8 @@ function addDomain() {
     }).done(function (data) {
         if(data.status == "success") {
             //Show instructions for verifying domain
-            showDomainVerificationInstructions(data.domain,data.token)
-
+       //     showDomainVerificationInstructions(data.domain,data.token)
+window.location.reload();
         } else {
             alert(data.error)
         }
@@ -165,7 +188,11 @@ var my_domains = document.getElementsByClassName("my_domain");
 function showDomainVerificationInstructions(domain,txt_key) {
     document.getElementById("dns-txt-key").innerHTML = txt_key;
     document.getElementById("verify-domain-name").innerHTML = "For <span style='color:gold'>" + domain + "</span>";
-    domainVerificationInstructionScreen.style.display = "block";
+document.getElementById("delete-unverified-domain").onclick = function() { 
+	deleteDomain(domain);
+}
+	domainVerificationInstructionScreen.style.display = "block";
+
 }
 function closeValidateDomain() {
     domainVerificationInstructionScreen.style.display = "none"

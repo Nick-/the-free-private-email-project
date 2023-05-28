@@ -26,8 +26,16 @@ body {
     align-items: center;
     justify-content: center;
 }
+.delete-domain {
+color: red;
+position: absolute;
+bottom: -20px;
+right: 5px;
+cursor:pointer;
+text-decoration: underline;
+}
 
-#register-form {
+#login-form {
     display: none;
 }
 #login-form, #register-form {
@@ -39,7 +47,7 @@ body {
 }
 
 #login-form h2, #register-form h2 {
-    font-size: 2em;
+    font-size: 1.5em;
     margin:0;
 }
 
@@ -71,9 +79,18 @@ body {
     cursor: pointer;
 }
 
-#bottom-button {
-    padding: 10px;
+.logout-txt {
+ position: absolute;
+ top: 0px;
+ right: 10px;
+ font-weight:900;
 }
+#add-email-user {
+}
+#bottom-button {
+margin-bottom:10px;
+}
+
 #no-domains {
     display: none;
 }
@@ -113,13 +130,20 @@ header {
     z-index: 2;
 }
 header h1 {
+line-height:1em;
+	font-size:1em;
     margin: 0;
+    margin-top: 10px;
     margin-left: 10px;
+}
+header h1 img {
+ vertical-align:middle;
 }
 #portal-content {
     background: white;
     text-align: center;
     padding:10px;
+    padding-bottom:30px;
 }
 #account-summary {
     position: fixed;
@@ -130,6 +154,7 @@ header h1 {
 }
 .domain_panel {
     display: none;
+    position: relative;
     padding:10px;
 }
 .my_domain_name {
@@ -146,21 +171,31 @@ header h1 {
     color: red;
     font-size: .8em;
 }
+#prompt {
+ margin-bottom: 2px;
+}
 .email-user {
     border: 1px solid white;
     margin-top: 10px;
 }
 .add-email-user-input {
+	display: inline;
     background:none;
     color:white;
     height: 50px;
+    padding:10px;
+    border: 1px solid white;
 }
 .add-email-user-password {
+	padding:10px;
+	display: inline-block;
     background:none;
     color:white;
     height: 50px;
+    border: 1px solid white;
 }
 .add-email-user-submit {
+	display: inline-block;
     background:none;
     color:white;
     height: 50px;
@@ -174,7 +209,5 @@ header h1 {
         text-align: center;
     }
     header h1 {
-        margin: 0;
-        text-align: center;
     }
 }

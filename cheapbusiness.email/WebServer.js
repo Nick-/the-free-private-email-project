@@ -21,12 +21,11 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, '/views'));
 app.set('partials', path.join(__dirname, '/partials'));
-app.engine('hbs', exphbs.engine({
-    extname: '.hbs',
+app.engine('html', exphbs.engine({
+    extname: '.html',
     helpers: require('./config/handlebars-helpers')
 }));
-
-app.set('view engine', 'hbs');
+app.set('view engine', 'html');
 
 app.listen(process.env.HTTP_PORT, () => 
     console.log(`Listening for HTTP on port ${process.env.HTTP_PORT}!`));
@@ -60,6 +59,16 @@ app.post('/add-email-domain', (req, res) => {
                 user_data, req.body.domain, DB.con);
             res.send(add_domain_response);
     })()
+
+});
+app.post('/delete-email-domain', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'
+], DB.con); 
+	    remove_domain_response = await Util.removeEmailDomain(user_data, req.body.domain, DB.con);
+            res.send(remove_domain_response);                  })()
 
 });
 
