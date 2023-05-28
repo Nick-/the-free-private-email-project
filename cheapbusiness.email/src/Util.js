@@ -185,10 +185,35 @@ async function addEmailDomain(user_data, domain, c) {
                     //console.log(error)
                     var clientErrorMessage = ""
                     if(error.toString().includes("Duplicate entry")) {
-                        clientErrorMessage = "That domain already exists."
-                    }
+                   //replace domain owner if domain is not verified
+		var cq = "SELECT dns_verified FROM virtual_domains WHERE name = ?";
+	c.query(cq, [domain], (error, results) => {
+		if (error) {
+resolve({status: "failed", error: "Error looking up domain in DB"})
+
+} else {
+ if(results[0].dns_verified == 1) {
+ var clientErrorMessage = "That domain has been verified by another user already."
+resolve({status: "failed", error: clientErrorMessage})
+			} else {
+var uq = "UPDATE virtual_domains SET owner_uid = ? WHERE name = ?"
+c.query(uq, [user_data.uid, domain], (error, results) => {
+	                if (error) {
+				resolve({status: "failed", error: "Error looking up domain in DB"})                                                                                            } else {
+			resolve({status: "success", domain: domain, token: token})
+				}
+})
+				}
+		}
+	});
+
+
+
+    } else {
                 resolve({status: "failed", error: clientErrorMessage})
-                } else {
+		    
+		        }
+		     } else {
                     resolve({status: "success", domain: domain, token: token})
             }
             });
