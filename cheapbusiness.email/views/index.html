@@ -14,11 +14,12 @@
 <body>
   <header>
     <h1>
-<img src="/img/favicon.ico"/>
-<em>Cheap</em> Business Email</h1>
-{{#ifeq user_data -1}}
-{{else}}
-    <div class="logout-txt" onclick="logout()">Logout</div>                 {{/ifeq}}
+      <img src="/img/favicon.ico" />
+      <em>Cheap</em> Business Email
+    </h1>
+    {{#ifeq user_data -1}}
+    {{else}}
+    <div class="logout-txt" onclick="logout()">Logout</div> {{/ifeq}}
   </header>
 
   {{#ifeq user_data -1}}
@@ -33,33 +34,33 @@
 
     <form id='register-form'>
       <h2>Get Your Professional Business Email for Free!</h2>
-     
-<ul style="text-align:left">
-<li>1 Custom Domain Name</li>
-<li>Up to 5 Users</li>
-<li>5GB Storage</li>
-<li><em style="color:red">Limited Time Only</em></li>
-</ul>
- <input type='email' name='email' placeholder='Email' /><br>
+
+      <ul style="text-align:left">
+        <li>1 Custom Domain Name</li>
+        <li>Up to 5 Users</li>
+        <li>5GB Storage</li>
+        <li><em style="color:red">Limited Time Only</em></li>
+      </ul>
+      <input type='email' name='email' placeholder='Email' /><br>
       <input type='password' name='password' placeholder='Password' /><br>
       <input type='submit' value="Get Started Now" /><br>
 
-<div style="margin-top: 5px">
-<em>No credit card required</em>
- </div>
+      <div style="margin-top: 5px">
+        <em>No credit card required</em>
+      </div>
       <div class="show-login" onclick="showLogin()">Already Have an Account? Login Now</div>
 
 
     </form>
 
-  
-</div>
+
+  </div>
   {{else}}
   <div id="dvis">
     <h2>Domain Verification</h2>
     <div id="verify-domain-name"></div>
     <div id="delete-unverified-domain">
-	    Cancel Domain Verification                                                           </div>
+      Cancel Domain Verification </div>
     <br>
     1) Add / Change MX record:<br>
     Name: @<br>
@@ -75,7 +76,7 @@
   </div>
   <div id="portal">
     <div id="account-summary">
-<span>Account Email: <b>{{user_data.email}}</b></span><br>
+      <span>Account Email: <b>{{user_data.email}}</b></span><br>
       My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
       Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
       Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}∞{{else}}∞{{/ifeq}}</b><br>
@@ -94,8 +95,8 @@
       {{else}}
       <h2 id="prompt">Select a Domain</h2>
       <div id="domain-list">
-    <div id="bottom-button" onclick="addDomain()">Add Domain</div>
-	      {{#each my_domains}}
+        <div id="bottom-button" onclick="addDomain()">Add Domain</div>
+        {{#each my_domains}}
 
         <div class="my_domain" data-id="{{id}}">
 
@@ -109,32 +110,30 @@
           </div>
           {{else}}
           <div class="my_domain_name" onclick='showDomainVerificationInstructions("{{name}}","{{dns_txt_code}}")'>
-		  {{name}} <br>
+            {{name}} <br>
             <div class="my_domain_verified">
               <div class='domain-not-verified'>Not Verified</div>
             </div>
           </div>
           {{/ifeq}}
 
-
           <div class="domain_panel" data-id="{{id}}">
 
-		  <div id="add-email-user">
-<input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}"  
-						     placeholder="user@{{name}}" />
+            <div id="add-email-user">
+              <input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}" placeholder="user@{{name}}" />
               <button class='add-email-user-submit' onclick="addEmailUser({{id}})">Add Email User</button>
-</div>
-
-            <div id="my_domain_email_users">
-             
             </div>
 
-	    <div class="delete-domain" onclick="deleteDomain({{name}})">
-		    DELETE DOMAIN
-	    </div>
-	  </div>
+            <div id="my_domain_email_users">
 
-	</div>
+            </div>
+
+            <div class="delete-domain" onclick="deleteDomain('{{name}}')">
+              DELETE DOMAIN
+            </div>
+          </div>
+
+        </div>
         {{/each}}
       </div>
       {{/ifeq}}
@@ -143,17 +142,18 @@
 
   {{/ifeq}}
 
-<div id="tos">
+  <div id="tos">
 
-</div
-<div id="pp">
+  </div>
+  <div id="pp">
 
-</div>
+  </div>
 
   <footer>
-    <span style="text-decoration:underline" onclick="showPP()">Privacy Policy</span> | <span style="text-decoration:underline"  onclick="showTOS()">Terms of Service</span>
+    <span style="text-decoration:underline" onclick="showPP()">Privacy Policy</span> | <span
+      style="text-decoration:underline" onclick="showTOS()">Terms of Service</span>
   </footer>
- <!--<div class="email-user">
+  <!--<div class="email-user">
                     nick@rise-game.com
                     Created: 0/0/00
                     Storage: 120MB
@@ -165,29 +165,29 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script>
 
-function formatBytes(bytes, decimals = 2) {
-    if (!+bytes) return '0 Bytes'
+    function formatBytes(bytes, decimals = 2) {
+      if (!+bytes) return '0 Bytes'
 
-    const k = 1024
-    const dm = decimals < 0 ? 0 : decimals
-    const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+      const k = 1024
+      const dm = decimals < 0 ? 0 : decimals
+      const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
 
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
+      const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
-}
+      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+    }
 
     var my_domain_panels = document.getElementsByClassName("domain_panel");
-    var my_email_users = {{{my_email_users}}};
-      //load email users into panels
+    var my_email_users = {{{ my_email_users }}};
+    //load email users into panels
     document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
     console.log("Loading email users:", my_email_users)
-    
+
     var total_email_user_storage = 0;
 
-    for(var d = 0; d < my_domain_panels.length; d++) {
-      for(var i = 0; i < my_email_users.length; i++) {
-        if(my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
+    for (var d = 0; d < my_domain_panels.length; d++) {
+      for (var i = 0; i < my_email_users.length; i++) {
+        if (my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
           var emailUserDiv = document.createElement("div")
           emailUserDiv.classList.add("email-user")
           var emailUserNameDiv = document.createElement("div")
@@ -209,12 +209,11 @@ function formatBytes(bytes, decimals = 2) {
 
           my_domain_panels[d].appendChild(emailUserDiv)
         }
-    }
+      }
     }
 
     document.getElementById("total-email-user-storage").innerHTML = formatBytes(total_email_user_storage);
 
-    
   </script>
   <script src='/js/core.js'></script>
 </body>

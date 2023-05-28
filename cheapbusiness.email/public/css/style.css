@@ -26,6 +26,15 @@ body {
     align-items: center;
     justify-content: center;
 }
+#delete-unverified-domain {
+    color:red;
+    border:1px solid white;
+    border-radius: 5px;
+    width: fit-content;
+    padding:10px;
+    margin:auto;
+    margin-top: 10px;
+}
 .delete-domain {
 color: red;
 position: absolute;
@@ -35,6 +44,13 @@ cursor:pointer;
 text-decoration: underline;
 }
 
+#register-form ul {
+    text-align: left;
+    margin: auto;
+    width: fit-content;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 #login-form {
     display: none;
 }
