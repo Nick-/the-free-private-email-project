@@ -26,14 +26,13 @@ body {
     align-items: center;
     justify-content: center;
 }
-#delete-unverified-domain {
-    color:red;
-    border:1px solid white;
-    border-radius: 5px;
-    width: fit-content;
-    padding:10px;
+
+.copy-div {
+    background: #333;
     margin:auto;
-    margin-top: 10px;
+    padding:5px;
+    cursor:pointer;
+    width:fit-content;
 }
 .delete-domain {
 color: red;
@@ -121,7 +120,14 @@ footer {
     background: black;
     color: white;
 }
-#dvis {
+.close-popup {
+    position:absolute;
+    top:5px;
+    right:5px;
+    cursor:pointer;
+    color:red;
+}
+#dvis, #tos, #pp {
     display: none;
     background: black;
     position: absolute;
@@ -131,6 +137,40 @@ footer {
     width: calc(100% - 20px);
     padding: 10px;
     z-index: 2;
+    max-width: 400px;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    border-radius: 10px;
+    max-height: 90%;
+    overflow-y: auto;
+}
+.check-domain-validate {
+    border:1px solid lime;
+    background: none;
+    color:white;
+    cursor:pointer;
+    padding:10px;
+    border-radius: 5px;
+}
+.close-domain-validate {
+    border: 1px solid yellow;
+    background:none;
+    color:white;
+    cursor:pointer;
+    padding:10px;
+    border-radius: 5px;
+}
+#delete-unverified-domain {
+    color:red;
+    border:1px solid white;
+    border-radius: 5px;
+    width: fit-content;
+    padding:10px;
+    margin:auto;
+    margin-top: 10px;
+    cursor:pointer;
 }
 #dvis h2 {
     margin-bottom: 0;

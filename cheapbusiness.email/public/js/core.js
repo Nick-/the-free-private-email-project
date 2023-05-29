@@ -23,6 +23,15 @@ function setCookie(cname, cvalue, exdays) {
     return "";
   }
 
+
+var copyDivs = document.getElementsByClassName("copy-div");
+
+for(var i = 0; i < copyDivs.length; i++) {
+    copyDivs[i].onclick = function(e) {
+        navigator.clipboard.writeText(e.target.innerHTML);
+    }
+}
+
 var registerForm = document.getElementById("register-form");
 if(registerForm) {
 registerForm.addEventListener("submit", function (e) {
@@ -124,6 +133,22 @@ function showLogin() {
 function showRegister() {
     document.getElementById("login-form").style.display = "none"
     document.getElementById("register-form").style.display = "block"
+}
+
+function showPP() {
+    document.getElementById("pp").style.display = "block";
+}
+
+function showTOS() {
+    document.getElementById("tos").style.display = "block";
+}
+
+function closePP() {
+    document.getElementById("pp").style.display = "none";
+}
+
+function closeTOS() {
+    document.getElementById("tos").style.display = "none";
 }
 
 function logout() {

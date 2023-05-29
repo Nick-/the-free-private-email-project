@@ -9,7 +9,7 @@
   <title>Professional Business Email</title>
   <link rel="icon" type="image/x-icon" href='/img/favicon.ico'>
   <meta name="referrer" content="no-referrer-when-downgrade" />
-</head>
+  <script src="https://kit.fontawesome.com/9069ce9b70.js" crossorigin="anonymous"></script></head>
 
 <body>
   <header>
@@ -19,7 +19,7 @@
     </h1>
     {{#ifeq user_data -1}}
     {{else}}
-    <div class="logout-txt" onclick="logout()">Logout</div> {{/ifeq}}
+    <div class="logout-txt" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div> {{/ifeq}}
   </header>
 
   {{#ifeq user_data -1}}
@@ -64,15 +64,15 @@
     <br>
     1) Add / Change MX record:<br>
     Name: @<br>
-    Value: cheapbusiness.email<br><br>
+    Value: <div class='copy-div'>cheapbusiness.email</div><br>
     2) Add TXT record:<br>
     Name: @<br>
-    Value: <span id="dns-txt-key"></span><br><br>
+    Value: <div id="dns-txt-key" class="copy-div"></div><br>
     3) Add TXT record:<br>
     Name: @<br>
-    Value: v=spf1 mx ~all<br>
-    <button onclick="validateDomain()">Validate Domain</button>
-    <button onclick="closeValidateDomain()">Close</button>
+    Value: <div class='copy-div'>v=spf1 mx ~all</div><br>
+    <button class='check-domain-validate' onclick="validateDomain()">Validate Domain</button>
+    <button class='close-domain-validate' onclick="closeValidateDomain()">Close</button>
   </div>
   <div id="portal">
     <div id="account-summary">
@@ -91,11 +91,11 @@
           </div> -->
       {{#ifeq my_domains.length 0}}
       <h2>You Have No Domains</h2>
-      <div id="bottom-button" onclick="addDomain()">Add Domain</div>
+      <div id="bottom-button" onclick="addDomain()"><i class="fa-solid fa-circle-plus"></i> Add Domain</div>
       {{else}}
       <h2 id="prompt">Select a Domain</h2>
       <div id="domain-list">
-        <div id="bottom-button" onclick="addDomain()">Add Domain</div>
+        <div id="bottom-button" onclick="addDomain()"><i class="fa-solid fa-circle-plus"></i> Add Domain</div>
         {{#each my_domains}}
 
         <div class="my_domain" data-id="{{id}}">
@@ -143,15 +143,20 @@
   {{/ifeq}}
 
   <div id="tos">
-
+    <div class="close-popup" onclick='closeTOS()'><i class="fa-solid fa-circle-xmark"></i></div>
+    <h2>Terms of Service</h2>
+    {{> tos }}
   </div>
   <div id="pp">
+
+  <div class="close-popup" onclick="closePP()"><i class="fa-solid fa-circle-xmark"></i></div>
+    <h2>Privacy Policy</h2>
 
   </div>
 
   <footer>
-    <span style="text-decoration:underline" onclick="showPP()">Privacy Policy</span> | <span
-      style="text-decoration:underline" onclick="showTOS()">Terms of Service</span>
+    <span style="text-decoration:underline;cursor:pointer;" onclick="showPP()">Privacy Policy</span> | <span
+      style="text-decoration:underline;cursor:pointer;" onclick="showTOS()">Terms of Service</span>
   </footer>
   <!--<div class="email-user">
                     nick@rise-game.com
