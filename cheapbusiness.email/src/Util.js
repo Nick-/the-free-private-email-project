@@ -395,7 +395,11 @@ async function addEmailUser(user_data, full_email, c) {
                         c.query(ceuq, [results[0].id, hashedPass, full_email], (error, results) => {
                             if (error) {
                                 console.log(error)
-                                resolve({ status: "failed", error: "Error creating mail user!" })
+                                var clientErrorMessage = "Error creating mail user!"
+                                if (error.toString().includes("Duplicate entry")) {
+                                    clientErrorMessage = "That user already exists."
+                                }
+                                resolve({ status: "failed", error: clientErrorMessage })
                             } else {
                                 resolve({ status: "success", temp_pass: password })
                             }
