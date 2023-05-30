@@ -530,21 +530,53 @@ async function removeEmailDomain(user_data, domain, c) {
         }
     });
 }
-//TODO: AUTH
+
+async function getEmailDomainOwnerUID(full_email, c) {
+    return new Promise(resolve => {
+    var domain = full_email.split("@")[1];
+    var q = "SELECT owner_uid FROM virtual_domains WHERE name = ?";
+
+    c.query(q, [domain], (error, results) => {
+        if (error) {
+            resolve(-1)
+        } else {
+            resolve(results[0].owner_uid)
+        }
+    });
+    });
+}
+
 async function deleteEmailUser(user_data, full_email, c) {
+console.log("Deleting email user " + full_email)
+    owner_uid = await getEmailDomainOwnerUID(full_email, c)
+
     return new Promise(resolve => {
         if (user_data == -1) {
             resolve({ status: "failed", error: "Authentification Error" })
+        } else if(user_data.uid != owner_uid) {
+            resolve({ status: "failed", error: "You don't own that domain..." })
         } else {
-            resolve({ status: "success"})
+            var dq = "DELETE FROM virtual_users WHERE email = ?";
+            c.query(dq, [full_email], (error, results) => {
+                if (error) {
+                    resolve({ status: "failed", error: "Error deleting email user in DB" })
+                } else {
+                    resolve({ status: "success"})
+                }
+            })
         }
     });
 }
-//TODO: AUTH
+
 async function changeEmailUserPass(user_data, full_email, c) {
+
+    owner_uid = await getEmailDomainOwnerUID(full_email, c)
+
     return new Promise(resolve => {
         if (user_data == -1) {
             resolve({ status: "failed", error: "Authentification Error" })
+        } else if(user_data.uid != owner_uid) {
+            resolve({ status: "failed", error: "You don't own that domain..." })
         } else {
             resolve({ status: "success"})
         }

@@ -223,9 +223,10 @@
 
           var emailUserChangePassDiv = document.createElement("div")
           emailUserChangePassDiv.classList.add("email-user-change-password")
-          emailUserChangePassDiv.innerHTML = '<i class="fa-solid fa-key"></i> Change Password'
+          emailUserChangePassDiv.innerHTML = '<i class="fa-solid fa-key"></i> Change Password';
+          let this_email = my_email_users[i].email
           emailUserChangePassDiv.onclick = function() {
-            changeEmailUserPass(my_email_users[i].email)
+            changeEmailUserPass(this_email)
           }
           emailUserDiv.appendChild(emailUserChangePassDiv);
 
@@ -233,7 +234,7 @@
           emailUserDeleteDiv.classList.add("email-user-delete")
           emailUserDeleteDiv.innerHTML = '<i class="fa-solid fa-trash"></i> Delete User'
           emailUserDeleteDiv.onclick = function() {
-            deleteEmailUser(my_email_users[i].email)
+            deleteEmailUser(this_email)
           }
           emailUserDiv.appendChild(emailUserDeleteDiv);
 
