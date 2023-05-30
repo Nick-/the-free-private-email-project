@@ -88,6 +88,12 @@ text-decoration: underline;
     margin-top: 15px;
     font-style: italic;
 }
+.forgot-password {
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 15px;
+    font-style: italic;
+}
 
 .logout-txt, #bottom-button {
     text-decoration: underline;
@@ -127,7 +133,7 @@ footer {
     cursor:pointer;
     color:red;
 }
-#dvis, #tos, #pp {
+#dvis, #tos, #pp, #forgot-password-screen {
     display: none;
     background: black;
     position: absolute;

@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 
         my_domains = await Util.getDomainsForUID(user_data, DB.con);
 
-        my_email_users = await Util.getEmailUsersForUser(my_domains, DB.con)
+        my_email_users = await Util.getEmailUsersForDomain(my_domains, DB.con)
         
         res.render('index', {
             my_email_users: JSON.stringify(my_email_users),
@@ -91,11 +91,9 @@ app.post('/add-email-user', (req, res) => {
         user_data = await Util.getUserData(
             req.cookies['email'], req.cookies['auth_key'], DB.con);
 
-            console.log("EMAIL:", req.body.full_email)
-            console.log(req.body.password)
 
             aeu_response = await Util.addEmailUser(
-                user_data, req.body.full_email, req.body.password, DB.con);
+                user_data, req.body.full_email, DB.con);
             res.send(aeu_response);
     })()
 

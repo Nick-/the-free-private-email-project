@@ -238,6 +238,17 @@ function gotoDomainList() {
 
 }
 
+function showForgotPassword() {
+    document.getElementById("forgot-password-screen").style.display = "block";
+}
+function closeForgotPassword() {
+    document.getElementById("forgot-password-screen").style.display = "none";
+}
+
+function sendPasswordReset() {
+
+}
+
 function showDomainPanel(id) {
     headerPrompt.innerHTML = "Domain Management";
     bottomButton.innerHTML = "Back";
@@ -262,22 +273,19 @@ function addEmailUser(domain_id) {
     var password = "";
 
     var addEmailUserEmail = document.getElementsByClassName("add-email-user-input")
+
     for(var i = 0; i < addEmailUserEmail.length; i++) {
         if(addEmailUserEmail[i].dataset.id == domain_id) {
-            full_email = addEmailUserEmail[i].value + "@" + addEmailUserEmail[i].dataset.domain
-        }
-    }
-
-    var addEmailUserPassword = document.getElementsByClassName("add-email-user-password")
-    for(var i = 0; i < addEmailUserPassword.length; i++) {
-        if(addEmailUserPassword[i].dataset.id == domain_id) {
-            password = addEmailUserPassword[i].value
+            if(addEmailUserEmail[i].value.includes("@")) {
+                full_email = addEmailUserEmail[i].value.split("@")[0] + "@" + addEmailUserEmail[i].dataset.domain
+            } else {
+                full_email = addEmailUserEmail[i].value + "@" + addEmailUserEmail[i].dataset.domain    
+            }
         }
     }
 
     var formData = {
-        full_email: full_email,
-        password: password
+        full_email: full_email
     };
 
     $.ajax({
@@ -288,8 +296,7 @@ function addEmailUser(domain_id) {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
-        
-            alert("Success!")
+            alert("Success! Your Temporary Password is: " + data.temp_pass)
             window.location.reload();
             //Modify UI without reload
         } else {

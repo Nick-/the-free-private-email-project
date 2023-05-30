@@ -22,14 +22,22 @@
     <div class="logout-txt" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div> {{/ifeq}}
   </header>
 
+  <div id="forgot-password-screen">
+    <div class="close-popup" onclick='closeForgotPassword()'><i class="fa-solid fa-circle-xmark"></i></div>
+    <input id='forgot-password-email' type='email' name='email' placeholder='Email' autocomplete="email" /><br>
+    <button onclick="sendPasswordReset()">Reset Password</button><br>
+  </div>
+
   {{#ifeq user_data -1}}
   <div id="login-screen" class="centered">
     <form id='login-form'>
       <h2>Portal Login</h2>
-      <input type='email' name='email' placeholder='Email' /><br>
-      <input type='password' name='password' placeholder='Password' /><br>
+      <input type='email' name='email' placeholder='Email' autocomplete="email"/><br>
+      <input type='password' name='password' placeholder='Password' autocomplete="current-password"/><br>
       <input type='submit' /><br>
-      <div class="show-register" onclick="showRegister()">Dont't Have an Account? Register Now</div>
+      <div class="forgot-password" onclick="showForgotPassword()">Forgot Your Password?</div>
+      
+      <div class="show-register" onclick="showRegister()">Don't Have an Account? Register Now</div>
     </form>
 
     <form id='register-form'>
@@ -41,8 +49,8 @@
         <li>5GB Storage</li>
         <li><em style="color:red">Limited Time Only</em></li>
       </ul>
-      <input type='email' name='email' placeholder='Email' /><br>
-      <input type='password' name='password' placeholder='Password' /><br>
+      <input type='email' name='email' placeholder='Email' autocomplete="email" /><br>
+      <input type='password' name='password' placeholder='Password' autocomplete="new-password"/><br>
       <input type='submit' value="Get Started Now" /><br>
 
       <div style="margin-top: 5px">
@@ -121,7 +129,7 @@
 
             <div id="add-email-user">
               <input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}" placeholder="user@{{name}}" />
-              <button class='add-email-user-submit' onclick="addEmailUser({{id}})">Add Email User</button>
+              <button class='add-email-user-submit' onclick="addEmailUser({{ id }})">Add Email User</button>
             </div>
 
             <div id="my_domain_email_users">
@@ -185,9 +193,11 @@
     var my_domain_panels = document.getElementsByClassName("domain_panel");
     var my_email_users = {{{ my_email_users }}};
     //load email users into panels
+
+    if(my_email_users != -1) {
     document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
     console.log("Loading email users:", my_email_users)
-
+    }
     var total_email_user_storage = 0;
 
     for (var d = 0; d < my_domain_panels.length; d++) {
@@ -217,7 +227,9 @@
       }
     }
 
-    document.getElementById("total-email-user-storage").innerHTML = formatBytes(total_email_user_storage);
+    var teus = document.getElementById("total-email-user-storage");
+    if(teus != null)
+      teus.innerHTML = formatBytes(total_email_user_storage);
 
   </script>
   <script src='/js/core.js'></script>
