@@ -305,3 +305,46 @@ function addEmailUser(domain_id) {
     });
 }
 
+function changeEmailUserPass(full_email) {
+    var formData = {
+        full_email: full_email
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/change-email-user-password",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Success! Your Temporary Password is: " + data.temp_pass)
+            window.location.reload();
+            //Modify UI without reload
+        } else {
+            alert(data.error)
+        }
+    });
+}
+
+function deleteEmailUser(full_email) {
+    var formData = {
+        full_email: full_email
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/delete-email-user",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Email User Deleted Successfully")
+            window.location.reload();
+            //Modify UI without reload
+        } else {
+            alert(data.error)
+        }
+    });
+}

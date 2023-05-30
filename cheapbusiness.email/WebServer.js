@@ -98,8 +98,29 @@ app.post('/add-email-user', (req, res) => {
     })()
 
 });
-app.post('/change-email-password', (req, res) => {
+app.post('/change-email-user-password', (req, res) => {
+    (async function () {
 
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+
+            cpeu_response = await Util.changeEmailUserPass(
+                user_data, req.body.full_email, DB.con);
+            res.send(cpeu_response);
+    })()
+});
+app.post('/delete-email-user', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+
+            deu_response = await Util.deleteEmailUser(
+                user_data, req.body.full_email, DB.con);
+            res.send(deu_response);
+    })()
 });
 app.post('/register', (req, res) => {
 	(async function () {

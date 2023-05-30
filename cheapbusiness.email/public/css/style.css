@@ -65,7 +65,18 @@ text-decoration: underline;
     font-size: 1.5em;
     margin:0;
 }
-
+.email-user-delete {
+    border:1px solid red;
+    padding: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.email-user-change-password {
+    border:1px solid gold;
+    padding: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
 #login-form input, #register-form input {
     color: white;
     border:1px solid lime;
@@ -204,8 +215,11 @@ header h1 img {
 #portal-content {
     background: white;
     text-align: center;
-    padding:10px;
-    padding-bottom:30px;
+    padding: 10px;
+    padding-bottom: 30px;
+    max-height: calc(100vh - 300px);
+    overflow: auto;
+    margin-top: 100px;
 }
 #account-summary {
     position: fixed;

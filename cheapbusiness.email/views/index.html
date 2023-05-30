@@ -219,8 +219,23 @@
           emailUserStorageDiv.classList.add("email-user-storage")
           emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_users[i].storage_used);
           total_email_user_storage = total_email_user_storage + my_email_users[i].storage_used
-
           emailUserDiv.appendChild(emailUserStorageDiv);
+
+          var emailUserChangePassDiv = document.createElement("div")
+          emailUserChangePassDiv.classList.add("email-user-change-password")
+          emailUserChangePassDiv.innerHTML = '<i class="fa-solid fa-key"></i> Change Password'
+          emailUserChangePassDiv.onclick = function() {
+            changeEmailUserPass(my_email_users[i].email)
+          }
+          emailUserDiv.appendChild(emailUserChangePassDiv);
+
+          var emailUserDeleteDiv = document.createElement("div")
+          emailUserDeleteDiv.classList.add("email-user-delete")
+          emailUserDeleteDiv.innerHTML = '<i class="fa-solid fa-trash"></i> Delete User'
+          emailUserDeleteDiv.onclick = function() {
+            deleteEmailUser(my_email_users[i].email)
+          }
+          emailUserDiv.appendChild(emailUserDeleteDiv);
 
           my_domain_panels[d].appendChild(emailUserDiv)
         }

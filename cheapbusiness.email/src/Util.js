@@ -354,6 +354,14 @@ async function verifyEmailDomain(user_data, domain, c) {
         }
     })
 }
+
+function checkIfEmail(str) {
+    // Regular expression to check if string is email
+    const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+  
+    return regexExp.test(str);
+  }
+
 async function addEmailUser(user_data, full_email, c) {
 
     var numUsersForDomain = await getEmailUsersLengthForDomainName([full_email.split("@")[1]], c);
@@ -361,6 +369,11 @@ async function addEmailUser(user_data, full_email, c) {
     return new Promise(resolve => {
         if (full_email == "" || full_email === undefined) {
             resolve({ status: "failed", error: "Empty Data" })
+            return
+        }
+
+        if(!checkIfEmail(full_email)) {
+            resolve({ status: "failed", error: "Invalid Email Address" })
             return
         }
         if (user_data == -1) {
@@ -383,13 +396,17 @@ async function addEmailUser(user_data, full_email, c) {
                     return;
                 }
                 var hashedPass = (`${stdout}`).trim();
-
-                var q = "SELECT id FROM virtual_domains WHERE name = ?"
-                c.query(q, [full_email.split("@")[1]], (error, results) => {
+                //Make sure owner UID matches from auth
+                var q = "SELECT id FROM virtual_domains WHERE name = ? and owner_uid = ?"
+                c.query(q, [full_email.split("@")[1], user_data.uid], (error, results) => {
                     if (error) {
                         console.log(error)
                         resolve({ status: "failed", error: "Error looking up domain info in DB" })
                     } else {
+
+                        if(results.length == 0) {
+                            resolve({ status: "failed", error: "Error authenticating domain info in DB" })
+                        } else {
                         console.log("Got email id " + results[0].id + " and hash " + hashedPass + " for email " + full_email)
                         var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email) VALUES (?, ?, ?)"
                         c.query(ceuq, [results[0].id, hashedPass, full_email], (error, results) => {
@@ -404,6 +421,8 @@ async function addEmailUser(user_data, full_email, c) {
                                 resolve({ status: "success", temp_pass: password })
                             }
                         });
+                    }
+
                     }
                 })
             });
@@ -492,13 +511,15 @@ async function getEmailUsersForDomain(domains, c) {
         });
     });
 }
+
 async function removeEmailDomain(user_data, domain, c) {
     return new Promise(resolve => {
         if (user_data == -1) {
             resolve({ status: "failed", error: "Authentification Error" })
         } else {
-            var dq = "DELETE FROM virtual_domains WHERE name = ?";
-            c.query(dq, [domain], (error, results) => {
+            //Auth Check request uid
+            var dq = "DELETE FROM virtual_domains WHERE name = ? AND owner_uid = ?";
+            c.query(dq, [domain, user_data.uid], (error, results) => {
                 if (error) {
                     resolve({ status: "failed", error: "Error deleting domain in DB" })
 
@@ -509,7 +530,29 @@ async function removeEmailDomain(user_data, domain, c) {
         }
     });
 }
+//TODO: AUTH
+async function deleteEmailUser(user_data, full_email, c) {
+    return new Promise(resolve => {
+        if (user_data == -1) {
+            resolve({ status: "failed", error: "Authentification Error" })
+        } else {
+            resolve({ status: "success"})
+        }
+    });
+}
+//TODO: AUTH
+async function changeEmailUserPass(user_data, full_email, c) {
+    return new Promise(resolve => {
+        if (user_data == -1) {
+            resolve({ status: "failed", error: "Authentification Error" })
+        } else {
+            resolve({ status: "success"})
+        }
+    });
+}
 module.exports = {
+    changeEmailUserPass,
+    deleteEmailUser,
     removeEmailDomain,
     getEmailUsersForDomain,
     addEmailUser,
