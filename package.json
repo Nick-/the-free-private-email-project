@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "dovehash": "^0.0.5",
-    "fast-folder-size": "^1.7.1"
-  }
-}

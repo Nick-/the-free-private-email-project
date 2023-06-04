@@ -1,0 +1,381 @@
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: []
+Done Getting Email Users
+Got email id 22 and hash $6$VusasjwYP65Xw.UZ$u89Cxm76mcQn2tpCiE5S6CqOLrr31x5usNqMs7uadmbSO9J5ns3RYf8cwl612hIqHHSj9FgFEZMiPTqSVjzO.0 for email 1@v.com
+Got emails: [
+  {
+    email: '1@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:12'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/1/
+Failed to get folder size for 1@v.com
+Done Getting Email Users
+Got email id 22 and hash $6$Dd4RqJyEmBvR3vXb$5dr2cTwqSzW8oUOHTPoVRuyIs1WD.k4idgcuRmbYKxGE1NOddP1B0YtmhKc4jkgK4LM2O27f/VAecteDukacw/ for email 2@v.com
+Got emails: [
+  {
+    email: '1@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:12'
+  },
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/1/
+Failed to get folder size for 1@v.com
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Done Getting Email Users
+Got email id 22 and hash $6$uYnBSMQ8ir.aAjEP$kbeomerTSHfpaXsXZLjYizXWx.va2pDeeYUXje.a205hF9V92HEbj034NGZhs5mi0fjuMsNEsqVXPkHoTW5c0/ for email 3@v.com
+Got emails: [
+  {
+    email: '1@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:12'
+  },
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  },
+  {
+    email: '3@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:24'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/1/
+Failed to get folder size for 1@v.com
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Getting size for /var/mail/vhosts/v.com/3/
+Failed to get folder size for 3@v.com
+Done Getting Email Users
+Got email id 22 and hash $6$QEb1ezBGcl1HLGXk$Qy09G3iXDbRaVSh6h.VzA1d14IUs03EUffSI1RjwTxlwCNZ8vvKFJu6f9IofTsBbDgFEP64weE1KP540g9D8i. for email 4@v.com
+Got emails: [
+  {
+    email: '1@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:12'
+  },
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  },
+  {
+    email: '3@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:24'
+  },
+  {
+    email: '4@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:27'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/1/
+Failed to get folder size for 1@v.com
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Getting size for /var/mail/vhosts/v.com/3/
+Failed to get folder size for 3@v.com
+Getting size for /var/mail/vhosts/v.com/4/
+Failed to get folder size for 4@v.com
+Done Getting Email Users
+Got email id 22 and hash $6$LQrROy2GxCeoblhy$aR0yiBA0kEVYLXgna8HPSxWZHAcEXh/uNzs9.TCXiynxeym/K4.0/dxC7nK2cJdtkMKXSIIcdOfaDrwSf/em91 for email 5@v.com
+Got emails: [
+  {
+    email: '1@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:12'
+  },
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  },
+  {
+    email: '3@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:24'
+  },
+  {
+    email: '4@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:27'
+  },
+  {
+    email: '5@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:30'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/1/
+Failed to get folder size for 1@v.com
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Getting size for /var/mail/vhosts/v.com/3/
+Failed to get folder size for 3@v.com
+Getting size for /var/mail/vhosts/v.com/4/
+Failed to get folder size for 4@v.com
+Getting size for /var/mail/vhosts/v.com/5/
+Failed to get folder size for 5@v.com
+Done Getting Email Users
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: [
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Done Getting Email Users
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+[ERROR]: Error: The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.
+    at Connection.protocolError (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:421:17)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:463:14)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:188:23)
+Connection Lost... Resetting.
+Connected to MySQL Database: mailserver
+Listening for HTTP on port 8080!
+Connected to MySQL Database: mailserver
+Got emails: [
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Done Getting Email Users
+Got email id 22 and hash $6$4W7yHp8c7ex8bGI7$1gyufngMsg25CzJuabxGNlPauOEcJSIQOGAoc8y9FV7g8F7dXAXLpEqGu/YRZHieLBz0qor0smruvDMdw4Xat. for email 2@v.com
+Error: Duplicate entry '2@v.com' for key 'virtual_users.email'
+    at Packet.asError (/cheapbusiness.email/node_modules/mysql2/lib/packets/packet.js:728:17)
+    at Query.execute (/cheapbusiness.email/node_modules/mysql2/lib/commands/command.js:29:26)
+    at Connection.handlePacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:488:32)
+    at PacketParser.onPacket (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:94:12)
+    at PacketParser.executeStart (/cheapbusiness.email/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.<anonymous> (/cheapbusiness.email/node_modules/mysql2/lib/connection.js:101:25)
+    at Socket.emit (events.js:314:20)
+    at addChunk (_stream_readable.js:297:12)
+    at readableAddChunk (_stream_readable.js:272:9)
+    at Socket.Readable.push (_stream_readable.js:213:10) {
+  code: 'ER_DUP_ENTRY',
+  errno: 1062,
+  sqlState: '23000',
+  sqlMessage: "Duplicate entry '2@v.com' for key 'virtual_users.email'",
+  sql: "INSERT INTO mailserver.virtual_users (domain_id, password , email) VALUES (22, '$6$4W7yHp8c7ex8bGI7$1gyufngMsg25CzJuabxGNlPauOEcJSIQOGAoc8y9FV7g8F7dXAXLpEqGu/YRZHieLBz0qor0smruvDMdw4Xat.', '2@v.com')"
+}
+Got emails: [
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Done Getting Email Users
+Got email id 22 and hash $6$OjdzwJoyMho1W1j8$/g5EaLqaxGDfQJs/ou//Ftn/Fms88uG4yY7NALhYTx4a0wRlx1GSkKCZu6xC2z.stJI5/iVBfJQKKlaZ0P6pG/ for email 1@v.com
+Got emails: [
+  {
+    email: '2@v.com',
+    domain_id: 22,
+    created_at: '2023-05-30 20:05:16'
+  },
+  {
+    email: '1@v.com',
+    domain_id: 22,
+    created_at: '2023-06-04 19:33:19'
+  }
+]
+Getting size for /var/mail/vhosts/v.com/2/
+Failed to get folder size for 2@v.com
+Getting size for /var/mail/vhosts/v.com/1/
+Failed to get folder size for 1@v.com
+Done Getting Email Users
