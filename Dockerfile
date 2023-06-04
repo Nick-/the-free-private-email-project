@@ -21,6 +21,7 @@ RUN apt-get -y install nodejs
 RUN apt-get -y install git
 COPY postfix_config/ /etc/postfix/
 COPY dovecot_config/ /etc/dovecot/
+COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
 RUN postconf -n
 #DKIM
