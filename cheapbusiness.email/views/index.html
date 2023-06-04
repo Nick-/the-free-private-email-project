@@ -190,6 +190,8 @@
       return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
     }
 
+
+
     var my_domain_panels = document.getElementsByClassName("domain_panel");
     var my_email_users = {{{ my_email_users }}};
     //load email users into panels
@@ -212,7 +214,9 @@
 
           var emailUserCreatedAtDiv = document.createElement("div")
           emailUserCreatedAtDiv.classList.add("email-user-created-at")
-          emailUserCreatedAtDiv.innerHTML = "Created at: <span style='color:gold'>" + my_email_users[i].created_at + "</span>";
+          var c_date = new Date(my_email_users[i].created_at + ' UTC');
+          var f_date = c_date.toDateString().substring(4) + " " + c_date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+          emailUserCreatedAtDiv.innerHTML = "Created: <span style='color:gold'>" + f_date + "</span>";
           emailUserDiv.appendChild(emailUserCreatedAtDiv);
 
           var emailUserStorageDiv = document.createElement("div")
