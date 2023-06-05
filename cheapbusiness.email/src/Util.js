@@ -582,6 +582,14 @@ async function changeEmailUserPass(user_data, full_email, c) {
         }
     });
 }
+
+var mail_settings = {
+    
+}
+function sendEmail(to_email, subject, message) {
+
+}
+
 module.exports = {
     changeEmailUserPass,
     deleteEmailUser,
