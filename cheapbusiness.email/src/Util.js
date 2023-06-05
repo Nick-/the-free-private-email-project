@@ -318,6 +318,7 @@ async function verifyEmailDomain(user_data, domain, c) {
                                 }
                                 //TODO: Validate SPF
                                 //TODO: Validate DKIM
+                                //TODO: Validate DMARC
                             }
                             if (!txt_verification_exists) {
                                 resolve({ status: "failed", error: "TXT verification not set" })

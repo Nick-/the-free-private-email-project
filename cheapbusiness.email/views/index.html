@@ -81,7 +81,10 @@
     Value: <div class='copy-div'>v=spf1 mx ~all</div><br>
     4) Add DKIM TXT record:<br>
     Name: cbe._domainkey<br>
-    Value: <div class='copy-div'>"v=DKIM1;h=sha256;k=rsa;t=y;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAojIbdb149vKwuasNv+TQOoWQVGFS0Gr1M+C+722vW1DP7H+/TOs+DA/Truz4iNC1JsT5/O9XfTq8ghQYVmfkxYosY2QC0l3x86YpdX5yy4b2UnbxkCLlJzFqbIksw2eNSBTHV29OO5ywnjq8Tc/ilAdHQoNmmZQTd1nyV2jOivuDeiM9hYHizIx7R20HSoB2VL51BbzM9LUxWlfeaN+rfIgEcLcltYbQKpJPPRIMobvYP99lNUGL+6ACIwFqbIvSP0aNxXh6IrynVeCXIdUrEKughPMplnEHOqKQRZEoGY9DgwkxHp2Ct0QjqPzWYEg+hUewIuH+EZgnfuA7ZdhQnwIDAQAB</div><br>
+    Value: <div class='copy-div'>v=DKIM1;h=sha256;k=rsa;t=y;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAojIbdb149vKwuasNv+TQOoWQVGFS0Gr1M+C+722vW1DP7H+/TOs+DA/Truz4iNC1JsT5/O9XfTq8ghQYVmfkxYosY2QC0l3x86YpdX5yy4b2UnbxkCLlJzFqbIksw2eNSBTHV29OO5ywnjq8Tc/ilAdHQoNmmZQTd1nyV2jOivuDeiM9hYHizIx7R20HSoB2VL51BbzM9LUxWlfeaN+rfIgEcLcltYbQKpJPPRIMobvYP99lNUGL+6ACIwFqbIvSP0aNxXh6IrynVeCXIdUrEKughPMplnEHOqKQRZEoGY9DgwkxHp2Ct0QjqPzWYEg+hUewIuH+EZgnfuA7ZdhQnwIDAQAB</div><br>
+    5) Add DMARC TXT record:<br>
+    Name: _dmarc<br>
+    Value: <div class='copy-div'>v=DMARC1; p=none; rua=mailto:webmaster@cheapbusiness.email; ruf=mailto:webmaster@cheapbusiness.email; fo=1</div><br>
     <button class='check-domain-validate' onclick="validateDomain()">Validate Domain</button>
     <button class='close-domain-validate' onclick="closeValidateDomain()">Close</button>
   </div>
@@ -90,8 +93,8 @@
       <span>Account Email: <b>{{user_data.email}}</b></span><br>
       My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
       Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
-      Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}∞{{else}}∞{{/ifeq}}</b><br>
-      Users: <b><span id="my_email_users_length"></span>/∞</b>
+      Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}1{{else}}∞{{/ifeq}}</b><br>
+      Users: <b><span id="my_email_users_length"></span>/{{#ifeq user_data.plan 0}}5{{else}}∞{{/ifeq}}</b>
     </div>
     <div id="portal-content">
       <!--<div class="client-settings">
