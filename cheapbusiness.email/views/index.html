@@ -73,12 +73,15 @@
     1) Add / Change MX record:<br>
     Name: @<br>
     Value: <div class='copy-div'>cheapbusiness.email</div><br>
-    2) Add TXT record:<br>
+    2) Add Verification TXT record:<br>
     Name: @<br>
     Value: <div id="dns-txt-key" class="copy-div"></div><br>
-    3) Add TXT record:<br>
+    3) Add SPF TXT record:<br>
     Name: @<br>
     Value: <div class='copy-div'>v=spf1 mx ~all</div><br>
+    4) Add DKIM TXT record:<br>
+    Name: cbe._domainkey<br>
+    Value: <div class='copy-div'>"v=DKIM1;h=sha256;k=rsa;t=y;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAojIbdb149vKwuasNv+TQOoWQVGFS0Gr1M+C+722vW1DP7H+/TOs+DA/Truz4iNC1JsT5/O9XfTq8ghQYVmfkxYosY2QC0l3x86YpdX5yy4b2UnbxkCLlJzFqbIksw2eNSBTHV29OO5ywnjq8Tc/ilAdHQoNmmZQTd1nyV2jOivuDeiM9hYHizIx7R20HSoB2VL51BbzM9LUxWlfeaN+rfIgEcLcltYbQKpJPPRIMobvYP99lNUGL+6ACIwFqbIvSP0aNxXh6IrynVeCXIdUrEKughPMplnEHOqKQRZEoGY9DgwkxHp2Ct0QjqPzWYEg+hUewIuH+EZgnfuA7ZdhQnwIDAQAB</div><br>
     <button class='check-domain-validate' onclick="validateDomain()">Validate Domain</button>
     <button class='close-domain-validate' onclick="closeValidateDomain()">Close</button>
   </div>

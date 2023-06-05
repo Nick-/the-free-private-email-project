@@ -5,7 +5,9 @@ resolver.setServers(['8.8.8.8']) //Google's
 const crypto = require('crypto');
 const bcrypt = require("bcrypt")
 const moment = require('moment-timezone');
-const fastFolderSizeSync = require('fast-folder-size/sync')
+var nodemailer = require('nodemailer');
+const fastFolderSizeSync = require('fast-folder-size/sync');
+const { send } = require('process');
 moment().tz("America/New_York").format();
 
 function isStrJSON(str) {
@@ -314,7 +316,8 @@ async function verifyEmailDomain(user_data, domain, c) {
                                 if (txt_records[i] == dns_txt_key) {
                                     txt_verification_exists = true;
                                 }
-                                //TODO: Validate SPF?
+                                //TODO: Validate SPF
+                                //TODO: Validate DKIM
                             }
                             if (!txt_verification_exists) {
                                 resolve({ status: "failed", error: "TXT verification not set" })
@@ -583,14 +586,34 @@ async function changeEmailUserPass(user_data, full_email, c) {
     });
 }
 
-var mail_settings = {
-    
-}
-function sendEmail(to_email, subject, message) {
+var transporter = nodemailer.createTransport({
+    host: "cheapbusiness.email",
+    port: 587,
+    auth: {
+      user: process.env.NOREPLY_EMAIL,
+      pass: process.env.NOREPLY_EMAIL_PASSWORD
+    }
+  });
 
+function sendEmail(to_email, subject, message) {
+    var mailOptions = {
+        from: '"Cheap Business Email 💸" <' + process.env.NOREPLY_EMAIL + '>',
+        to: to_email,
+        subject: subject,
+        text: message
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
 }
 
 module.exports = {
+    sendEmail,
     changeEmailUserPass,
     deleteEmailUser,
     removeEmailDomain,

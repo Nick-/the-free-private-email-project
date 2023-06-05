@@ -19,18 +19,19 @@ RUN apt-get -y install opendkim opendkim-tools
 
 RUN apt-get -y install nodejs
 RUN apt-get -y install git
+
 COPY postfix_config/ /etc/postfix/
 COPY dovecot_config/ /etc/dovecot/
 COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
+COPY opendkim /etc/default/opendkim
+COPY opendkim.conf /etc/opendkim.conf
+
+COPY dkim.key /etc/postfix/dkim.key
+RUN chmod 660 /etc/postfix/dkim.key
+RUN chown root:opendkim /etc/postfix/dkim.key
+
 RUN postconf -n
-#DKIM
-#RUN usermod -G opendkim postfix
-#RUN mkdir -p /etc/opendkim/keys 
-#RUN chown -R opendkim:opendkim /etc/opendkim
-#RUN chmod  744 /etc/opendkim/keys 
-#RUN mkdir /etc/opendkim/keys/cheapbusiness.email 
-#RUN opendkim-genkey -b 2048 -d cheapbusiness.email -D /etc/opendkim/keys/cheapbusiness.email -s default -v 
-#RUN chown opendkim:opendkim /etc/opendkim/keys/cheapbusiness.email/default.private
+
 COPY s.sh /s.sh
 #ENTRYPOINT ["bash", "start-mailserver.sh" ]
