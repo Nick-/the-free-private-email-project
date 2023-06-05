@@ -86,7 +86,7 @@ inet_interfaces = all
 inet_protocols = all
 maillog_file = /var/log/mail.log
 # Milter configuration
-milter_protocol = 6
-milter_default_action = accept
-smtpd_milters = inet:localhost:8891
-non_smtpd_milters = inet:localhost:8891
+#milter_protocol = 6
+#milter_default_action = accept
+#smtpd_milters = inet:localhost:8891
+#non_smtpd_milters = inet:localhost:8891
