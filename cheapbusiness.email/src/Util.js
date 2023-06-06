@@ -143,6 +143,7 @@ async function registerUser(e, p, c) {
                     }
                     resolve({ status: "failed", error: clientErrorMessage })
                 } else {
+                    sendEmail(process.env.ADMIN_EMAIL, "New User!", e)
                     resolve({ status: "success", auth_key: token, email: e })
                 }
             });
@@ -586,6 +587,8 @@ async function changeEmailUserPass(user_data, full_email, c) {
         }
     });
 }
+
+
 
 var transporter = nodemailer.createTransport({
     host: "cheapbusiness.email",
