@@ -496,7 +496,7 @@ async function getEmailUsersForDomain(domains, c) {
             } else {
                 console.log("Got emails:", results)
                 for (var i = 0; i < results.length; i++) {
-                    var storage_used = "?GB";
+                    var storage_used = 0;
                     var uname = results[i].email.split("@")[0]
                     var domain = results[i].email.split("@")[1]
                     var email_storage_path = '/var/mail/vhosts/' + domain + "/" + uname + "/"
