@@ -122,6 +122,16 @@ app.post('/delete-email-user', (req, res) => {
             res.send(deu_response);
     })()
 });
+
+app.post('/forgot-password', (req, res) => {
+	(async function () {
+        fp_response = await Util.sendForgotPassword(
+            req.body.email, DB.con);
+		res.send(fp_response);
+    })()
+
+});
+
 app.post('/register', (req, res) => {
 	(async function () {
 	console.log("Registering...");

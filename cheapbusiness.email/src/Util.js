@@ -208,7 +208,7 @@ return true;
 function canAddMoreEmailUsers(plan_id, num_current_users) {
     switch(plan_id) {
         case 0:
-            if(num_current_users == 5)
+            if(num_current_users == 1)
                 return false;
         break;
     }
@@ -616,7 +616,31 @@ function sendEmail(to_email, subject, message) {
       });
 }
 
+function sendHTMLEmail(template_name, template_data, to_email) {
+
+    var subject = "Cheap Business Email"
+    switch(template_name) {
+        case "forgot_password":
+            subject = "Reset Your Password"
+            break;
+    }
+}
+
+async function sendForgotPassword(email, c) {
+    return new Promise(resolve => {
+         try {
+            var reset_key = "";
+            sendHTMLEmail("forgot_password", {email: email, reset_key: reset_key}, email)
+            resolve({ status: "success"})
+         } catch(e) {
+            console.log(e)
+            resolve({ status: "failed", error: "There was an error on our end.. Please contact an admin!" })
+         }
+        });
+}
+
 module.exports = {
+    sendForgotPassword,
     sendEmail,
     changeEmailUserPass,
     deleteEmailUser,

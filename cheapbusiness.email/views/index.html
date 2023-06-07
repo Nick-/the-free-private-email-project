@@ -24,44 +24,47 @@
 
   <div id="forgot-password-screen">
     <div class="close-popup" onclick='closeForgotPassword()'><i class="fa-solid fa-circle-xmark"></i></div>
+    <h2>Forgot Password?</h2>
     <input id='forgot-password-email' type='email' name='email' placeholder='Email' autocomplete="email" /><br>
     <button onclick="sendPasswordReset()">Reset Password</button><br>
   </div>
 
   {{#ifeq user_data -1}}
   <div id="login-screen" class="centered">
+    <div class="center-holder">
     <form id='login-form'>
       <h2>Portal Login</h2>
       <input type='email' name='email' placeholder='Email' autocomplete="email"/><br>
       <input type='password' name='password' placeholder='Password' autocomplete="current-password"/><br>
       <input type='submit' /><br>
       <div class="forgot-password" onclick="showForgotPassword()">Forgot Your Password?</div>
-      
       <div class="show-register" onclick="showRegister()">Don't Have an Account? Register Now</div>
     </form>
-
     <form id='register-form'>
-      <h2>Get Your Professional Business Email for Free!</h2>
-
-      <ul style="text-align:left">
-        <li>1 Custom Domain Name</li>
-        <li>Up to 5 Users</li>
-        <li>5GB Storage</li>
-        <li><em style="color:red">Limited Time Only</em></li>
-      </ul>
+      <h2>Get Your Professional Business Email</h2>
       <input type='email' name='email' placeholder='Email' autocomplete="email" /><br>
       <input type='password' name='password' placeholder='Password' autocomplete="new-password"/><br>
       <input type='submit' value="Get Started Now" /><br>
-
       <div style="margin-top: 5px">
         <em>No credit card required</em>
       </div>
       <div class="show-login" onclick="showLogin()">Already Have an Account? Login Now</div>
-
-
     </form>
-
-
+    <div id="features">
+      <h2>Free Beta Testing</h2>
+      <ul style="text-align:left">
+        <li>Custom Domain Name</li>
+        <li>SPF, DKIM & DMARC</li>
+        <li>1GB Storage</li>
+      </ul>
+      <p>Become a part of our community</p>
+      <a href="https://discord.gg/SrQkPdExjM" target="_blank" class="discord-button-link">
+        <div class="discord-button">
+          <i class="fa-brands fa-discord"></i> Join Discord
+        </div>
+      </a>
+    </div>
+    </div>
   </div>
   {{else}}
   <div id="dvis">
@@ -92,9 +95,9 @@
     <div id="account-summary">
       <span>Account Email: <b>{{user_data.email}}</b></span><br>
       My Plan: <b>{{#ifeq user_data.plan 0}}Free{{else}}Premium{{/ifeq}}</b><br>
-      Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}5{{else}}100{{/ifeq}}GB</b><br>
+      Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}1{{else}}100{{/ifeq}}GB</b><br>
       Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}1{{else}}∞{{/ifeq}}</b><br>
-      Users: <b><span id="my_email_users_length"></span>/{{#ifeq user_data.plan 0}}5{{else}}∞{{/ifeq}}</b>
+      Users: <b><span id="my_email_users_length"></span>/{{#ifeq user_data.plan 0}}1{{else}}∞{{/ifeq}}</b>
     </div>
     <div id="portal-content">
       <!--<div class="client-settings">

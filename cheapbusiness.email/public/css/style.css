@@ -58,7 +58,10 @@ text-decoration: underline;
     color: white;
     text-align: center;
     padding: 20px;
-    border-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    float:right;
+    height: 100%;
 }
 
 #login-form h2, #register-form h2 {
@@ -280,11 +283,74 @@ header h1 img {
     border: 1px solid white;
     cursor: pointer;
 }
-@media only screen and (max-width: 640px) {
+#features {
+    float:left;
+    background:white;
+    height: 100%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+.discord-button {
+    height: 50px;
+    line-height: 50px;
+    border-radius: 5px;
+    text-align: center;
+    background: #a981d6;
+}
+.discord-button-link {
+    color: white;
+    text-decoration: none;
+}
+.center-holder {
+    position: relative;
+    height: 300px;
+}
+#features ul {
+    margin: auto;
+    width: fit-content;
+}
+#forgot-password-screen {
+ border:1px solid aqua;
+}
+#forgot-password-screen input,
+#forgot-password-screen button {
+    background: none;
+    color: white;
+    padding: 10px;
+    border:1px solid white;
+    border-radius: 5px;
+ 
+}
+#forgot-password-screen button {
+margin-top: 10px;
+}
+
+@media only screen and (max-width: 750px) {
     #account-summary {
         right: 0;
         text-align: center;
     }
-    header h1 {
+    #login-screen {
+        display: block;
+    }
+    #login-form, #register-form {
+        margin-bottom: 0px;
+        margin-top: 50px;
+        margin-bottom: 0px;
+        border-radius: 0px;
+        width: calc(100% - 40px);
+    }
+    #features {
+        border-radius: 0px;
+        width: calc(100% - 40px);
+        height:100vh;
+    }
+    #features h2 {
+        margin-top: 0;
+    }
+    footer {
+        color: black;
     }
 }

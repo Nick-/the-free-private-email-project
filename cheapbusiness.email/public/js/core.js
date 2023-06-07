@@ -246,7 +246,24 @@ function closeForgotPassword() {
 }
 
 function sendPasswordReset() {
+    var fp_email = document.getElementById("forgot-password-email").value;
+    var formData = {
+        email:fp_email
+    };
 
+    $.ajax({
+        type: "POST",
+        url: "/forgot-password",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Password Reset Sent!")
+        } else {
+            alert(data.error)
+        }
+    });
 }
 
 function showDomainPanel(id) {
