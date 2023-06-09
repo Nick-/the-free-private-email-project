@@ -1,0 +1,22 @@
+<div id="membership-plans">
+    <div class="close-popup" onclick="closeMembershipPlans()"><i class="fa-solid fa-circle-xmark"></i></div>
+<h2 style="text-align: center;">Upgrade to Premium</h2>
+<div>
+    <ul>
+        <li>Unlimited Users</li>
+        <li>Unlimited Domains</li>
+        <li>100GB Total Storage</li>
+    </ul>
+    <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1NHC5QJP8d9HeiR6SqjBoIsc"
+  customer-email="{{user_data.email}}"
+  client-reference-id="{{user_data.uid}}"
+  publishable-key="pk_live_51N70IkJP8d9HeiR6MM7gPkYtRifCeW13YAei4wrNlFhxTzGBx2il21XEdc1TIcGMZZgtn8d79D8PCJr44JUpaDl700l3jCiRSY"
+>
+</stripe-buy-button>
+</div>
+</div>

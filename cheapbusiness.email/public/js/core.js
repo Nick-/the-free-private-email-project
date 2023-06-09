@@ -238,6 +238,16 @@ function gotoDomainList() {
 
 }
 
+
+
+function showMembershipPlans() {
+    document.getElementById("membership-plans").style.display = "block"
+}
+
+function closeMembershipPlans() {
+    document.getElementById("membership-plans").style.display = "none"
+}
+
 function showForgotPassword() {
     document.getElementById("forgot-password-screen").style.display = "block";
 }

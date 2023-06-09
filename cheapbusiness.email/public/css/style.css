@@ -14,6 +14,22 @@ body {
     align-items: center;
     justify-content: center;
 }
+#membership-plans {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: white;
+    z-index: 2;
+    padding: 10px;
+    border: 1px solid black;
+    display: none;
+}
+.upgrade-span {
+    text-decoration: underline;
+    text-decoration-color: lime;
+    cursor: pointer;
+}
 #portal {
     position: fixed;
     background: url('/img/portal-bg.jpg');

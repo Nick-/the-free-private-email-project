@@ -49,7 +49,10 @@ app.get('/', (req, res) => {
     })()
 });
 
-
+//https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
+app.post('/stripe-webhooks', (req, res) => {
+//TODO: Upgrade user based on the passed client ID
+});
 
 app.post('/add-email-domain', (req, res) => {
     (async function () {
