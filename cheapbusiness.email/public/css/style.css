@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#login-screen {
+#login-screen, #pr-screen {
     position: fixed;
     background: url('/img/landing-bg.jpg');
     background-size: cover;

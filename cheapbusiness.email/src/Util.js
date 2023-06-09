@@ -9,6 +9,7 @@ var nodemailer = require('nodemailer');
 const ejs = require("ejs")
 const fastFolderSizeSync = require('fast-folder-size/sync');
 const { send } = require('process');
+const path = require("path");
 moment().tz("America/New_York").format();
 
 function isStrJSON(str) {
@@ -626,7 +627,7 @@ function sendHTMLEmail(template_name, template_data, to_email) {
             break;
     }
 
-    ejs.renderFile(path.join(__dirname, "views/emails/" + template_name + ".ejs"), template_data)
+    ejs.renderFile(path.join(__dirname, "../views/email/" + template_name + ".html"), template_data)
         .then(result => {
 
             var mailOptions = {
@@ -662,7 +663,7 @@ async function generateForgotPasswordKey(email, con) {
 
 async function userExists(email, con) {
     return new Promise(resolve => {
-        var q = "SELECT FROM users WHERE email = ?"
+        var q = "SELECT * FROM users WHERE email = ?"
         con.query(q, [email], (error, results) => {
            if(error) {
                 resolve(false)
@@ -678,7 +679,7 @@ async function userExists(email, con) {
 }
 
 async function sendForgotPassword(email, c) {
-
+    console.log("Reseting user password for " + email)
     var user_exists = await userExists(email, c);
 
     if(!user_exists) {

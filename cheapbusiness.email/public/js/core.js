@@ -260,6 +260,7 @@ function sendPasswordReset() {
     }).done(function (data) {
         if(data.status == "success") {
             alert("Password Reset Sent!")
+            closeForgotPassword()
         } else {
             alert(data.error)
         }
