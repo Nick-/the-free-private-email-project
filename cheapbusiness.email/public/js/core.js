@@ -259,7 +259,7 @@ function sendPasswordReset() {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
-            alert("Password Reset Sent!")
+            alert("A password reset has been sent to that email if it exists.")
             closeForgotPassword()
         } else {
             alert(data.error)
