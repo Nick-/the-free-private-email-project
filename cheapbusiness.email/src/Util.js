@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const bcrypt = require("bcrypt")
 const moment = require('moment-timezone');
 var nodemailer = require('nodemailer');
+const ejs = require("ejs")
 const fastFolderSizeSync = require('fast-folder-size/sync');
 const { send } = require('process');
 moment().tz("America/New_York").format();
@@ -624,13 +625,49 @@ function sendHTMLEmail(template_name, template_data, to_email) {
             subject = "Reset Your Password"
             break;
     }
+
+    ejs.renderFile(path.join(__dirname, "views/emails/" + template_name + ".ejs"), template_data)
+        .then(result => {
+
+            var mailOptions = {
+                from: '"Cheap Business Email 💸" <' + process.env.NOREPLY_EMAIL + '>',
+                to: to_email,
+                subject: subject,
+                html: result
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        })
+
+
+}
+
+function generateForgotPasswordKey(email, con) {
+    return new Promise(resolve => {
+        var token = crypto.randomBytes(64).toString('hex');
+        var exp = moment(new Date().addDays(1)).format('YYYY-MM-DD HH:mm:ss');
+        var q = "UPDATE users SET forgot_password_key = '" + token + "', forgot_password_expiration = '" + exp + "' WHERE email = '" + email + "'";
+        con.query(q, (error, result) => {
+            if (error) throw error;
+            resolve(token);
+        });
+    });
 }
 
 async function sendForgotPassword(email, c) {
+
+    var reset_key = await generateForgotPasswordKey(email, c);
+
     return new Promise(resolve => {
          try {
-            var reset_key = "";
-            sendHTMLEmail("forgot_password", {email: email, reset_key: reset_key}, email)
+            
+            sendHTMLEmail("forgot_password", {email: email, pk: reset_key}, email)
             resolve({ status: "success"})
          } catch(e) {
             console.log(e)
@@ -639,7 +676,27 @@ async function sendForgotPassword(email, c) {
         });
 }
 
+async function submitResetPassword(email, fpk, password, con) {
+    return new Promise(resolve => {
+    bcrypt.hash(password, 11, function (err, hash) {
+        if(err) {
+            resolve({ status: "failed", error: "There was an error creating your new password.." })
+        } else {
+        var q = "UPDATE users SET password = ?, forgot_password_key = '' WHERE email = ? AND forgot_password_key = ? AND forgot_password_expiration >= CURDATE()";
+        con.query(q, [hash, email, fpk], (error, email_results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "There was an error resetting your password.." })
+            } else {
+                resolve({ status: "success"})
+            }
+        });
+    }
+    });
+});
+}
 module.exports = {
+    submitResetPassword,
     sendForgotPassword,
     sendEmail,
     changeEmailUserPass,

@@ -49,6 +49,8 @@ app.get('/', (req, res) => {
     })()
 });
 
+
+
 app.post('/add-email-domain', (req, res) => {
     (async function () {
 
@@ -130,6 +132,31 @@ app.post('/forgot-password', (req, res) => {
 		res.send(fp_response);
     })()
 
+});
+
+app.get('/reset-password', (req, res) => {
+    (async function () {
+        var email = req.query.email;
+        var pk = req.query.pk;
+
+        res.render('reset-password', {
+            email: email,
+            pk: pk,
+            user_data: -1
+        });
+    })()
+});
+
+app.post('/create-new-password', (req, res) => {
+    (async function () {
+    const email = req.body.email;
+    const fpk = req.body.pk;
+    const password = req.body.password;
+
+    rp_response = await Util.submitResetPassword(
+        email, fpk, password, DB.con);
+    res.send(rp_response);
+    })()
 });
 
 app.post('/register', (req, res) => {

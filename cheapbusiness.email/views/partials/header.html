@@ -1,0 +1,23 @@
+<html>
+
+<head>
+  <meta name="description" content="">
+  <meta name="keywords" content="free email,custom domain email">
+  <meta name="author" content="Nicholas Conrad">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Professional Business Email</title>
+  <link rel="icon" type="image/x-icon" href='/img/favicon.ico'>
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <script src="https://kit.fontawesome.com/9069ce9b70.js" crossorigin="anonymous"></script></head>
+
+<body>
+  <header>
+    <h1>
+      <img src="/img/favicon.ico" />
+      <em>Cheap</em> Business Email
+    </h1>
+    {{#ifeq user_data -1}}
+    {{else}}
+    <div class="logout-txt" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div> {{/ifeq}}
+  </header>
