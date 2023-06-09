@@ -682,9 +682,9 @@ async function sendForgotPassword(email, c) {
     var user_exists = await userExists(email, c);
 
     if(!user_exists) {
-        return { status: "success"};
+        return { status: "failed", error: "That user doesn't exist" };
     }
-    
+
     var reset_key = await generateForgotPasswordKey(email, c);
 
     return new Promise(resolve => {
