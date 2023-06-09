@@ -648,7 +648,7 @@ function sendHTMLEmail(template_name, template_data, to_email) {
 
 }
 
-function generateForgotPasswordKey(email, con) {
+async function generateForgotPasswordKey(email, con) {
     return new Promise(resolve => {
         var token = crypto.randomBytes(64).toString('hex');
         var exp = moment(new Date().addDays(1)).format('YYYY-MM-DD HH:mm:ss');
@@ -660,8 +660,31 @@ function generateForgotPasswordKey(email, con) {
     });
 }
 
+async function userExists(email, con) {
+    return new Promise(resolve => {
+        var q = "SELECT FROM users WHERE email = ?"
+        con.query(q, [email], (error, results) => {
+           if(error) {
+                resolve(false)
+           } else {
+            if(results.length == 0) {
+                resolve(false)
+            } else {
+                resolve(true)
+            }
+           }
+        });
+    })
+}
+
 async function sendForgotPassword(email, c) {
 
+    var user_exists = await userExists(email, c);
+
+    if(!user_exists) {
+        return { status: "success"};
+    }
+    
     var reset_key = await generateForgotPasswordKey(email, c);
 
     return new Promise(resolve => {
