@@ -228,7 +228,7 @@ async function addEmailDomain(user_data, domain, c) {
             resolve({ status: "failed", error: "Maximum Domains Reached" })
         } else {
 
-            var token = crypto.randomBytes(64).toString('hex');
+            var token = "cbev=" + crypto.randomBytes(64).toString('hex');
 
             var q = "INSERT INTO virtual_domains(name, owner_uid, dns_txt_code) VALUES(?, ?, ?)";
             c.query(q, [domain, user_data.uid, token], (error, result) => {
