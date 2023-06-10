@@ -9,7 +9,18 @@
   <title>Professional Business Email</title>
   <link rel="icon" type="image/x-icon" href='/img/favicon.ico'>
   <meta name="referrer" content="no-referrer-when-downgrade" />
-  <script src="https://kit.fontawesome.com/9069ce9b70.js" crossorigin="anonymous"></script></head>
+  <script src="https://kit.fontawesome.com/9069ce9b70.js" crossorigin="anonymous"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTKF30BDLT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-LTKF30BDLT');
+  </script>
+</head>
 
 <body>
   <header>
@@ -19,5 +30,6 @@
     </h1>
     {{#ifeq user_data -1}}
     {{else}}
-    <div class="logout-txt" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div> {{/ifeq}}
+    <div class="logout-txt" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
+    {{/ifeq}}
   </header>
