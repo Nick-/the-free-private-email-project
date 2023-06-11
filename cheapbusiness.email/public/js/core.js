@@ -32,6 +32,14 @@ for(var i = 0; i < copyDivs.length; i++) {
     }
 }
 
+var copyButtons = document.getElementsByClassName("copy-button");
+
+for(var i = 0; i < copyButtons.length; i++) {
+    copyButtons[i].onclick = function(e) {
+        navigator.clipboard.writeText(document.getElementById(e.target.dataset.id).innerHTML);
+    }
+}
+
 var registerForm = document.getElementById("register-form");
 if(registerForm) {
 registerForm.addEventListener("submit", function (e) {
@@ -186,7 +194,7 @@ window.location.reload();
 }
 
 function validateDomain() {
-    var domain = document.getElementById("verify-domain-name").textContent.split(" ")[1];
+    var domain = document.getElementById("verify-domain-name-span").innerHTML;
     var formData = {
         domain: domain
     };
@@ -216,7 +224,7 @@ var my_domains = document.getElementsByClassName("my_domain");
 
 function showDomainVerificationInstructions(domain,txt_key) {
     document.getElementById("dns-txt-key").innerHTML = txt_key;
-    document.getElementById("verify-domain-name").innerHTML = "For <span style='color:gold'>" + domain + "</span>";
+    document.getElementById("verify-domain-name").innerHTML = "Update DNS for <span style='color:gold' id='verify-domain-name-span'>" + domain + "</span>";
 document.getElementById("delete-unverified-domain").onclick = function() { 
 	deleteDomain(domain);
 }

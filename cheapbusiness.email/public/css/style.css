@@ -44,11 +44,26 @@ body {
 }
 
 .copy-div {
+    color: #333;
+    background: lightyellow;
+    overflow: hidden;
+    margin: auto;
+    padding: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-block;
+    width: 250px;
+}
+.copy-button {
     background: #333;
-    margin:auto;
-    padding:5px;
-    cursor:pointer;
-    width:fit-content;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    vertical-align: top;
+    display: inline-block;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 .delete-domain {
 color: red;
@@ -163,7 +178,7 @@ footer {
     cursor:pointer;
     color:red;
 }
-#dvis, #tos, #pp, #forgot-password-screen {
+#tos, #pp, #forgot-password-screen {
     display: none;
     background: black;
     position: absolute;
@@ -183,34 +198,39 @@ footer {
     overflow-y: auto;
 }
 .check-domain-validate {
-    border:1px solid lime;
-    background: none;
+    background: #333;
     color:white;
     cursor:pointer;
     padding:10px;
     border-radius: 5px;
+    border: none;
+    text-transform: uppercase;
 }
 .close-domain-validate {
-    border: 1px solid yellow;
     background:none;
-    color:white;
+    color: #333;
     cursor:pointer;
     padding:10px;
     border-radius: 5px;
+    margin-left: 10px;
+    border: none;
+    text-transform: uppercase;
 }
 #delete-unverified-domain {
-    color:red;
-    border:1px solid white;
+    color: gray;
     border-radius: 5px;
+    background: white;
     width: fit-content;
     padding:10px;
-    margin:auto;
-    margin-top: 10px;
     cursor:pointer;
+    border: none;
+    text-transform: uppercase;
 }
-#dvis h2 {
-    margin-bottom: 0;
+.dvis-action-bar {
+    padding: 10px;
+    border-top: 1px solid lightgrey;
 }
+
 header {
     position: fixed;
     top:0;
@@ -324,6 +344,34 @@ header h1 img {
     border-bottom-left-radius: 15px;
     padding: 20px;
     text-align: center;
+}
+.dvis-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+}
+#dvis {
+    display: none;
+    position: absolute;
+    word-break: break-all;
+    text-align: center;
+    width: calc(100% - 20px);
+    z-index: 2;
+    background: white;
+    max-width: 400px;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    border-radius: 10px;
+    max-height: 90%;
+    overflow-y: auto;
+}
+#dvis h2 {
+    margin: 0;
+}
+.dvis-content {
+    padding: 10px;
 }
 .discord-button {
     height: 50px;
