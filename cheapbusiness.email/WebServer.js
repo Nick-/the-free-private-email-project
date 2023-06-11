@@ -98,7 +98,7 @@ app.post('/add-email-user', (req, res) => {
 
 
             aeu_response = await Util.addEmailUser(
-                user_data, req.body.full_email, DB.con);
+                user_data, req.body.full_email, req.body.mailbox_size_gb, DB.con);
             res.send(aeu_response);
     })()
 

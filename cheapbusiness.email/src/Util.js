@@ -369,7 +369,7 @@ function checkIfEmail(str) {
     return regexExp.test(str);
   }
 
-async function addEmailUser(user_data, full_email, c) {
+async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
 
     var numUsersForDomain = await getEmailUsersLengthForDomainName([full_email.split("@")[1]], c);
 
@@ -377,6 +377,11 @@ async function addEmailUser(user_data, full_email, c) {
         if (full_email == "" || full_email === undefined) {
             resolve({ status: "failed", error: "Empty Data" })
             return
+        }
+
+        if(mailbox_size_gb - user_data.mailbox_gb_allocated < 0) {
+            resolve({ status: "failed", error: "Not enough storage, please upgrade!" })
+            return 
         }
 
         if(!checkIfEmail(full_email)) {
@@ -415,8 +420,8 @@ async function addEmailUser(user_data, full_email, c) {
                             resolve({ status: "failed", error: "Error authenticating domain info in DB" })
                         } else {
                         console.log("Got email id " + results[0].id + " and hash " + hashedPass + " for email " + full_email)
-                        var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email) VALUES (?, ?, ?)"
-                        c.query(ceuq, [results[0].id, hashedPass, full_email], (error, results) => {
+                        var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email, mailbox_size_gb) VALUES (?, ?, ?, ?)"
+                        c.query(ceuq, [results[0].id, hashedPass, full_email, mailbox_size_gb], (error, results) => {
                             if (error) {
                                 console.log(error)
                                 var clientErrorMessage = "Error creating mail user!"
@@ -425,7 +430,16 @@ async function addEmailUser(user_data, full_email, c) {
                                 }
                                 resolve({ status: "failed", error: clientErrorMessage })
                             } else {
-                                resolve({ status: "success", temp_pass: password })
+                                var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
+                                var gb_remaining = user_data.mailbox_gb_allocated - mailbox_size_gb;
+                                c.query(ualuq, [gb_remaining, user_data.uid], (error, results) => {
+                                    if(error) {
+                                        resolve({ status: "failed", error: "Error updating user mailbox GB allocation." })
+                                    } else {
+                                        resolve({ status: "success", temp_pass: password })
+                                    }
+                                
+                                })
                             }
                         });
                     }
@@ -490,7 +504,7 @@ async function getEmailUsersForDomain(domains, c) {
         }
         my_domain_ids = my_domain_ids.substring(0, my_domain_ids.length - 1)
 
-        var q = "SELECT email, domain_id, created_at from virtual_users WHERE domain_id IN (" + my_domain_ids + ")";
+        var q = "SELECT email, domain_id, created_at, mailbox_size_gb from virtual_users WHERE domain_id IN (" + my_domain_ids + ")";
 
         c.query(q, [], (error, results) => {
             if (error) {
@@ -519,6 +533,8 @@ async function getEmailUsersForDomain(domains, c) {
     });
 }
 
+//TODO: Delete users, mv their mail to trash
+        // Update Allocation for user
 async function removeEmailDomain(user_data, domain, c) {
     return new Promise(resolve => {
         if (user_data == -1) {
@@ -553,6 +569,7 @@ async function getEmailDomainOwnerUID(full_email, c) {
     });
 }
 
+//TODO: Move email to trash, update user gb allocation
 async function deleteEmailUser(user_data, full_email, c) {
 console.log("Deleting email user " + full_email)
     owner_uid = await getEmailDomainOwnerUID(full_email, c)

@@ -151,8 +151,7 @@ text-decoration: underline;
  right: 10px;
  font-weight:900;
 }
-#add-email-user {
-}
+
 #bottom-button {
 margin-bottom:10px;
 }
@@ -316,30 +315,27 @@ header h1 img {
     border: 1px solid white;
     margin-top: 10px;
 }
-.add-email-user-input {
+#add-email-user-input {
 	display: inline;
     background:none;
-    color:white;
     height: 50px;
     padding:10px;
-    border: 1px solid white;
+    border: 1px solid #333;
 }
-.add-email-user-password {
-	padding:10px;
-	display: inline-block;
-    background:none;
-    color:white;
+#add-email-user-mailbox-size {
     height: 50px;
-    border: 1px solid white;
+}
+#add-email-user {
+    padding-bottom: 20px;
 }
 .add-email-user-submit {
 	display: inline-block;
-    background:none;
+    background:#333;
     color:white;
     height: 50px;
     margin-top:10px;
     border-radius: 5px;
-    border: 1px solid white;
+    border: none;
     cursor: pointer;
 }
 #features {
@@ -356,7 +352,7 @@ header h1 img {
     color: white;
     padding: 10px;
 }
-#dvis {
+#add-email-user, #email-user-created-instructions, #dvis {
     display: none;
     position: absolute;
     word-break: break-all;

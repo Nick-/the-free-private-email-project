@@ -308,24 +308,80 @@ function showDomainPanel(id) {
 
 }
 
-function addEmailUser(domain_id) {
+var addEmailUserScreen = document.getElementById("add-email-user")
+var addEmailUserInput = document.getElementById("add-email-user-input")
+var addEmailUserMBSize = document.getElementById("add-email-user-mailbox-size")
+var addEmailUserDomain = ""
+
+function showAddEmailUser(domain_name) {
+addEmailUserDomain = domain_name;
+addEmailUserInput.placeholder = "user@" + domain_name;
+//Set Mailbox Options based on gb remaining
+
+var gb_allowed = 1; //free users
+
+if(user_plan == "1") {
+    gb_allowed == 100
+}
+
+var gb_used = parseInt(mailbox_gb_allocated);
+var gb_remaining = gb_used - gb_allowed;
+
+if(gb_remaining <= 0) {
+    alert("Please upgrade for more storage.")
+    return;
+}
+
+addEmailUserMBSize.innerHTML = "";
+
+if(gb_remaining >= 1) {
+    var option = document.createElement("option")
+    option.value = 1;
+    option.innerHTML = "1GB"
+    addEmailUserMBSize.appendChild(option)
+}
+
+if(gb_remaining >= 5) {
+    var option = document.createElement("option")
+    option.value = 5;
+    option.innerHTML = "5GB"
+    addEmailUserMBSize.appendChild(option)
+}
+
+if(gb_remaining >= 10) {
+    var option = document.createElement("option")
+    option.value = 10;
+    option.innerHTML = "10GB"
+    addEmailUserMBSize.appendChild(option)
+}
+
+addEmailUserScreen.style.display = "block"
+}
+
+function hideAddEmailUser() {
+    addEmailUserScreen.style.display = "none"
+}
+
+function showEmailUserCreatedInstructions(tmp_pass) {
+    hideAddEmailUser();
+    alert("Success! Your Temporary Password is: " + tmp_pass)
+    document.getElementById("email-user-created-instructions").style.display = "block"
+    window.location.reload();
+}
+
+function addEmailUser() {
     var full_email = "";
-    var password = "";
 
-    var addEmailUserEmail = document.getElementsByClassName("add-email-user-input")
-
-    for(var i = 0; i < addEmailUserEmail.length; i++) {
-        if(addEmailUserEmail[i].dataset.id == domain_id) {
-            if(addEmailUserEmail[i].value.includes("@")) {
-                full_email = addEmailUserEmail[i].value.split("@")[0] + "@" + addEmailUserEmail[i].dataset.domain
-            } else {
-                full_email = addEmailUserEmail[i].value + "@" + addEmailUserEmail[i].dataset.domain    
-            }
-        }
+    if(addEmailUserInput.value.includes("@")) {
+        full_email = addEmailUserInput.value.split("@")[0] + "@" + addEmailUserDomain;
+    } else {
+        full_email = addEmailUserInput.value + "@" + addEmailUserDomain; 
     }
 
+
     var formData = {
-        full_email: full_email
+        full_email: full_email,
+        mailbox_size_gb: addEmailUserMBSize.value
     };
 
     $.ajax({
@@ -336,9 +392,7 @@ function addEmailUser(domain_id) {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
-            alert("Success! Your Temporary Password is: " + data.temp_pass)
-            window.location.reload();
-            //Modify UI without reload
+            showEmailUserCreatedInstructions(data.temp_pass)
         } else {
             alert(data.error)
         }

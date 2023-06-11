@@ -48,11 +48,24 @@
   {{> dvis }}
   {{> mplans }}
 
+  <div id="add-email-user">
+    <div class="close-popup" onclick='hideAddEmailUser()'><i class="fa-solid fa-circle-xmark"></i></div>
+    <h2>Create Email User</h2>
+    <p>A temporary password will be randomly generated.</p>
+    <input id="add-email-user-input" />
+    <select id="add-email-user-mailbox-size"></select>
+    <button class='add-email-user-submit' onclick="addEmailUser({{ id }})">Add Email User</button>
+  </div>
+  <div id="email-user-created-instructions">
+    <h2>Email Login Instructions</h2>
+  </div>
+
   <div id="portal">
     <div id="account-summary">
       <span>Account Email: <b>{{user_data.email}}</b></span><br>
       My Plan: <b>{{#ifeq user_data.plan 0}}Free <span class="upgrade-span" onclick="showMembershipPlans()">(Upgrade)</span>{{else}}Premium{{/ifeq}}</b><br>
-      Storage: <b><span id='total-email-user-storage'></span>/{{#ifeq user_data.plan 0}}1{{else}}100{{/ifeq}}GB</b><br>
+      Storage Used: <b><span id='total-email-user-storage-used'></span>/{{#ifeq user_data.plan 0}}1{{else}}100{{/ifeq}}GB</b><br>
+      Storage Allocated: <b><span id='total-email-user-storage-allocated'>{{ user_data.mailbox_gb_allocated }}GB</span>/{{#ifeq user_data.plan 0}}1{{else}}100{{/ifeq}}GB</b><br>
       Domains: <b>{{my_domains.length}}/{{#ifeq user_data.plan 0}}1{{else}}∞{{/ifeq}}</b><br>
       Users: <b><span id="my_email_users_length"></span>/{{#ifeq user_data.plan 0}}1{{else}}∞{{/ifeq}}</b>
     </div>
@@ -93,10 +106,7 @@
 
           <div class="domain_panel" data-id="{{id}}">
 
-            <div id="add-email-user">
-              <input class="add-email-user-input" data-id="{{id}}" data-domain="{{name}}" placeholder="user@{{name}}" />
-              <button class='add-email-user-submit' onclick="addEmailUser({{ id }})">Add Email User</button>
-            </div>
+            <button class='show-add-email-user' onclick="showAddEmailUser('{{ name }}')">Add Email User</button>
 
             <div id="my_domain_email_users">
 
@@ -166,7 +176,7 @@
     document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
     console.log("Loading email users:", my_email_users)
     }
-    var total_email_user_storage = 0;
+    var total_email_user_storage_used = 0;
 
     for (var d = 0; d < my_domain_panels.length; d++) {
       for (var i = 0; i < my_email_users.length; i++) {
@@ -187,8 +197,8 @@
 
           var emailUserStorageDiv = document.createElement("div")
           emailUserStorageDiv.classList.add("email-user-storage")
-          emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_users[i].storage_used);
-          total_email_user_storage = total_email_user_storage + my_email_users[i].storage_used
+          emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_users[i].storage_used) + "/" + my_email_users[i].mailbox_size_gb +"GB";
+          total_email_user_storage_used = total_email_user_storage_used + my_email_users[i].storage_used
           emailUserDiv.appendChild(emailUserStorageDiv);
 
           var emailUserChangePassDiv = document.createElement("div")
@@ -212,11 +222,13 @@
         }
       }
     }
-    console.log("TESU:", total_email_user_storage)
-    var teus = document.getElementById("total-email-user-storage");
+    
+    var teus = document.getElementById("total-email-user-storage-used");
     if(teus != null)
-      teus.innerHTML = formatBytes(total_email_user_storage);
+      teus.innerHTML = formatBytes(total_email_user_storage_used);
 
+    var mailbox_gb_allocated = "{{ user_data.mailbox_gb_allocated }}";
+    var user_plan = "{{ user_data.plan }}";
   </script>
   <script src='/js/core.js'></script>
 </body>
