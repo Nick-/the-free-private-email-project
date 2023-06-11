@@ -117,15 +117,18 @@
   {{/ifeq}}
 
   <div id="tos">
+    <div class="popup-header">
     <div class="close-popup" onclick='closeTOS()'><i class="fa-solid fa-circle-xmark"></i></div>
     <h2>Terms of Service</h2>
+    </div>
     {{> tos }}
   </div>
   <div id="pp">
-
+    <div class="popup-header">
   <div class="close-popup" onclick="closePP()"><i class="fa-solid fa-circle-xmark"></i></div>
     <h2>Privacy Policy</h2>
-
+  </div>
+    {{> pp }}
   </div>
 
   {{> footer }}

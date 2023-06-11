@@ -180,11 +180,8 @@ footer {
 }
 #tos, #pp, #forgot-password-screen {
     display: none;
-    background: black;
+    background: white;
     position: absolute;
-    color: white;
-    word-break: break-all;
-    text-align: center;
     width: calc(100% - 20px);
     padding: 10px;
     z-index: 2;
@@ -196,6 +193,15 @@ footer {
     border-radius: 10px;
     max-height: 90%;
     overflow-y: auto;
+}
+#forgot-password-screen {
+    text-align: center;
+    background: black;
+    color: white;
+}
+.popup-header {
+    text-align: center;
+    
 }
 .check-domain-validate {
     background: #333;
