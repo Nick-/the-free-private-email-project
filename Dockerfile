@@ -13,14 +13,15 @@ RUN apt-get -y install postfix-mysql
 RUN apt-get -y install mysql-server
 RUN apt-get -y install opendkim opendkim-tools
 RUN apt-get -y install nodejs
-#RUN apt-get -y install ssmtp
+RUN apt-get -y install msmtp msmtp-mta mailutils
+
 RUN apt-get -y install vim
 
 COPY postfix_config/ /etc/postfix/
 COPY dovecot_config/ /etc/dovecot/
 COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
-#COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
+COPY msmtprc /etc/msmtprc
 
 COPY opendkim /etc/default/opendkim
 COPY opendkim.conf /etc/opendkim.conf
