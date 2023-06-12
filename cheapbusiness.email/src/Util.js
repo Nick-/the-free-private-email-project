@@ -386,8 +386,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
         }
 
         var mailbox_gb_remaining = mailbox_gb_allowed - user_data.mailbox_gb_allocated;
-        console.log("Subtracting " + mailbox_size_gb + " from remaining storage: " + mailbox_gb_remaining)
-        if(mailbox_size_gb - mailbox_gb_remaining < 0) {
+        if(mailbox_gb_remaining - mailbox_size_gb < 0) {
             resolve({ status: "failed", error: "Not enough storage, please upgrade!" })
             return 
         }
