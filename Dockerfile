@@ -7,24 +7,19 @@ RUN apt-get -y install dovecot-pop3d
 RUN apt-get -y install dovecot-imapd
 RUN apt-get -y install dovecot-lmtpd
 RUN apt-get -y install dovecot-mysql
-
 RUN apt-get -y install postfix
 RUN apt-get -y install postfix-mysql
-
 RUN apt-get -y install mysql-server
-
 RUN apt-get -y install opendkim opendkim-tools
-
 RUN apt-get -y install nodejs
 RUN apt-get -y install ssmtp
-
 RUN apt-get -y install vim
-
-COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 COPY postfix_config/ /etc/postfix/
 COPY dovecot_config/ /etc/dovecot/
 COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
+
+COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 COPY opendkim /etc/default/opendkim
 COPY opendkim.conf /etc/opendkim.conf
