@@ -107,7 +107,10 @@ default_pass_scheme = SHA512-CRYPT
 #   password_query = SELECT userid AS user, pw AS password \
 #     FROM users WHERE userid = '%u' AND active = 'Y'
 #
+
 password_query = SELECT email as user, password, CONCAT('*:storage=',mailbox_size_gb,'G') as userdb_quota_rule FROM virtual_users WHERE email='%u';
+
+
 #  SELECT username, domain, password \
 #  FROM users WHERE username = '%n' AND domain = '%d'
 
@@ -141,4 +144,4 @@ password_query = SELECT email as user, password, CONCAT('*:storage=',mailbox_siz
 #  FROM users WHERE userid = '%u'
 
 # Query to get a list of all usernames.
-#iterate_query = SELECT username AS user FROM users
+iterate_query = SELECT email AS user FROM virtual_users
