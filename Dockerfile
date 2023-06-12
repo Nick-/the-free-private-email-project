@@ -18,7 +18,7 @@ RUN apt-get -y install mysql-server
 RUN apt-get -y install opendkim opendkim-tools
 
 RUN apt-get -y install nodejs
-RUN apt-get -y install git
+RUN apt-get -y install mailutils
 
 COPY postfix_config/ /etc/postfix/
 COPY dovecot_config/ /etc/dovecot/
