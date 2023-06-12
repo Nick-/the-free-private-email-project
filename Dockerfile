@@ -2,7 +2,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get update
-
+RUN apt-get upgrade
 RUN apt-get -y install dovecot-core
 RUN apt-get -y install dovecot-pop3d
 RUN apt-get -y install dovecot-imapd
