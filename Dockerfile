@@ -33,7 +33,7 @@ COPY dkim.key /etc/postfix/dkim.key
 RUN chmod 660 /etc/postfix/dkim.key
 RUN chown root:opendkim /etc/postfix/dkim.key
 
-RUN postconf -n
+#RUN postconf -n
 
 COPY s.sh /s.sh
 #ENTRYPOINT ["bash", "start-mailserver.sh" ]
