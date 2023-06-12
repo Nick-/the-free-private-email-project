@@ -107,7 +107,7 @@ default_pass_scheme = SHA512-CRYPT
 #   password_query = SELECT userid AS user, pw AS password \
 #     FROM users WHERE userid = '%u' AND active = 'Y'
 #
-password_query = SELECT email as user, password FROM virtual_users WHERE email='%u';
+password_query = SELECT email as user, password, CONCAT('*:storage=',mailbox_size_gb,'G') as userdb_quota_rule FROM virtual_users WHERE email='%u';
 #  SELECT username, domain, password \
 #  FROM users WHERE username = '%n' AND domain = '%d'
 
