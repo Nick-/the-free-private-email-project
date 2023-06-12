@@ -379,7 +379,15 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
             return
         }
 
-        if(mailbox_size_gb - user_data.mailbox_gb_allocated < 0) {
+        var mailbox_gb_allowed = 1; //free users get 1gb total storage
+
+        if(user_data.plan == 1) {
+            mailbox_gb_allowed = 100; //premium users are allowed 100gb
+        }
+
+        var mailbox_gb_remaining = mailbox_gb_allowed - user_data.mailbox_gb_allocated;
+
+        if(mailbox_size_gb - mailbox_gb_remaining < 0) {
             resolve({ status: "failed", error: "Not enough storage, please upgrade!" })
             return 
         }
