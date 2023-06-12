@@ -2,8 +2,6 @@
 FROM ubuntu:22.04
 RUN apt-get update
 
-RUN apt-get -y install vim
-
 RUN apt-get -y install dovecot-core
 RUN apt-get -y install dovecot-pop3d
 RUN apt-get -y install dovecot-imapd
@@ -20,6 +18,8 @@ RUN apt-get -y install opendkim opendkim-tools
 RUN apt-get -y install nodejs
 RUN apt-get -y install ssmtp
 
+RUN apt-get -y install vim
+
 COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 COPY postfix_config/ /etc/postfix/
@@ -33,7 +33,7 @@ COPY dkim.key /etc/postfix/dkim.key
 RUN chmod 660 /etc/postfix/dkim.key
 RUN chown root:opendkim /etc/postfix/dkim.key
 
-#RUN postconf -n
+RUN postconf -n
 
 COPY s.sh /s.sh
 #ENTRYPOINT ["bash", "start-mailserver.sh" ]
