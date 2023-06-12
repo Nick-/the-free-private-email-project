@@ -13,7 +13,9 @@ RUN apt-get -y install postfix-mysql
 RUN apt-get -y install mysql-server
 RUN apt-get -y install opendkim opendkim-tools
 RUN apt-get -y install nodejs
-RUN apt-get -y install msmtp msmtp-mta mailutils
+RUN apt-get -y install msmtp
+RUN apt-get -y install msmtp-mta
+RUN apt-get -y install mailutils
 
 RUN apt-get -y install vim
 
