@@ -2,7 +2,11 @@
 PERCENT=$1
 USER=$2
 SUBJECT="Test Subject"
-TO="webmaster@cheapbusiness.email"
-MESSAGE="Hey There! This is a test mail"
+MESSAGE="
+From: Cheap Business Email <noreply@cheapbusiness.email>
+Subject: Your mailbox is almost full!
 
-echo $MESSAGE | sudo ssmtp -vvv $TO
+Your Mailbox is currently $PERCENT % Full!
+"
+
+echo $MESSAGE | msmtp -d $USER
