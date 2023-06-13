@@ -390,6 +390,9 @@ function showEmailUserCreatedInstructions(tmp_pass, my_email_user, gb_alloc) {
     //Update New Mailbox GB allocated
     document.getElementById("total-email-user-storage-allocated").innerHTML = gb_alloc + "GB";
 
+    //Update Users Length
+    document.getElementById("my_email_users_length").innerHTML = (parseInt(document.getElementById("my_email_users_length").textContent) + 1)
+
     //Add Email User Div
     for (var d = 0; d < my_domain_panels.length; d++) {
           if (my_email_user.domain_id == my_domain_panels[d].dataset.id) {
