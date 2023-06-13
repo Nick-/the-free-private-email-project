@@ -401,7 +401,7 @@ function showEmailUserCreatedInstructions(tmp_pass, my_email_user, gb_alloc) {
           }
       }
 
-    document.getElementById("email-created-username").innerHTML = new_email
+    document.getElementById("email-created-username").innerHTML = my_email_user.email
     document.getElementById("email-created-password").innerHTML = tmp_pass
     document.getElementById("email-user-created-instructions").style.display = "block"
 }

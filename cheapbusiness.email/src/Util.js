@@ -794,6 +794,7 @@ function timeSince(date) {
   async function sendEmailLoginInstructions() {
 
   }
+  
 module.exports = {
     sendEmailLoginInstructions,
     timeSince,
