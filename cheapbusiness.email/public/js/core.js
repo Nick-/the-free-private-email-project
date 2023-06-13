@@ -250,8 +250,6 @@ function gotoDomainList() {
 
 }
 
-
-
 function showMembershipPlans() {
     document.getElementById("membership-plans").style.display = "block"
 }
@@ -283,6 +281,30 @@ function sendPasswordReset() {
         if(data.status == "success") {
             alert("A password reset has been sent to that email if it exists.")
             closeForgotPassword()
+        } else {
+            alert(data.error)
+        }
+    });
+}
+
+function sendEmailLoginInstructions() {
+    var new_email = document.getElementById("email-created-username").textContent;
+    var to_email = document.getElementById("send-email-instructions-email").value;
+
+    var formData = {
+        new_email: new_email,
+        to_email: to_email
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/send-email-login-instructions",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Login instructions have been emailed successfully.")
         } else {
             alert(data.error)
         }
@@ -362,11 +384,26 @@ function hideAddEmailUser() {
     addEmailUserScreen.style.display = "none"
 }
 
-function showEmailUserCreatedInstructions(tmp_pass) {
+function showEmailUserCreatedInstructions(tmp_pass, my_email_user, gb_alloc) {
     hideAddEmailUser();
-    alert("Success! Your Temporary Password is: " + tmp_pass)
+
+    //Update New Mailbox GB allocated
+    document.getElementById("total-email-user-storage-allocated").innerHTML = gb_alloc + "GB";
+
+    //Add Email User Div
+    for (var d = 0; d < my_domain_panels.length; d++) {
+          if (my_email_user.domain_id == my_domain_panels[d].dataset.id) {
+              addEmailUserToPanel(my_email_user, my_domain_panels[d])
+          }
+      }
+
+    document.getElementById("email-created-username").innerHTML = new_email
+    document.getElementById("email-created-password").innerHTML = tmp_pass
     document.getElementById("email-user-created-instructions").style.display = "block"
-    window.location.reload();
+}
+
+function closeEmailLoginInstructions() {
+    document.getElementById("email-user-created-instructions").style.display = "none"
 }
 
 function addEmailUser() {
@@ -392,7 +429,7 @@ function addEmailUser() {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
-            showEmailUserCreatedInstructions(data.temp_pass)
+            showEmailUserCreatedInstructions(data.temp_pass, data.email_user, data.gb_alloc)
         } else {
             alert(data.error)
         }

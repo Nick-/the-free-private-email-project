@@ -58,6 +58,25 @@
   </div>
   <div id="email-user-created-instructions">
     <h2>Email Login Instructions</h2>
+    <p>We recommend using Outlook at your mail client, but you can use any client that supports IMAP / POP like Gmail for Mobile, Thunderbird, etc.</p>
+    <div class="client-settings">
+      IMAP: Port 993 (SSL)<br>
+      POP3: Port 995 (SSL)<br>
+      SMTP: 587 (TLS)<br>
+      Password Type: Encrypted<br>
+      Username: <span id="email-created-username"></span><br>
+      Password: <span id="email-created-password"></span>
+    </div>
+    <div>
+      <p>Email these login instructions:</p>
+      <input type="email" id="send-email-instructions-email"/>
+    </div>
+    <div class="close-created-user-instructions" onclick="closeEmailLoginInstructions()">
+      Close
+    </div>
+    <div class="send-created-user-instructions" onclick="sendEmailLoginInstructions()">
+      Send Instructions
+    </div>
   </div>
 
   <div id="portal">
@@ -70,12 +89,6 @@
       Users: <b><span id="my_email_users_length"></span>/{{#ifeq user_data.plan 0}}1{{else}}∞{{/ifeq}}</b>
     </div>
     <div id="portal-content">
-      <!--<div class="client-settings">
-            IMAP: Port 993<br>
-            POP3: Port 995<br>
-            SMTP: 587<br>
-            Password Type: Encrypted
-          </div> -->
       {{#ifeq my_domains.length 0}}
       <h2>You Have No Domains</h2>
       <div id="bottom-button" onclick="addDomain()"><i class="fa-solid fa-circle-plus"></i> Add Domain</div>
@@ -170,41 +183,33 @@
 
     var my_domain_panels = document.getElementsByClassName("domain_panel");
     var my_email_users = {{{ my_email_users }}};
-    //load email users into panels
 
-    if(my_email_users != -1) {
-    document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
-    console.log("Loading email users:", my_email_users)
-    }
-    var total_email_user_storage_used = 0;
 
-    for (var d = 0; d < my_domain_panels.length; d++) {
-      for (var i = 0; i < my_email_users.length; i++) {
-        if (my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
-          var emailUserDiv = document.createElement("div")
+    function addEmailUserToPanel(my_email_user, my_domain_panel) {
+      var emailUserDiv = document.createElement("div")
           emailUserDiv.classList.add("email-user")
           var emailUserNameDiv = document.createElement("div")
           emailUserNameDiv.classList.add("email-user-full-email")
-          emailUserNameDiv.innerHTML = my_email_users[i].email
+          emailUserNameDiv.innerHTML = my_email_user.email
           emailUserDiv.appendChild(emailUserNameDiv);
 
           var emailUserCreatedAtDiv = document.createElement("div")
           emailUserCreatedAtDiv.classList.add("email-user-created-at")
-          var c_date = new Date(my_email_users[i].created_at + ' UTC');
+          var c_date = new Date(my_email_user.created_at + ' UTC');
           var f_date = c_date.toDateString().substring(4) + " " + c_date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
           emailUserCreatedAtDiv.innerHTML = "Created: <span style='color:gold'>" + f_date + "</span>";
           emailUserDiv.appendChild(emailUserCreatedAtDiv);
 
           var emailUserStorageDiv = document.createElement("div")
           emailUserStorageDiv.classList.add("email-user-storage")
-          emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_users[i].storage_used) + "/" + my_email_users[i].mailbox_size_gb +"GB";
-          total_email_user_storage_used = total_email_user_storage_used + my_email_users[i].storage_used
+          emailUserStorageDiv.innerHTML = "Storage Used: " + formatBytes(my_email_user.storage_used) + "/" + my_email_user.mailbox_size_gb +"GB";
+          total_email_user_storage_used = total_email_user_storage_used + my_email_user.storage_used
           emailUserDiv.appendChild(emailUserStorageDiv);
 
           var emailUserChangePassDiv = document.createElement("div")
           emailUserChangePassDiv.classList.add("email-user-change-password")
           emailUserChangePassDiv.innerHTML = '<i class="fa-solid fa-key"></i> Change Password';
-          let this_email = my_email_users[i].email
+          let this_email = my_email_user.email
           emailUserChangePassDiv.onclick = function() {
             changeEmailUserPass(this_email)
           }
@@ -218,16 +223,29 @@
           }
           emailUserDiv.appendChild(emailUserDeleteDiv);
 
-          my_domain_panels[d].appendChild(emailUserDiv)
+          my_domain_panel.appendChild(emailUserDiv);
+
+          if(teus != null)
+            teus.innerHTML = formatBytes(total_email_user_storage_used);
+    }
+
+    //load email users into panels
+    if(my_email_users != -1) {
+    document.getElementById("my_email_users_length").innerHTML = my_email_users.length;
+    console.log("Loading email users:", my_email_users)
+    }
+
+    var total_email_user_storage_used = 0;
+    var teus = document.getElementById("total-email-user-storage-used");
+
+    for (var d = 0; d < my_domain_panels.length; d++) {
+      for (var i = 0; i < my_email_users.length; i++) {
+        if (my_email_users[i].domain_id == my_domain_panels[d].dataset.id) {
+            addEmailUserToPanel(my_email_users[i], my_domain_panels[d])
         }
       }
     }
     
-    var teus = document.getElementById("total-email-user-storage-used");
-    if(teus != null)
-      teus.innerHTML = formatBytes(total_email_user_storage_used);
-
-    var mailbox_gb_allocated = "{{ user_data.mailbox_gb_allocated }}";
     var user_plan = "{{ user_data.plan }}";
   </script>
   <script src='/js/core.js'></script>

@@ -54,6 +54,18 @@ app.post('/stripe-webhooks', (req, res) => {
 //TODO: Upgrade user based on the passed client ID
 });
 
+app.post('/send-email-login-instructions', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            si_response = await Util.sendEmailLoginInstructions(
+                user_data, req.body.new_email, req.body.to_email, DB.con);
+            res.send(si_response);
+    })()
+});
+
 app.post('/add-email-domain', (req, res) => {
     (async function () {
 

@@ -435,7 +435,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
                         } else {
                         console.log("Got email id " + results[0].id + " and hash " + hashedPass + " for email " + full_email)
                         var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email, mailbox_size_gb) VALUES (?, ?, ?, ?)"
-                        c.query(ceuq, [results[0].id, hashedPass, full_email, mailbox_size_gb_int], (error, results) => {
+                        c.query(ceuq, [results[0].id, hashedPass, full_email, mailbox_size_gb_int], (error, result) => {
                             if (error) {
                                 console.log(error)
                                 var clientErrorMessage = "Error creating mail user!"
@@ -444,18 +444,28 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
                                 }
                                 resolve({ status: "failed", error: clientErrorMessage })
                             } else {
-                                var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
-                                console.log("Current mailbox usage is " + user_data.mailbox_gb_allocated)
-                                var gb_alloc = user_data.mailbox_gb_allocated + mailbox_size_gb_int;
-                                console.log("Updating mail usage to " + gb_alloc)
-                                c.query(ualuq, [gb_alloc, user_data.uid], (error, results) => {
+
+                                var email_user_id = result.insertId;
+
+                                var q = "SELECT email, domain_id, created_at, mailbox_size_gb from virtual_users WHERE id = ?";
+
+                                c.query(q, [email_user_id], (error, results) => {
                                     if(error) {
-                                        resolve({ status: "failed", error: "Error updating user mailbox GB allocation." })
+                                        resolve({ status: "failed", error: "Error returning new user data" })
                                     } else {
-                                        resolve({ status: "success", temp_pass: password })
-                                    }
-                                
-                                })
+                                        var email_user = results[0];
+                                        var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
+                                        var gb_alloc = user_data.mailbox_gb_allocated + mailbox_size_gb_int;
+                                        c.query(ualuq, [gb_alloc, user_data.uid], (error, results) => {
+                                            if(error) {
+                                                resolve({ status: "failed", error: "Error updating user mailbox GB allocation." })
+                                            } else {
+                                                resolve({ status: "success", temp_pass: password, email_user: email_user, gb_alloc: gb_alloc })
+                                            }
+                                        })
+                                    }   
+                                });
+
                             }
                         });
                     }
@@ -781,7 +791,11 @@ function timeSince(date) {
     return Math.floor(seconds) + " seconds";
   }
 
+  async function sendEmailLoginInstructions() {
+
+  }
 module.exports = {
+    sendEmailLoginInstructions,
     timeSince,
     submitResetPassword,
     sendForgotPassword,
