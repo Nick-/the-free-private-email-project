@@ -380,7 +380,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
         }
 
         try {
-        var mailbox_size_gb = parseInt(mailbox_size_gb);
+        var mailbox_size_gb_int = parseInt(mailbox_size_gb);
         } catch (e) {
             resolve({ status: "failed", error: "Invalid mailbox size parameter >:(" })
             return 
@@ -393,7 +393,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
         }
 
         var mailbox_gb_remaining = mailbox_gb_allowed - user_data.mailbox_gb_allocated;
-        if(mailbox_gb_remaining - mailbox_size_gb < 0) {
+        if(mailbox_gb_remaining - mailbox_size_gb_int < 0) {
             resolve({ status: "failed", error: "Not enough storage, please upgrade!" })
             return 
         }
@@ -435,7 +435,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
                         } else {
                         console.log("Got email id " + results[0].id + " and hash " + hashedPass + " for email " + full_email)
                         var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email, mailbox_size_gb) VALUES (?, ?, ?, ?)"
-                        c.query(ceuq, [results[0].id, hashedPass, full_email, mailbox_size_gb], (error, results) => {
+                        c.query(ceuq, [results[0].id, hashedPass, full_email, mailbox_size_gb_int], (error, results) => {
                             if (error) {
                                 console.log(error)
                                 var clientErrorMessage = "Error creating mail user!"
@@ -446,7 +446,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
                             } else {
                                 var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
                                 console.log("Current mailbox usage is " + user_data.mailbox_gb_allocated)
-                                var gb_alloc = user_data.mailbox_gb_allocated + mailbox_size_gb;
+                                var gb_alloc = user_data.mailbox_gb_allocated + mailbox_size_gb_int;
                                 console.log("Updating mail usage to " + gb_alloc)
                                 c.query(ualuq, [gb_alloc, user_data.uid], (error, results) => {
                                     if(error) {
