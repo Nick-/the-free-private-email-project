@@ -389,6 +389,7 @@ function showEmailUserCreatedInstructions(tmp_pass, my_email_user, gb_alloc) {
 
     //Update New Mailbox GB allocated
     document.getElementById("total-email-user-storage-allocated").innerHTML = gb_alloc + "GB";
+    mailbox_gb_allocated = gb_alloc; //Used when populating add email mailbox size select options
 
     //Update Users Length
     document.getElementById("my_email_users_length").innerHTML = (parseInt(document.getElementById("my_email_users_length").textContent) + 1)
