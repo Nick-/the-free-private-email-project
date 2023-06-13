@@ -438,7 +438,9 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
                                 resolve({ status: "failed", error: clientErrorMessage })
                             } else {
                                 var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
+                                console.log("Current mailbox usage is " + user_data.mailbox_gb_allocated)
                                 var gb_alloc = user_data.mailbox_gb_allocated + mailbox_size_gb;
+                                console.log("Updating mail usage to " + gb_alloc)
                                 c.query(ualuq, [gb_alloc, user_data.uid], (error, results) => {
                                     if(error) {
                                         resolve({ status: "failed", error: "Error updating user mailbox GB allocation." })
