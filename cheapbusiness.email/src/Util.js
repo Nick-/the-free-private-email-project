@@ -379,6 +379,13 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
             return
         }
 
+        try {
+        var mailbox_size_gb = parseInt(mailbox_size_gb);
+        } catch (e) {
+            resolve({ status: "failed", error: "Invalid mailbox size parameter >:(" })
+            return 
+        }
+
         var mailbox_gb_allowed = 1; //free users get 1gb total storage
 
         if(user_data.plan == 1) {
