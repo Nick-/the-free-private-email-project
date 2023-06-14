@@ -19,6 +19,7 @@ RUN apt-get -y install opendkim opendkim-tools
 RUN apt-get -y install nodejs
 RUN apt-get -y install npm
 RUN npm install -g n
+RUN apt-get -y install curl
 RUN n lts
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install msmtp mailutils
