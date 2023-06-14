@@ -438,7 +438,7 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
                         var ceuq = "INSERT INTO mailserver.virtual_users (domain_id, password , email, mailbox_size_gb) VALUES (?, ?, ?, ?)"
                         c.query(ceuq, [results[0].id, hashedPass, full_email, mailbox_size_gb_int], (error, result) => {
                             if (error) {
-                                console.log(error)
+                                //console.log(error)
                                 var clientErrorMessage = "Error creating mail user!"
                                 if (error.toString().includes("Duplicate entry")) {
                                     clientErrorMessage = "That user already exists."

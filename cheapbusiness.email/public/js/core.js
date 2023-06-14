@@ -59,6 +59,7 @@ function deleteDomain(domain) {
             encode: true,
         }).done(function (data) {
             if(data.status == "success") {
+                alert("Domain deleted successfully")
                     window.location.reload();
             } else {
                 alert(data.error)
