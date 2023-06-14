@@ -58,8 +58,7 @@
 
           my_domain_panel.appendChild(emailUserDiv);
 
-          if(teus != null)
-            teus.innerHTML = formatBytes(total_email_user_storage_used);
+
     }
 
     //load email users into panels
@@ -78,6 +77,9 @@
         }
       }
     }
+    
+    if(teus != null)
+      teus.innerHTML = formatBytes(total_email_user_storage_used);
     
     var mailbox_gb_allocated = "{{ user_data.mailbox_gb_allocated }}"
     var user_plan = "{{ user_data.plan }}";

@@ -565,7 +565,7 @@ async function removeEmailDomain(user_data, domain, c) {
 
     var email_storage_path = '/var/mail/vhosts/' + domain + "/"
     var domain_gb = await getDomainGBalloc(domain, c);
-
+    console.log("Domain gb allocated (del): " + domain_gb)
     return new Promise(resolve => {
         if (user_data == -1) {
             resolve({ status: "failed", error: "Authentification Error" })
@@ -583,15 +583,19 @@ async function removeEmailDomain(user_data, domain, c) {
                         if (error) {
                             resolve({ status: "failed", error: "Error deleting domain users in DB" })
                         } else {
+
+                            console.log("Deleteing domain folder..")
+                            //Stops working here?
                             fs.rmSync(email_storage_path, { recursive: true, force: true });
 
                             //Finally, update user gb alloc
                             var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
                             var new_gb_alloc = user_data.mailbox_gb_allocated - domain_gb;
-
+                            console.log("Deleting domain.. Updating Storage alloc to " + new_gb_alloc)
                             c.query(ualuq, [new_gb_alloc, user_data.uid], (error, results) => {
                                 if (error) {
-                                    resolve({ status: "failed", error: "Error updating GB allocated in GB" })
+                                    console.log(error)
+                                    resolve({ status: "failed", error: "Error updating GB allocated for user" })
                                 } else {
                                     resolve({ status: "success" }) //Just reload for now...
                                 }
