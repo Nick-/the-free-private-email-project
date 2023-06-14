@@ -560,11 +560,12 @@ async function getEmailUsersForDomain(domains, c) {
     });
 }
 
-async function getStorageUsedForUID(uid) {
-
-}
 
 async function removeEmailDomain(user_data, domain, c) {
+
+    var email_storage_path = '/var/mail/vhosts/' + domain + "/"
+    var domain_gb = await getDomainGBalloc(domain, c);
+
     return new Promise(resolve => {
         if (user_data == -1) {
             resolve({ status: "failed", error: "Authentification Error" })
@@ -576,7 +577,27 @@ async function removeEmailDomain(user_data, domain, c) {
                     resolve({ status: "failed", error: "Error deleting domain in DB" })
 
                 } else {
-                    resolve({ status: "success" })
+                    //Delete Users and their storage
+                    var dq2 = "DELETE FROM virtual_users WHERE email LIKE %?"
+                    c.query(dq2, [domain], (error, results) => {
+                        if (error) {
+                            resolve({ status: "failed", error: "Error deleting domain users in DB" })
+                        } else {
+                            fs.rmSync(email_storage_path, { recursive: true, force: true });
+
+                            //Finally, update user gb alloc
+                            var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
+                            var new_gb_alloc = user_data.mailbox_gb_allocated - domain_gb;
+
+                            c.query(ualuq, [new_gb_alloc, user_data.uid], (error, results) => {
+                                if (error) {
+                                    resolve({ status: "failed", error: "Error updating GB allocated in GB" })
+                                } else {
+                                    resolve({ status: "success" }) //Just reload for now...
+                                }
+                            });
+                        }
+                    });
                 }
             })
         }
@@ -607,6 +628,24 @@ async function getEmailGBalloc(full_email, c) {
             resolve(-1)
         } else {
             resolve(parseInt(results[0].mailbox_size_gb))
+        }
+    });
+    });
+}
+
+async function getDomainGBalloc(domain, c) {
+    return new Promise(resolve => {
+    var q = "SELECT mailbox_size_gb FROM virtual_users WHERE email LIKE %?";
+
+    c.query(q, [domain], (error, results) => {
+        if (error) {
+            resolve(-1)
+        } else {
+            var gb = 0;
+            for(var i = 0; i < results.length; i++) {
+                gb = gb + parseInt(results[i].mailbox_size_gb)
+            }
+            resolve(gb)
         }
     });
     });

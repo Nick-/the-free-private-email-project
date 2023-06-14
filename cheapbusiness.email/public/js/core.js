@@ -49,28 +49,22 @@ registerForm.addEventListener("submit", function (e) {
 });
 }
 function deleteDomain(domain) {
- if(confirm("Are you sure you wish to delete "+domain+"?")) {
-  var formData = {
-
-	          domain: domain
-	      };
-
-	     $.ajax({
-		             type: "POST",
-		             url: "/delete-email-domain",
-		             data: formData,
-		             dataType: "json",
-		             encode: true,
-		         }).done(function (data) {
-       if(data.status == "success") {
-	        window.location.reload();
-        } else {
-	           alert(data.error)
-
-								         }
-				     });
- }
- 
+    if(confirm("Are you sure you wish to delete "+domain+"?")) {
+        var formData = { domain: domain };
+        $.ajax({
+            type: "POST",
+            url: "/delete-email-domain",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                    window.location.reload();
+            } else {
+                alert(data.error)
+            }
+        });
+    }
 }
 function register(form) {
     var un = form.email.value;
