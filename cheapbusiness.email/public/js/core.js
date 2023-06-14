@@ -221,7 +221,6 @@ var bottomButton = document.getElementById("bottom-button");
 var my_domains = document.getElementsByClassName("my_domain");
 
 
-
 function showDomainVerificationInstructions(domain,txt_key) {
     document.getElementById("dns-txt-key").innerHTML = txt_key;
     document.getElementById("verify-domain-name").innerHTML = "Update DNS for <span style='color:gold' id='verify-domain-name-span'>" + domain + "</span>";
