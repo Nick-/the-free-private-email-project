@@ -578,7 +578,7 @@ async function removeEmailDomain(user_data, domain, c) {
 
                 } else {
                     //Delete Users and their storage
-                    var dq2 = "DELETE FROM virtual_users WHERE email LIKE %?"
+                    var dq2 = "DELETE FROM virtual_users WHERE email LIKE '%?'"
                     c.query(dq2, [domain], (error, results) => {
                         if (error) {
                             resolve({ status: "failed", error: "Error deleting domain users in DB" })
@@ -639,7 +639,7 @@ async function getEmailGBalloc(full_email, c) {
 
 async function getDomainGBalloc(domain, c) {
     return new Promise(resolve => {
-    var q = "SELECT mailbox_size_gb FROM virtual_users WHERE email LIKE %?";
+    var q = "SELECT mailbox_size_gb FROM virtual_users WHERE email LIKE '%?'";
 
     c.query(q, [domain], (error, results) => {
         if (error) {
