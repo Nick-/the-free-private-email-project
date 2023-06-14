@@ -487,6 +487,10 @@ function deleteEmailUser(full_email) {
                 //Update Users Length
                 document.getElementById("my_email_users_length").innerHTML = (parseInt(document.getElementById("my_email_users_length").textContent) - 1)
 
+                //Update Storage Used
+                total_email_user_storage_used = total_email_user_storage_used - data.storage_cleared;
+                teus.innerHTML = formatBytes(total_email_user_storage_used);
+
                 //Delete Email User Div
                 var emailUserDivs = document.getElementsByClassName("email-user");
                 for(var i = 0; i < emailUserDivs.length; i++) {

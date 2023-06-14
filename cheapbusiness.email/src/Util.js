@@ -560,8 +560,10 @@ async function getEmailUsersForDomain(domains, c) {
     });
 }
 
-//TODO: Delete users, mv their mail to trash
-        // Update Allocation for user
+async function getStorageUsedForUID(uid) {
+
+}
+
 async function removeEmailDomain(user_data, domain, c) {
     return new Promise(resolve => {
         if (user_data == -1) {
@@ -639,9 +641,9 @@ async function deleteEmailUser(user_data, full_email, c) {
                             resolve({ status: "failed", error: "Error deleting email user in DB" })
                         } else {
                             //Remove files, mv these to a trash in the future for compliance purposes
-                                fs.rmSync(email_storage_path, { recursive: true, force: true });
-                             resolve({ status: "success", gb_alloc: new_gb_alloc, del_email: full_email})
-
+                            var storage_used = fastFolderSizeSync(email_storage_path)
+                            fs.rmSync(email_storage_path, { recursive: true, force: true });
+                            resolve({ status: "success", gb_alloc: new_gb_alloc, del_email: full_email, storage_cleared: storage_used})
                         }
                     });
 
