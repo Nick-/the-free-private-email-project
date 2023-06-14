@@ -186,8 +186,11 @@
 
 
     function addEmailUserToPanel(my_email_user, my_domain_panel) {
-      var emailUserDiv = document.createElement("div")
+
+          var emailUserDiv = document.createElement("div")
           emailUserDiv.classList.add("email-user")
+          emailUserDiv.dataset.email = my_email_user.email
+
           var emailUserNameDiv = document.createElement("div")
           emailUserNameDiv.classList.add("email-user-full-email")
           emailUserNameDiv.innerHTML = my_email_user.email

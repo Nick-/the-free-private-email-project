@@ -463,23 +463,42 @@ function changeEmailUserPass(full_email) {
 }
 
 function deleteEmailUser(full_email) {
-    var formData = {
-        full_email: full_email
-    };
 
-    $.ajax({
-        type: "POST",
-        url: "/delete-email-user",
-        data: formData,
-        dataType: "json",
-        encode: true,
-    }).done(function (data) {
-        if(data.status == "success") {
-            alert("Email User Deleted Successfully")
-            window.location.reload();
-            //Modify UI without reload
-        } else {
-            alert(data.error)
-        }
-    });
+    if(confirm("Are you sure you'd like to delete " + full_email)) {
+
+        var formData = {
+            full_email: full_email
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/delete-email-user",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                alert("Email User Deleted Successfully")
+
+                //Update New Mailbox GB allocated
+                document.getElementById("total-email-user-storage-allocated").innerHTML = data.gb_alloc + "GB";
+                mailbox_gb_allocated = data.gb_alloc; //Used when populating add email mailbox size select options
+
+                //Update Users Length
+                document.getElementById("my_email_users_length").innerHTML = (parseInt(document.getElementById("my_email_users_length").textContent) - 1)
+
+                //Delete Email User Div
+                var emailUserDivs = document.getElementsByClassName("email-user");
+                for(var i = 0; i < emailUserDivs.length; i++) {
+                    if(emailUserDivs[i].dataset.email == data.del_email) {
+                        emailUserDivs[i].remove()
+                        break;
+                    }
+                }
+
+            } else {
+                alert(data.error)
+            }
+        });
+    }
 }

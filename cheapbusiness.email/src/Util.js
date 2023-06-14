@@ -595,10 +595,28 @@ async function getEmailDomainOwnerUID(full_email, c) {
     });
 }
 
-//TODO: Move email to trash, update user gb allocation
+async function getEmailGBalloc(full_email, c) {
+    return new Promise(resolve => {
+    var q = "SELECT mailbox_size_gb FROM virtual_users WHERE email = ?";
+
+    c.query(q, [full_email], (error, results) => {
+        if (error) {
+            resolve(-1)
+        } else {
+            resolve(parseInt(results[0].mailbox_size_gb))
+        }
+    });
+    });
+}
+
 async function deleteEmailUser(user_data, full_email, c) {
-console.log("Deleting email user " + full_email)
-    owner_uid = await getEmailDomainOwnerUID(full_email, c)
+
+    console.log("Deleting email user " + full_email)
+    var owner_uid = await getEmailDomainOwnerUID(full_email, c)
+    var mailbox_size_gb_int = await getEmailGBalloc(full_email, c)
+    var uname = full_email.split("@")[0]
+    var domain = full_email.split("@")[1]
+    var email_storage_path = '/var/mail/vhosts/' + domain + "/" + uname + "/"
 
     return new Promise(resolve => {
         if (user_data == -1) {
@@ -611,7 +629,21 @@ console.log("Deleting email user " + full_email)
                 if (error) {
                     resolve({ status: "failed", error: "Error deleting email user in DB" })
                 } else {
-                    resolve({ status: "success"})
+
+                    var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
+                    var new_gb_alloc = user_data.mailbox_gb_allocated - mailbox_size_gb_int;
+
+                    c.query(ualuq, [new_gb_alloc, user_data.uid], (error, results) => {
+                        if (error) {
+                            resolve({ status: "failed", error: "Error deleting email user in DB" })
+                        } else {
+                            //Remove files, mv these to a trash in the future for compliance purposes
+                                fs.rmSync(email_storage_path, { recursive: true, force: true });
+                             resolve({ status: "success", gb_alloc: new_gb_alloc, del_email: full_email})
+
+                        }
+                    });
+
                 }
             })
         }
