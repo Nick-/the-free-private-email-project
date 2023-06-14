@@ -3,16 +3,24 @@ FROM ubuntu:22.04
 
 RUN apt-get update
 RUN apt-get -y upgrade
+
 RUN apt-get -y install dovecot-core
 RUN apt-get -y install dovecot-pop3d
 RUN apt-get -y install dovecot-imapd
 RUN apt-get -y install dovecot-lmtpd
 RUN apt-get -y install dovecot-mysql
+
 RUN apt-get -y install postfix
 RUN apt-get -y install postfix-mysql
 RUN apt-get -y install mysql-server
+
 RUN apt-get -y install opendkim opendkim-tools
+
 RUN apt-get -y install nodejs
+RUN apt-get -y install npm
+RUN npm install -g n
+RUN n lts
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install msmtp mailutils
 
 RUN apt-get -y install vim
