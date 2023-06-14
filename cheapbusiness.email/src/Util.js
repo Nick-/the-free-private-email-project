@@ -8,6 +8,7 @@ const moment = require('moment-timezone');
 var nodemailer = require('nodemailer');
 const ejs = require("ejs")
 const fastFolderSizeSync = require('fast-folder-size/sync');
+const fs = require("fs");
 const { send } = require('process');
 const path = require("path");
 moment().tz("America/New_York").format();
