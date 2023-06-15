@@ -762,11 +762,14 @@ function sendEmail(to_email, subject, message) {
 }
 
 function sendHTMLEmail(template_name, template_data, to_email) {
-
+    console.log("Sending HTML Email: ", to_email)
     var subject = "Cheap Business Email"
     switch(template_name) {
         case "forgot_password":
             subject = "Reset Your Password"
+            break;
+        case "forgot_password":
+            subject = "Email Login Instructions"
             break;
     }
 
