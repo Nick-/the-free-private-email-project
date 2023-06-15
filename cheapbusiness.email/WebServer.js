@@ -64,7 +64,7 @@ app.post('/send-email-login-instructions', (req, res) => {
                 res.send("Suspicious Activity Logged..")
             } else {
                 si_response = await Util.sendEmailLoginInstructions(
-                    user_data, req.body.new_email, req.body.new_password, req.body.to_email, DB.con);
+                    req.body.new_email, req.body.new_password, req.body.to_email);
                 res.send(si_response);
             }
 
