@@ -1,0 +1,41 @@
+<div id="email-user-created-instructions">
+    <div class="email-login-instruction-header">
+      <h2>Email Login Instructions</h2>
+    </div>
+    <div class="email-client-logos">
+        <img src="/img/apple.svg"
+        loading="lazy"
+        height="50"
+        width="50"/>
+        <img src="/img/gmail.svg"
+        loading="lazy"
+        height="50"
+        width="50"/>
+        <img src="/img/outlook.svg"
+        loading="lazy"
+        height="50"
+        width="50"/>
+        <img src="/img/thunderbird.svg"
+        loading="lazy"
+        height="50"
+        width="50"/>
+    </div>
+    <div class="client-settings">
+      Hosts: <b>cheapbusiness.email</b><br>
+      IMAP: <b>Port 993 (SSL)</b><br>
+      POP3: <b>Port 995 (SSL)</b><br>
+      SMTP: <b>587 (TLS)</b><br>
+      Password Type: <b>Encrypted</b><br>
+      Username: <b><span id="email-created-username"></span></b><br>
+      Password: <b><span id="email-created-password"></span></b>
+    </div>
+    <div class="email-login-instruction-action-bar">
+        <div class="close-created-user-instructions" onclick="closeEmailLoginInstructions()">
+        Close
+        </div>
+        <input type="email" id="send-email-instructions-email" placeholder="instructions.recipient@gmail.com"/>
+        <div class="send-created-user-instructions" onclick="sendEmailLoginInstructions()">
+        Send
+        </div>
+    </div>
+  </div>

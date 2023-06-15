@@ -45,41 +45,11 @@
     </div>
   </div>
   {{else}}
-  {{> dvis }}
-  {{> mplans }}
-
-  <div id="add-email-user">
-    <div class="close-popup" onclick='hideAddEmailUser()'><i class="fa-solid fa-circle-xmark"></i></div>
-    <h2>Create Email User</h2>
-    <p>A temporary password will be randomly generated.</p>
-    <input id="add-email-user-input" />
-    <select id="add-email-user-mailbox-size"></select>
-    <button class='add-email-user-submit' onclick="addEmailUser({{ id }})">Add Email User</button>
-  </div>
-  <div id="email-user-created-instructions">
-    <h2>Email Login Instructions</h2>
-    <p>We recommend using Outlook at your mail client, but you can use any client that supports IMAP / POP like Gmail for Mobile, Thunderbird, etc.</p>
-    <div class="client-settings">
-      IMAP: Port 993 (SSL)<br>
-      POP3: Port 995 (SSL)<br>
-      SMTP: 587 (TLS)<br>
-      Password Type: Encrypted<br>
-      Username: <span id="email-created-username"></span><br>
-      Password: <span id="email-created-password"></span>
-    </div>
-    <div>
-      <p>Email these login instructions:</p>
-      <input type="email" id="send-email-instructions-email"/>
-    </div>
-    <div class="close-created-user-instructions" onclick="closeEmailLoginInstructions()">
-      Close
-    </div>
-    <div class="send-created-user-instructions" onclick="sendEmailLoginInstructions()">
-      Send Instructions
-    </div>
-  </div>
-
-  <div id="portal">
+    {{> dvis }}
+    {{> mplans }}
+    {{> add-email-user }}
+    {{> email-setup-instructions-popup }}
+    <div id="portal">
     <div id="account-summary">
       <span>Account Email: <b>{{user_data.email}}</b></span><br>
       My Plan: <b>{{#ifeq user_data.plan 0}}Free <span class="upgrade-span" onclick="showMembershipPlans()">(Upgrade)</span>{{else}}Premium{{/ifeq}}</b><br>

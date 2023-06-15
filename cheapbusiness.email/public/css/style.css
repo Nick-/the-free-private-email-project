@@ -202,7 +202,7 @@ footer {
     text-align: center;
     
 }
-.check-domain-validate {
+.check-domain-validate, .send-created-user-instructions {
     background: #333;
     color:white;
     cursor:pointer;
@@ -210,6 +210,15 @@ footer {
     border-radius: 5px;
     border: none;
     text-transform: uppercase;
+}
+.close-created-user-instructions, #send-email-instructions-email, .send-created-user-instructions {
+    display: inline-block;
+}
+#send-email-instructions-email {
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid lightgray;
 }
 .close-domain-validate {
     background:none;
@@ -221,7 +230,7 @@ footer {
     border: none;
     text-transform: uppercase;
 }
-#delete-unverified-domain {
+#delete-unverified-domain, .close-created-user-instructions {
     color: gray;
     border-radius: 5px;
     background: white;
@@ -231,7 +240,7 @@ footer {
     border: none;
     text-transform: uppercase;
 }
-.dvis-action-bar {
+.dvis-action-bar, .email-login-instruction-action-bar {
     padding: 10px;
     border-top: 1px solid lightgrey;
 }
@@ -347,9 +356,18 @@ header h1 img {
     padding: 20px;
     text-align: center;
 }
-.dvis-header {
+.dvis-header, .email-login-instruction-header {
     background: #333;
     color: white;
+    padding: 10px;
+}
+.email-client-logos {
+    padding-top: 10px;
+}
+.email-client-logos img {
+    display: inline-block;
+}
+.client-settings {
     padding: 10px;
 }
 #add-email-user, #email-user-created-instructions, #dvis {

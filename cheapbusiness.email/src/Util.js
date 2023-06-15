@@ -697,7 +697,7 @@ async function deleteEmailUser(user_data, full_email, c) {
     });
 }
 
-async function changeEmailUserPass(user_data, full_email, c) {
+async function resetEmailUserPass(user_data, full_email, c) {
 
     owner_uid = await getEmailDomainOwnerUID(full_email, c)
 
@@ -707,7 +707,28 @@ async function changeEmailUserPass(user_data, full_email, c) {
         } else if(user_data.uid != owner_uid) {
             resolve({ status: "failed", error: "You don't own that domain..." })
         } else {
-            resolve({ status: "success"})
+            var password = getRandomString(12);
+            exec("doveadm pw -s SHA512-CRYPT -p " + password + " | cut -c 15-", (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    resolve({ status: "failed", error: "Failed to Generate Password" })
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    resolve({ status: "failed", error: "Failed to Generate Password" })
+                    return;
+                }
+                var hashedPass = (`${stdout}`).trim();
+                var upq = "UPDATE virtual_users SET password = ? WHERE email = ?";
+                c.query(upq, [hashedPass, full_email], (error, result) => {
+                    if (error) {
+                        resolve({ status: "failed", error: "Failed to reset password.." })
+                    } else {
+                        resolve({ status: "success", tmp_pass:password, email: full_email })
+                    }
+                });
+            })
         }
     });
 }
@@ -819,7 +840,7 @@ async function sendForgotPassword(email, c) {
             console.log(e)
             resolve({ status: "failed", error: "There was an error on our end.. Please contact an admin!" })
          }
-        });
+    });
 }
 
 async function submitResetPassword(email, fpk, password, con) {
@@ -870,8 +891,16 @@ function timeSince(date) {
     return Math.floor(seconds) + " seconds";
   }
 
-  async function sendEmailLoginInstructions() {
-
+  async function sendEmailLoginInstructions(new_email, new_password, to_email) {
+    return new Promise(resolve => {
+        try {
+           sendHTMLEmail("email_instructions", {email: new_email, password: new_password}, to_email)
+           resolve({ status: "success"})
+        } catch(e) {
+           console.log(e)
+           resolve({ status: "failed", error: "There was an error on our end.. Please contact an admin!" })
+        }
+   });
   }
   
 module.exports = {
@@ -880,7 +909,7 @@ module.exports = {
     submitResetPassword,
     sendForgotPassword,
     sendEmail,
-    changeEmailUserPass,
+    resetEmailUserPass,
     deleteEmailUser,
     removeEmailDomain,
     getEmailUsersForDomain,

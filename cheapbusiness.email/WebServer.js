@@ -60,9 +60,15 @@ app.post('/send-email-login-instructions', (req, res) => {
         user_data = await Util.getUserData(
             req.cookies['email'], req.cookies['auth_key'], DB.con);
 
-            si_response = await Util.sendEmailLoginInstructions(
-                user_data, req.body.new_email, req.body.to_email, DB.con);
-            res.send(si_response);
+            if(user_data == -1) {
+                res.send("Suspicious Activity Logged..")
+            } else {
+                si_response = await Util.sendEmailLoginInstructions(
+                    user_data, req.body.new_email, req.body.new_password, req.body.to_email, DB.con);
+                res.send(si_response);
+            }
+
+            
     })()
 });
 
@@ -115,14 +121,14 @@ app.post('/add-email-user', (req, res) => {
     })()
 
 });
-app.post('/change-email-user-password', (req, res) => {
+app.post('/reset-email-user-password', (req, res) => {
     (async function () {
 
         user_data = await Util.getUserData(
             req.cookies['email'], req.cookies['auth_key'], DB.con);
 
 
-            cpeu_response = await Util.changeEmailUserPass(
+            cpeu_response = await Util.resetEmailUserPass(
                 user_data, req.body.full_email, DB.con);
             res.send(cpeu_response);
     })()

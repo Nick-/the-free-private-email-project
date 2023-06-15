@@ -283,10 +283,12 @@ function sendPasswordReset() {
 
 function sendEmailLoginInstructions() {
     var new_email = document.getElementById("email-created-username").textContent;
+    var new_password = document.getElementById("email-created-password").textContent;
     var to_email = document.getElementById("send-email-instructions-email").value;
 
     var formData = {
         new_email: new_email,
+        new_password: new_password,
         to_email: to_email
     };
 
@@ -378,15 +380,30 @@ function hideAddEmailUser() {
     addEmailUserScreen.style.display = "none"
 }
 
+
+function KeyPress(e) {
+    var evtobj = window.event? event : e
+    if (evtobj.keyCode == 90 && evtobj.ctrlKey) //z
+        showEmailUserCreatedInstructions("fdsafdsffx", {email:"test@test.com", domain_id:-1}, -1)
+
+    if(evtobj.keyCode == 68 && evtobj.ctrlKey) //d
+        showDomainVerificationInstructions("test.com","examplekey")
+}
+
+document.onkeydown = KeyPress;
+
 function showEmailUserCreatedInstructions(tmp_pass, my_email_user, gb_alloc) {
     hideAddEmailUser();
 
     //Update New Mailbox GB allocated
-    document.getElementById("total-email-user-storage-allocated").innerHTML = gb_alloc + "GB";
-    mailbox_gb_allocated = gb_alloc; //Used when populating add email mailbox size select options
+    if(gb_alloc != -1) { //Reset Password has no size update
+        document.getElementById("total-email-user-storage-allocated").innerHTML = gb_alloc + "GB";
+        mailbox_gb_allocated = gb_alloc; //Used when populating add email mailbox size select options
+    }
 
     //Update Users Length
-    document.getElementById("my_email_users_length").innerHTML = (parseInt(document.getElementById("my_email_users_length").textContent) + 1)
+    if(my_email_user.domain_id != -1)
+        document.getElementById("my_email_users_length").innerHTML = (parseInt(document.getElementById("my_email_users_length").textContent) + 1)
 
     //Add Email User Div
     for (var d = 0; d < my_domain_panels.length; d++) {
@@ -434,26 +451,27 @@ function addEmailUser() {
     });
 }
 
-function changeEmailUserPass(full_email) {
-    var formData = {
-        full_email: full_email
-    };
+function resetEmailUserPass(full_email) {
 
-    $.ajax({
-        type: "POST",
-        url: "/change-email-user-password",
-        data: formData,
-        dataType: "json",
-        encode: true,
-    }).done(function (data) {
-        if(data.status == "success") {
-            alert("Success! Your Temporary Password is: " + data.temp_pass)
-            window.location.reload();
-            //Modify UI without reload
-        } else {
-            alert(data.error)
-        }
-    });
+    if(confirm("Are you sure you'd like to reset " + full_email + "'s password?")) {
+        var formData = {
+            full_email: full_email
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/reset-email-user-password",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                showEmailUserCreatedInstructions(data.tmp_pass, {email:data.email, domain_id:-1}, -1)
+            } else {
+                alert(data.error)
+            }
+        });
+    }
 }
 
 function deleteEmailUser(full_email) {

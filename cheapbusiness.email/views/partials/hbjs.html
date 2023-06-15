@@ -41,10 +41,10 @@
 
           var emailUserChangePassDiv = document.createElement("div")
           emailUserChangePassDiv.classList.add("email-user-change-password")
-          emailUserChangePassDiv.innerHTML = '<i class="fa-solid fa-key"></i> Change Password';
+          emailUserChangePassDiv.innerHTML = '<i class="fa-solid fa-key"></i> Reset Password';
           let this_email = my_email_user.email
           emailUserChangePassDiv.onclick = function() {
-            changeEmailUserPass(this_email)
+            resetEmailUserPass(this_email)
           }
           emailUserDiv.appendChild(emailUserChangePassDiv);
 
