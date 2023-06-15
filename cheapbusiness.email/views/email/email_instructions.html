@@ -10,65 +10,78 @@
   <center>
     <table width="620" cellspacing="0" cellpadding="0" style="border:0px;font-size: 14px">
       <tbody>
+        <center>
         <tr>
-          <td height="60" align="center">
-            
-            <table border="0" cellspacing="0" cellpadding="0" align="center">
-              <tbody>
+            <td bgcolor="#333"
+              style="color: #fff; font-size:2em; font-family:Arial, Helvetica, sans-serif; padding: 12px 2px 12px 0px;text-align:center; ">
+              <table style="width:620px; border:0; text-align:center;" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td width="620"
-                    style='padding-left: 20px;font-family: Arial, Helvetica, sans-serif;line-height: 1.5;font-size: 1.5em'>
-                    <p>A password reset request has been made for your account. If this wasn't you, please ignore this
-                      email.</p>
-
-                  </td>
+                  <td style="font-weight: bold;width:620px;color: #fff"><b>Email Login Instructions</b></td>
                 </tr>
-
-              </tbody>
-            </table>
-
-          </td>
-        </tr>
-
+              </table>
+            </td>
+          </tr>
+          </center>
+          <tr>
+            <td height="10"></td>
+          </tr>
+          
+          <tr>
+            <td>
+                <table style="width:620px; border:0; text-align:center;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td height="50" width="25%" align="center">
+                            <a href='https://support.apple.com/en-us/HT201320#manual' target="_blank"><img src="https://cheapbusiness.email/img/apple.svg"
+                               
+                                height="50"
+                                width="50"/></a>
+                        </td>
+                        <td height="50" width="25%" align="center">
+                            <a href='https://support.google.com/mail/answer/6078445/' target="_blank"><img src="https://cheapbusiness.email/img/gmail.svg"
+                             
+                                height="50"
+                                width="50"/></a>
+                        </td>
+                        <td height="50" width="25%" align="center">
+                            <a href='https://support.microsoft.com/en-us/office/set-up-the-outlook-app-for-ios-b2de2161-cc1d-49ef-9ef9-81acd1c8e234#tab=bkmk_imap' target="_blank">
+                                <img src="https://cheapbusiness.email/img/outlook.svg"
+                               
+                                height="50"
+                                width="50"/></a>
+                        </td>
+                        <td height="50" width="25%" align="center">
+                            <a href='https://support.mozilla.org/en-US/kb/manual-account-configuration' target="_blank"><img src="https://cheapbusiness.email/img/thunderbird.svg"
+                              
+                                height="50"
+                                width="50"/></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            </tr>
         <tr>
           <td height="10"></td>
         </tr>
-
         <tr>
-          <td bgcolor="#333"
-            style="color: #fff; font-size:2em; font-family:Arial, Helvetica, sans-serif; padding: 12px 2px 12px 0px;text-align:center; ">
-            <table style="width:620px; border:0; text-align:center;" cellpadding="0" cellspacing="0">
-              <center>
-                <td style="font-weight: bold;width:620px;color: #fff"><a style='color: white;font-size:1.5em;text-decoration:none'
-                    href='https://cheapbusiness.email/reset-password/?email=<%= email %>&pk=<%= pk %>'><b>Reset
-                      Password</b></a></td>
-              </center>
-            </table>
-          </td>
+            <td align="center">
+                Hosts: <b>cheapbusiness.email</b><br>
+                IMAP: <b>Port 993 (SSL)</b><br>
+                POP3: <b>Port 995 (SSL)</b><br>
+                SMTP: <b>587 (TLS)</b><br>
+                Password Type: <b>Encrypted</b><br>
+                Username: <b><%= email %></b><br>
+                Password: <b><%= password %></b>
+            </td>
         </tr>
         <tr>
-          <td height="10"></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table border="0" cellpadding="0" cellspacing="0" width="100%"
-      style="background-color:#FFFFFF;border-top:0px solid #E5E5E5;">
-      <tbody>
+            <td height="10"></td>
+          </tr>
         <tr>
-          <td align="center" valign="top" style="padding-top:0px;padding-bottom:20px;">
-            <table border="0" cellpadding="0" cellspacing="0">
-              <tbody>
-                <tr>
-                  <td align="center" valign="top"
-                    style="color:#606060;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:150%;padding-right:20px;padding-bottom:5px;padding-left:20px;text-align:center;">
-                    This email was sent to <a href="mailto:<%= email %></a>" target="_blank" style="color:#606060;"><%= email %></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
+            <td align="center" valign="top"
+              style="color:#606060;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:150%;padding-right:20px;padding-bottom:5px;padding-left:20px;text-align:center;">
+              This email was sent to <%= to_email %>.
+            </td>
+          </tr>
       </tbody>
     </table>
   </center>

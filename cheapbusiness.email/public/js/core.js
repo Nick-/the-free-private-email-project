@@ -390,7 +390,7 @@ function KeyPress(e) {
         showDomainVerificationInstructions("test.com","examplekey")
 }
 
-document.onkeydown = KeyPress;
+//document.onkeydown = KeyPress; //DEBUG ONLY
 
 function showEmailUserCreatedInstructions(tmp_pass, my_email_user, gb_alloc) {
     hideAddEmailUser();

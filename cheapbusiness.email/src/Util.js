@@ -160,7 +160,7 @@ async function loginUser(e, p, c) {
         c.query(passCheckQ, [e], (error, result) => {
             if (error) {
                 //console.log(error)
-                var clientErrorMessage = "Password Check Failed!"
+                var clientErrorMessage = "Error connecting to database! Please contact an admin."
                 resolve({ status: "failed", error: clientErrorMessage })
             } else {
 
@@ -894,7 +894,7 @@ function timeSince(date) {
   async function sendEmailLoginInstructions(new_email, new_password, to_email) {
     return new Promise(resolve => {
         try {
-           sendHTMLEmail("email_instructions", {email: new_email, password: new_password}, to_email)
+           sendHTMLEmail("email_instructions", {email: new_email, password: new_password, to_email:to_email}, to_email)
            resolve({ status: "success"})
         } catch(e) {
            console.log(e)
