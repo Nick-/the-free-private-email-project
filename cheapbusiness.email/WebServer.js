@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require("path");
+const stripe = require('stripe')('sk_test_51N70IkJP8d9HeiR6QDOYB4WeDubnDadBa3kjxZCX7MF4bxuT7JkkEANMGX0fzeF04GqWmSUV2YTAHQX5kBEholfc00g2z2pSND');
 
 require('dotenv').config({ path: path.join(__dirname,'/app.env') })
 
@@ -49,10 +50,71 @@ app.get('/', (req, res) => {
     })()
 });
 
-//https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
-app.post('/stripe-webhooks', (req, res) => {
+//invoice.payment_succeeded
+app.post('/payment-succeeded', express.raw({type: 'application/json'}), (request, response) => {
 //TODO: Upgrade user based on the passed client ID
+//Set subscription_exp to lines.data[0].period.end WHERE stripe_customer_id = customer
+
+const sig = request.headers['stripe-signature'];
+
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(request.body, sig, "whsec_HkwDQhVAXbhUwn6Iujkf5wal3vGtN5u2");
+    } catch (err) {
+        response.status(400).send(`Webhook Error: ${err.message}`);
+        return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+        case 'invoice.payment_succeeded':
+        const invoicePaymentSucceeded = event.data.object;
+        // Then define and call a function to handle the event checkout.session.completed
+        break;
+        // ... handle other event types
+        default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+
 });
+
+//https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
+//checkout.session.completed
+app.post('/subscription-created', express.raw({type: 'application/json'}), (request, response) => {
+    //TODO: Set stripe_customer_id to customer ("cus_O5WxUXQJuRPCw1")
+    //based on client_reference_id
+
+    //expires_at
+    const sig = request.headers['stripe-signature'];
+
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(request.body, sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
+    } catch (err) {
+        response.status(400).send(`Webhook Error: ${err.message}`);
+        return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+        case 'checkout.session.completed':
+        const checkoutSessionCompleted = event.data.object;
+        // Then define and call a function to handle the event checkout.session.completed
+        break;
+        // ... handle other event types
+        default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+
+    });
 
 app.post('/send-email-login-instructions', (req, res) => {
     (async function () {

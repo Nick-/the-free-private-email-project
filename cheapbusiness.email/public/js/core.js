@@ -83,9 +83,12 @@ function register(form) {
         encode: true,
     }).done(function (data) {
         if(data.status == "success") {
+            if(host != "localhost")
+            {
             gtag('event', 'sign_up', {
                 'email': data.email
               });
+            }
         setCookie("email", data.email, 30)
         setCookie("auth_key", data.auth_key, 30);
         alert("Success!")

@@ -5,13 +5,14 @@ resolver.setServers(['8.8.8.8']) //Google's
 const crypto = require('crypto');
 const bcrypt = require("bcrypt")
 const moment = require('moment-timezone');
+moment().tz("America/New_York").format();
 var nodemailer = require('nodemailer');
 const ejs = require("ejs")
 const fastFolderSizeSync = require('fast-folder-size/sync');
 const fs = require("fs");
 const { send } = require('process');
 const path = require("path");
-moment().tz("America/New_York").format();
+
 
 function isStrJSON(str) {
     try {
