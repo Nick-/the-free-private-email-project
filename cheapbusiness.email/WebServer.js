@@ -64,8 +64,6 @@ app.get('/', (req, res) => {
 
 //invoice.payment_succeeded
 app.post('/payment-succeeded', (request, response) => {
-//TODO: Upgrade user based on the passed client ID
-//Set subscription_exp to lines.data[0].period.end WHERE stripe_customer_id = customer
 
 const sig = request.headers['stripe-signature'];
 

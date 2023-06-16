@@ -587,8 +587,10 @@ async function removeEmailDomain(user_data, domain, c) {
 
                             console.log("Deleteing domain folder..")
                             //Stops working here?
-                            fs.rmSync(email_storage_path, { recursive: true, force: true });
 
+                            if (fs.existsSync(email_storage_path)) {
+                                fs.rmSync(email_storage_path, { recursive: true, force: true });
+                            }
                             //Finally, update user gb alloc
                             var ualuq = "UPDATE users SET mailbox_gb_allocated = ? WHERE uid = ?";
                             var new_gb_alloc = user_data.mailbox_gb_allocated - domain_gb;
@@ -686,8 +688,12 @@ async function deleteEmailUser(user_data, full_email, c) {
                             resolve({ status: "failed", error: "Error deleting email user in DB" })
                         } else {
                             //Remove files, mv these to a trash in the future for compliance purposes
-                            var storage_used = fastFolderSizeSync(email_storage_path)
-                            fs.rmSync(email_storage_path, { recursive: true, force: true });
+                            
+                            var storage_used = 0;
+                            if (fs.existsSync(email_storage_path)) {
+                                storage_used = fastFolderSizeSync(email_storage_path)
+                                fs.rmSync(email_storage_path, { recursive: true, force: true });
+                            }
                             resolve({ status: "success", gb_alloc: new_gb_alloc, del_email: full_email, storage_cleared: storage_used})
                         }
                     });
