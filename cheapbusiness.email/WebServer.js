@@ -92,7 +92,7 @@ const sig = request.headers['stripe-signature'];
         console.log("Invoice Paid:", sub_exp)
 
         var q = "UPDATE users SET plan = 1, subscription_exp = ? WHERE stripe_customer_id = ?";
-        c.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
+        DB.con.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
             if (error) {
                 Util.reportError(error)
             } else {
@@ -145,7 +145,7 @@ app.post('/subscription-created', (request, response) => {
 
         var q = "UPDATE users SET stripe_customer_id = ?, subscription_exp = ?, plan = 1 WHERE uid = ?";
 
-        c.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
+        DB.con.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
             if (error) {
                 Util.reportError(error)
             } else {
