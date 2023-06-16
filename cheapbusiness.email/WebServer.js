@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require("path");
-const stripe = require('stripe')('sk_test_51N70IkJP8d9HeiR6QDOYB4WeDubnDadBa3kjxZCX7MF4bxuT7JkkEANMGX0fzeF04GqWmSUV2YTAHQX5kBEholfc00g2z2pSND');
+const stripe = require('stripe')('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');
 
 require('dotenv').config({ path: path.join(__dirname,'/app.env') })
 
@@ -72,7 +72,7 @@ const sig = request.headers['stripe-signature'];
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_HkwDQhVAXbhUwn6Iujkf5wal3vGtN5u2");
+        event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_ESGEkajxEziTUVTSyKqolAaRhoxQOPNi");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
@@ -115,7 +115,7 @@ app.post('/subscription-created', (request, response) => {
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
+        event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_z94mfxT6Q3azgYfFHsERXjYsMkLDDqwo");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
