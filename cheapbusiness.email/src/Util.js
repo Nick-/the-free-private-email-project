@@ -59,17 +59,11 @@ process.on('unhandledRejection', (err) => {
     reportError(err.stack);
 });
 
-function sendEmail() {
-    //TODO
-    console.log("SET UP EMAIL!")
-}
-
 function reportError(m) {
     if (process.env.DEV)
         console.log("[ERROR]: " + m)
     else
         sendEmail(process.env.ADMIN_EMAIL, process.env.APP_NAME + ": ERROR", m)
-
 }
 
 function isValidDate(date) {
@@ -376,6 +370,12 @@ async function addEmailUser(user_data, full_email, mailbox_size_gb, c) {
     var numUsersForDomain = await getEmailUsersLengthForDomainName([full_email.split("@")[1]], c);
 
     return new Promise(resolve => {
+
+        if(process.env.DEV) {
+            resolve({ status: "failed", error: "Cannot perform this action in developer mode" })
+            return;
+        }
+
         if (full_email == "" || full_email === undefined) {
             resolve({ status: "failed", error: "Empty Data" })
             return
@@ -703,6 +703,12 @@ async function resetEmailUserPass(user_data, full_email, c) {
     owner_uid = await getEmailDomainOwnerUID(full_email, c)
 
     return new Promise(resolve => {
+
+        if(process.env.DEV) {
+            resolve({ status: "failed", error: "Cannot perform this action in developer mode" })
+            return;
+        }
+
         if (user_data == -1) {
             resolve({ status: "failed", error: "Authentification Error" })
         } else if(user_data.uid != owner_uid) {

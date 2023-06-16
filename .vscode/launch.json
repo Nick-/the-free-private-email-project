@@ -11,7 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\cheapbusiness.email\\WebServer.js"
+            "program": "${workspaceFolder}\\cheapbusiness.email\\WebServer.js",
+            "args": ["--DEV"]
         }
     ]
 }

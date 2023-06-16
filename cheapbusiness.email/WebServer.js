@@ -28,6 +28,13 @@ app.engine('html', exphbs.engine({
 }));
 app.set('view engine', 'html');
 
+process.argv.forEach(function (val, index, array) {
+    if(val == "--DEV") {
+        process.env.DEV = true;
+        console.log("Starting Server in Development Mode")
+    }
+  });
+
 app.listen(process.env.HTTP_PORT, () => 
     console.log(`Listening for HTTP on port ${process.env.HTTP_PORT}!`));
 
@@ -71,6 +78,22 @@ const sig = request.headers['stripe-signature'];
         case 'invoice.payment_succeeded':
         const invoicePaymentSucceeded = event.data.object;
         // Then define and call a function to handle the event checkout.session.completed
+        console.log("Got Invoice payment.")
+
+        var customer_id = invoicePaymentSucceeded.customer;
+        var sub_exp = invoicePaymentSucceeded.lines.data[0].period.end;
+
+        console.log("Invoice Paid:", customer_id)
+        console.log("Invoice Paid:", sub_exp)
+
+        var q = "UPDATE users SET plan = 1, subscription_exp = ? WHERE stripe_customer_id = ?";
+        c.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
+            if (error) {
+                Util.reportError(error)
+            } else {
+                console.log("Invoice Paid: User membership extended successfully.")
+            }
+        });
         break;
         // ... handle other event types
         default:
@@ -105,6 +128,25 @@ app.post('/subscription-created', express.raw({type: 'application/json'}), (requ
         case 'checkout.session.completed':
         const checkoutSessionCompleted = event.data.object;
         // Then define and call a function to handle the event checkout.session.completed
+
+        var customer_id = checkoutSessionCompleted.customer;
+        var sub_exp = checkoutSessionCompleted.expires_at;
+        var ref_uid = checkoutSessionCompleted.client_reference_id;
+
+        console.log("New user subscription!", customer_id)
+        console.log("New user subscription!", sub_exp)
+        console.log("New user subscription!", ref_uid)
+
+        var q = "UPDATE users SET stripe_customer_id = ?, subscription_exp = ?, plan = 1 WHERE uid = ?";
+
+        c.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
+            if (error) {
+                Util.reportError(error)
+            } else {
+                console.log("Checkout Completed: User upgraded successfully.")
+            }
+        });
+
         break;
         // ... handle other event types
         default:
@@ -258,3 +300,4 @@ app.post('/login', (req, res) => {
                 res.send(login_response);
 	})()
 });
+
