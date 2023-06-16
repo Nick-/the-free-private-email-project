@@ -18,7 +18,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json())
 app.use(cookieParser());
-
+app.use(express.json({
+    limit: '5mb',
+    verify: (req, res, buf) => {
+      req.rawBody = buf.toString();
+    }
+}));
 app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, '/views'));
 app.set('partials', path.join(__dirname, '/partials'));
@@ -58,7 +63,7 @@ app.get('/', (req, res) => {
 });
 
 //invoice.payment_succeeded
-app.post('/payment-succeeded', express.raw({type: 'application/json'}), (request, response) => {
+app.post('/payment-succeeded', (request, response) => {
 //TODO: Upgrade user based on the passed client ID
 //Set subscription_exp to lines.data[0].period.end WHERE stripe_customer_id = customer
 
@@ -67,7 +72,7 @@ const sig = request.headers['stripe-signature'];
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(JSON.stringify(request.body), sig, "whsec_HkwDQhVAXbhUwn6Iujkf5wal3vGtN5u2");
+        event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_HkwDQhVAXbhUwn6Iujkf5wal3vGtN5u2");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
@@ -107,7 +112,7 @@ const sig = request.headers['stripe-signature'];
 
 //https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
 //checkout.session.completed
-app.post('/subscription-created', express.raw({type: 'application/json'}), (request, response) => {
+app.post('/subscription-created', (request, response) => {
     //TODO: Set stripe_customer_id to customer ("cus_O5WxUXQJuRPCw1")
     //based on client_reference_id
 
@@ -117,7 +122,7 @@ app.post('/subscription-created', express.raw({type: 'application/json'}), (requ
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(JSON.stringify(request.body), sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
+        event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
