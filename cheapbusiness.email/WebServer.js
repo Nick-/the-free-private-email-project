@@ -67,7 +67,7 @@ const sig = request.headers['stripe-signature'];
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(request.body, sig, "whsec_HkwDQhVAXbhUwn6Iujkf5wal3vGtN5u2");
+        event = stripe.webhooks.constructEvent(JSON.stringify(request.body), sig, "whsec_HkwDQhVAXbhUwn6Iujkf5wal3vGtN5u2");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
@@ -117,7 +117,7 @@ app.post('/subscription-created', express.raw({type: 'application/json'}), (requ
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(request.body, sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
+        event = stripe.webhooks.constructEvent(JSON.stringify(request.body), sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
