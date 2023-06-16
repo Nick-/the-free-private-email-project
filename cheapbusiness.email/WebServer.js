@@ -88,11 +88,8 @@ const sig = request.headers['stripe-signature'];
         var customer_id = invoicePaymentSucceeded.customer;
         var sub_exp = invoicePaymentSucceeded.lines.data[0].period.end;
 
-        console.log("Invoice Paid:", customer_id)
-        console.log("Invoice Paid:", sub_exp)
-
         var q = "UPDATE users SET plan = 1, subscription_exp = ? WHERE stripe_customer_id = ?";
-        DB.con.query(q, [customer_id, sub_exp, ref_uid], (error, result) => {
+        DB.con.query(q, [sub_exp, customer_id], (error, result) => {
             if (error) {
                 Util.reportError(error)
             } else {
@@ -113,16 +110,11 @@ const sig = request.headers['stripe-signature'];
 //https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
 //checkout.session.completed
 app.post('/subscription-created', (request, response) => {
-    //TODO: Set stripe_customer_id to customer ("cus_O5WxUXQJuRPCw1")
-    //based on client_reference_id
-
-    //expires_at
     const sig = request.headers['stripe-signature'];
 
     let event;
 
     try {
-        console.log("Hello", request.rawBody)
         event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
@@ -138,10 +130,6 @@ app.post('/subscription-created', (request, response) => {
         var customer_id = checkoutSessionCompleted.customer;
         var sub_exp = checkoutSessionCompleted.expires_at;
         var ref_uid = checkoutSessionCompleted.client_reference_id;
-
-        console.log("New user subscription!", customer_id)
-        console.log("New user subscription!", sub_exp)
-        console.log("New user subscription!", ref_uid)
 
         var q = "UPDATE users SET stripe_customer_id = ?, subscription_exp = ?, plan = 1 WHERE uid = ?";
 
