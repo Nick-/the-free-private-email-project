@@ -122,6 +122,7 @@ app.post('/subscription-created', (request, response) => {
     let event;
 
     try {
+        console.log("Hello", request.rawBody)
         event = stripe.webhooks.constructEvent(request.rawBody, sig, "whsec_xBkctnxoYFv1xQ6QS59NkhVkUFidIt88");
     } catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
