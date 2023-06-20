@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-
+const Util = require("./Util.js");
 
 const db_config = {
     host: process.env.MYSQL_HOST,
@@ -34,10 +34,10 @@ function initMySQL() {
 
             if (err.code === 'PROTOCOL_CONNECTION_LOST') {
                 console.log('Connection Lost... Resetting.');
+                Util.reportError("Resetting DB.. OK")
                 initMySQL();
             } else { 
-                throw err;
-
+                Util.reportError(err.stack)
             }
         }
 
