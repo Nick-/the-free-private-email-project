@@ -1,0 +1,23 @@
+{{> header }}
+<div id="blog-posts">
+    {{#each blog_posts}}
+        <a href="{{slug}}">
+            <div class="blog-post-preview">
+                <img class="blog-post-preview-cover" src="{{cover_url}}"/>
+                <div class="blog-post-preview-title">
+                    {{title}}
+                </div>
+                <div class="blog-post-preview-date">
+                    {{post_date}}
+                </div>
+                <div class="blog-post-preview-excerpt">
+                    {{excerpt}}
+                </div>
+            </div>
+        </a>
+    {{/each}}
+</div>
+{{> footer }}
+</body>
+
+</html>

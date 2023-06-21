@@ -919,7 +919,61 @@ function timeSince(date) {
    });
   }
   
+  async function getBlogPostPreviews(con) {
+    return new Promise(resolve => {
+        var q = "SELECT slug, title, cover_url, excerpt, post_date FROM blog_posts LIMIT 9";
+        con.query(q, (error, results) => {
+            if (error) {
+                resolve({ status: "failed", error: "Error getting blog posts..." })
+            } else {
+                resolve(results)
+            }
+        });
+    });
+  }
+
+  function saveImageDataToFileSystemBuffer(buffer, slug) {
+
+    var imgPath = path.join(__dirname, '../public/img/uploads/')
+
+
+    fs.writeFile(imgPath + slug+ ".webp", buffer, {
+        flag: 'w',
+    }, function (err) {
+        if (err)
+            console.log("Image write error: " + err);
+    });
+}
+
+  async function createBlogPost(con, body, file_buffer) {
+    return new Promise(resolve => {
+
+        saveImageDataToFileSystemBuffer(file_buffer, body.slug)
+
+        var slug = body.slug;
+        var title = body.title;
+        var cover_url = "/img/uploads/" + slug + ".webp";
+        var excerpt = body.excerpt;
+        var post_date = new Date();
+        var post_content = body.content;
+        var seo_keywords = body.seo_keywords;
+        var seo_description = body.seo_description;
+
+        var q = "INSERT INTO blog_posts (slug, title, cover_url, excerpt, post_date, post_content, seo_keywords, seo_description) VALUES (?,?,?,?,?,?,?,?)"
+        con.query(q, [slug, title, cover_url, excerpt, post_date, post_content, seo_keywords, seo_description], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error creating blog post..." })
+            } else {
+                resolve({ status: "success" })
+            }
+        });
+
+    });
+  }
 module.exports = {
+    createBlogPost,
+    getBlogPostPreviews,
     sendEmailLoginInstructions,
     timeSince,
     submitResetPassword,

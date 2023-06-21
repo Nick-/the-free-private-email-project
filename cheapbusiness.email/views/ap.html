@@ -1,0 +1,57 @@
+{{> header }}
+<div class="ap-body">
+    <h1>Admin Panel</h1>
+    <div class="create-blog-post">
+        <h2>Create Blog Post</h2>
+        <input placeholder="Blog Post Slug" id="create-blog-post-slug"/>
+        <br>
+        <input placeholder="Blog Post Title" id="create-blog-post-title"/>
+        <br>
+        <textarea placeholder="Blog Post Excerpt" id="create-blog-post-excerpt"></textarea>
+        <br>
+        <textarea placeholder="Blog Post Content" id="create-blog-post-content"></textarea>
+        <br>
+        <input placeholder="Blog Post Keywords" id="create-blog-post-seo-keywords"/>
+        <br>
+        <input placeholder="Blog Post Description" id="create-blog-post-seo-description"/>
+        <br>
+        <input id='create-blog-post-image' type="file" accept="image/webp"/>
+        <button onclick="createBlogPost()">Create Post</button>
+    </div>
+</div>
+{{> footer }}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+    function createBlogPost() {
+        var formData = {
+        slug: document.getElementById("create-blog-post-slug").value,
+        title: document.getElementById("create-blog-post-title").value,
+        excerpt: document.getElementById("create-blog-post-excerpt").value,
+        content: document.getElementById("create-blog-post-content").value,
+        seo_keywords:document.getElementById("create-blog-post-seo-keywords").value,
+        seo_description:document.getElementById("create-blog-post-seo-description").value,
+        file: $("#create-blog-post-image")[0]
+    };
+
+    var formData = new FormData($("#create-blog-post-image").value)
+
+    $.ajax({
+        type: "POST",
+        url: "/create-blog-post",
+        data: formData,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Success")
+        } else {
+            alert(data.error)
+        }
+    });
+    }
+
+</script>
+</body>
+</html>

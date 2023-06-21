@@ -3,12 +3,15 @@ const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require("path");
+const multer = require('multer');
+const upload = multer();
 const stripe = require('stripe')('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');
 
 require('dotenv').config({ path: path.join(__dirname,'/app.env') })
 
 const Util = require("./src/Util.js");
 const DB = require("./src/DB.js");
+const { userInfo } = require('os');
 require("./src/Daemons.js");
 
 const app = express();
@@ -43,6 +46,44 @@ process.argv.forEach(function (val, index, array) {
 app.listen(process.env.HTTP_PORT, () => 
     console.log(`Listening for HTTP on port ${process.env.HTTP_PORT}!`));
 
+
+app.get('/ap', (req, res) => {
+    (async function () {
+    
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+        if(user_data.email == "nicholasconrad96@gmail.com") {
+
+            var blog_post_previews = await Util.getBlogPostPreviews(DB.con)
+
+            res.render('ap', {
+                seo_title: "Admin Panel",
+                blog_posts:blog_post_previews
+            })
+            
+        } else {
+            res.redirect("/")
+        }  
+    })()
+});
+
+app.post('/create-blog-post', upload.single("file"), (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+                console.log("File:", req)
+                var bp_res = await Util.createBlogPost(DB.con, req.body, req.file.buffer)
+                res.send(bp_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
 app.get('/', (req, res) => {
     (async function () {
 
@@ -54,11 +95,33 @@ app.get('/', (req, res) => {
         my_email_users = await Util.getEmailUsersForDomain(my_domains, DB.con)
         
         res.render('index', {
+            seo_keywords:"free email,custom domain email, cheap business email, affordable business email, reliable email solutions, professional email addresses, secure business email, generous storage capacity, collaboration tools, scalable email service, cost-effective email solutions",
+            seo_description:"Looking for affordable and reliable business email solutions? Establish a professional brand identity, enhance security, and improve communication with clients. Boost your business productivity and credibility today!",
+            seo_title: "Professional Business Email",
             my_email_users: JSON.stringify(my_email_users),
             my_domains: my_domains,
             user_data: user_data,
             currentYear: new Date().getFullYear(),
         });
+    })()
+});
+
+app.get('/blog', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+        var blog_post_previews = await Util.getBlogPostPreviews(DB.con)
+
+        res.render('blog', {
+            seo_keywords:"small business email solutions, best email providers for businesses, choosing the right email service for your business, benefits of investing in a business email service, boosting professionalism with business email, secure and efficient email solutions for businesses, affordable email options for small enterprises, maximizing productivity with cheap business email, streamlining communication with affordable email services, essential features to consider in a business email provider",
+            seo_description:"Unlock the potential of affordable business email solutions. Discover cost-effective strategies, enhance professionalism, and streamline communication for your growing business.",
+            seo_title: "The EconoMail Blog: Empowering Your Business with Affordable Email Solutions",
+            user_data:user_data,
+            blog_posts:blog_post_previews,
+            currentYear: new Date().getFullYear(),
+        })
     })()
 });
 
