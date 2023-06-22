@@ -3,39 +3,58 @@
     <h1>Admin Panel</h1>
     <div class="create-blog-post">
         <h2>Create Blog Post</h2>
-        <input placeholder="Blog Post Slug" id="create-blog-post-slug"/>
+        <form id="create-blog-post-form" enctype="multipart/form-data">
+        <input required placeholder="Blog Post Slug" name="slug"/>
         <br>
-        <input placeholder="Blog Post Title" id="create-blog-post-title"/>
+        <input required placeholder="Blog Post Title" name="title"/>
         <br>
-        <textarea placeholder="Blog Post Excerpt" id="create-blog-post-excerpt"></textarea>
+        <textarea required placeholder="Blog Post Excerpt" name="excerpt"></textarea>
         <br>
-        <textarea placeholder="Blog Post Content" id="create-blog-post-content"></textarea>
+        <textarea required placeholder="Blog Post Content" name="content"></textarea>
         <br>
-        <input placeholder="Blog Post Keywords" id="create-blog-post-seo-keywords"/>
+        <input required placeholder="Blog Post Keywords" name="seo_keywords"/>
         <br>
-        <input placeholder="Blog Post Description" id="create-blog-post-seo-description"/>
+        <input required placeholder="Blog Post Description" name="seo_description"/>
         <br>
-        <input id='create-blog-post-image' type="file" accept="image/webp"/>
-        <button onclick="createBlogPost()">Create Post</button>
+        <label for="file" >WebP (1080 x 500)</label>
+        <br>
+        <input required id='create-blog-post-image' name="file" type="file" accept="image/webp"/>
+        <br><br>
+        <input type="submit" value="Create Post"/>
+    </form>
     </div>
 </div>
 {{> footer }}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
+
+var _URL = window.URL || window.webkitURL;
+$("#create-blog-post-image").change(function (e) {
+    var file, img;
+    if ((file = this.files[0])) {
+        img = new Image();
+        var objectUrl = _URL.createObjectURL(file);
+        img.onload = function () {
+            if(this.width != 1080 && this.height != "500") {
+                alert("Please Upload a WebP 1080x500");
+                $("#create-blog-post-image").val("")
+            }
+            _URL.revokeObjectURL(objectUrl);
+        };
+        img.src = objectUrl;
+    }
+});
+
+document.getElementById("create-blog-post").onsubmit = function(e) {
+    e.preventDefault();
+    createBlogPost;
+    return false;
+}
+
     function createBlogPost() {
-        var formData = {
-        slug: document.getElementById("create-blog-post-slug").value,
-        title: document.getElementById("create-blog-post-title").value,
-        excerpt: document.getElementById("create-blog-post-excerpt").value,
-        content: document.getElementById("create-blog-post-content").value,
-        seo_keywords:document.getElementById("create-blog-post-seo-keywords").value,
-        seo_description:document.getElementById("create-blog-post-seo-description").value,
-        file: $("#create-blog-post-image")[0]
-    };
-
-    var formData = new FormData($("#create-blog-post-image").value)
-
+        try {
+        var formData = new FormData(document.getElementById("create-blog-post-form"))
     $.ajax({
         type: "POST",
         url: "/create-blog-post",
@@ -50,6 +69,10 @@
             alert(data.error)
         }
     });
+
+} catch(e) {
+    alert(e)
+}
     }
 
 </script>

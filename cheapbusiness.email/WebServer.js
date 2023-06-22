@@ -75,7 +75,7 @@ app.post('/create-blog-post', upload.single("file"), (req, res) => {
             req.cookies['email'], req.cookies['auth_key'], DB.con);
 
             if(user_data.email == "nicholasconrad96@gmail.com") {
-                console.log("File:", req)
+                //console.log("File:", req)
                 var bp_res = await Util.createBlogPost(DB.con, req.body, req.file.buffer)
                 res.send(bp_res)
             } else {
@@ -120,10 +120,33 @@ app.get('/blog', (req, res) => {
             seo_title: "The EconoMail Blog: Empowering Your Business with Affordable Email Solutions",
             user_data:user_data,
             blog_posts:blog_post_previews,
-            currentYear: new Date().getFullYear(),
+            currentYear: new Date().getFullYear()
         })
     })()
 });
+
+app.get('/blog/:id', function(req , res){
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+        var blog_post = await Util.loadBlogPost(DB.con, req.params.id)
+
+        if(blog_post == -1) {
+            res.redirect("/blog")
+        } else {
+            res.render('blog-post', {
+                seo_keywords: blog_post.seo_keywords,
+                seo_description: blog_post.seo_description,
+                seo_title: blog_post.title,
+                user_data:user_data,
+                blog_post:blog_post,
+                currentYear: new Date().getFullYear()
+                });
+        }
+    })()
+  });
 
 //invoice.payment_succeeded
 app.post('/payment-succeeded', (request, response) => {

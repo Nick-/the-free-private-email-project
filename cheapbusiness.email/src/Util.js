@@ -971,7 +971,26 @@ function timeSince(date) {
 
     });
   }
+
+  async function loadBlogPost(con, slug) {
+    return new Promise(resolve => {
+        var q = "SELECT * FROM blog_posts WHERE slug = ?";
+        con.query(q, [slug], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve(-1)
+            } else {
+                if(results.length == 0) {
+                    resolve(-1)
+                } else {
+                    resolve(results[0])
+                }
+            }
+        });
+    });
+  }
 module.exports = {
+    loadBlogPost,
     createBlogPost,
     getBlogPostPreviews,
     sendEmailLoginInstructions,
