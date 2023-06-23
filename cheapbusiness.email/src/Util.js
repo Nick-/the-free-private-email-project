@@ -921,7 +921,7 @@ function timeSince(date) {
   
   async function getBlogPostPreviews(con) {
     return new Promise(resolve => {
-        var q = "SELECT slug, title, cover_url, excerpt, post_date FROM blog_posts LIMIT 9";
+        var q = "SELECT * FROM blog_posts";
         con.query(q, (error, results) => {
             if (error) {
                 resolve({ status: "failed", error: "Error getting blog posts..." })
@@ -971,6 +971,34 @@ function timeSince(date) {
 
     });
   }
+  
+  async function updateBlogPost(con, body, file_buffer) {
+    return new Promise(resolve => {
+
+        saveImageDataToFileSystemBuffer(file_buffer, body.slug)
+
+        var edit_id = body.id;
+        var slug = body.slug;
+        var title = body.title;
+        var cover_url = "/img/uploads/" + slug + ".webp";
+        var excerpt = body.excerpt;
+        var post_date = new Date();
+        var post_content = body.content;
+        var seo_keywords = body.seo_keywords;
+        var seo_description = body.seo_description;
+
+        var q = "UPDATE blog_posts SET slug = ?, title = ?, cover_url = ?, excerpt = ?, post_date = ?, post_content = ?, seo_keywords = ?, seo_description = ? WHERE id = ?"
+        con.query(q, [slug, title, cover_url, excerpt, post_date, post_content, seo_keywords, seo_description, edit_id], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error editing blog post..." })
+            } else {
+                resolve({ status: "success" })
+            }
+        });
+
+    });
+  }
 
   async function loadBlogPost(con, slug) {
     return new Promise(resolve => {
@@ -989,7 +1017,25 @@ function timeSince(date) {
         });
     });
   }
+
+  async function deleteBlogPost(con, slug) {
+    return new Promise(resolve => {
+        var q = "DELETE FROM blog_posts WHERE slug = ?"
+        con.query(q, [slug], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error removing blog post..." })
+            } else {
+                var imgPath = path.join(__dirname, '../public/img/uploads/' + slug + ".webp")
+                fs.unlinkSync(imgPath)
+                resolve({ status: "success" })
+            }
+        })
+    });
+}
 module.exports = {
+    updateBlogPost,
+    deleteBlogPost,
     loadBlogPost,
     createBlogPost,
     getBlogPostPreviews,

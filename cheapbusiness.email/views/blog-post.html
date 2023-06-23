@@ -1,9 +1,28 @@
 {{> header }}
+<style>
+    #blog-post {
+        max-width: 1080px;
+        margin: auto;
+        padding: 10px;
+        padding-bottom: 50px;
+        padding-top: 50px;
+    }
+    .blog-cover {
+        width: 100%;
+    }
+    .back-to-blog {
+        margin-top: 10px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+</style>
 <div id="blog-post">
-    <div class="blog-cover">
-
-    </div>
-    <h1>{{post.title}}</h1>
+    <img class="blog-cover" src="{{blog_post.cover_url}}"/>
+    <h1>{{blog_post.title}}</h1>
+    <div class="blog-post-date">{{blog_post.post_date}}</div><br>
+    <div class="blog-post-content">{{{ blog_post.post_content }}}</div>
+    <a href='/blog/'><div class="back-to-blog">Back to Blog</div></a>
 </div>
 {{> footer}}
 </body>

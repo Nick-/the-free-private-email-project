@@ -84,6 +84,37 @@ app.post('/create-blog-post', upload.single("file"), (req, res) => {
     })()
 })
 
+app.post('/update-blog-post', upload.single("file"), (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+                //console.log("File:", req)
+                var bp_res = await Util.updateBlogPost(DB.con, req.body, req.file.buffer)
+                res.send(bp_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
+app.post('/delete-blog-post', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+                var bp_res = await Util.deleteBlogPost(DB.con, req.body.slug)
+                res.send(bp_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
 app.get('/', (req, res) => {
     (async function () {
 

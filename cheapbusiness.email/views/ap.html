@@ -1,9 +1,22 @@
 {{> header }}
+<style>
+    .ap-body {
+        text-align: center;
+    }
+    .delete-blog-post-a {
+        color:red;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
 <div class="ap-body">
     <h1>Admin Panel</h1>
     <div class="create-blog-post">
         <h2>Create Blog Post</h2>
-        <form id="create-blog-post-form" enctype="multipart/form-data">
+        <form id="create-blog-post-form" enctype="multipart/form-data" method="post">
+
+        <input hidden name="edit_id"/>
+
         <input required placeholder="Blog Post Slug" name="slug"/>
         <br>
         <input required placeholder="Blog Post Title" name="title"/>
@@ -23,11 +36,30 @@
         <input type="submit" value="Create Post"/>
     </form>
     </div>
+    <div>
+        <h2>Current Blog Posts:</h2>
+        {{#each blog_posts}}
+            {{title}} <a class='delete-blog-post-a' onclick='deleteBlogPost("{{slug}}")'>(delete)</a> <a data-id="{{id}}" 
+            onclick='editBlogPost(this)'>(edit)</a><br>
+        {{/each}}
+    </div>
 </div>
 {{> footer }}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
+
+var editingPost = false;
+
+function editBlogPost(elem) {
+    console.log(elem.dataset)
+    console.log("Editing", elem.dataset.id)
+
+    //Set Status to Editing
+    editingPost = true;
+
+    //Set Inputs, including the file to existing image?...
+}
 
 var _URL = window.URL || window.webkitURL;
 $("#create-blog-post-image").change(function (e) {
@@ -46,9 +78,9 @@ $("#create-blog-post-image").change(function (e) {
     }
 });
 
-document.getElementById("create-blog-post").onsubmit = function(e) {
+document.getElementById("create-blog-post-form").onsubmit = function(e) {
+    createBlogPost();
     e.preventDefault();
-    createBlogPost;
     return false;
 }
 
@@ -65,6 +97,30 @@ document.getElementById("create-blog-post").onsubmit = function(e) {
     }).done(function (data) {
         if(data.status == "success") {
             alert("Success")
+            window.location.reload();
+        } else {
+            alert(data.error)
+        }
+    });
+
+} catch(e) {
+    alert(e)
+}
+    }
+
+    function deleteBlogPost(slug) {
+        try {
+        var formData = {slug: slug}
+    $.ajax({
+        type: "POST",
+        url: "/delete-blog-post",
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Success")
+            window.location.reload();
         } else {
             alert(data.error)
         }

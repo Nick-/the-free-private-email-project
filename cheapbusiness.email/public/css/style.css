@@ -166,6 +166,10 @@ footer {
     color:white;
 }
 
+footer a {
+    color: white;
+}
+
 .my_domain {
     background: black;
     color: white;

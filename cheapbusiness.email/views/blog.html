@@ -1,7 +1,35 @@
 {{> header }}
+<style>
+    #blog-posts {
+        max-width: 1080px;
+        margin: auto;
+        padding-top: 50px;
+    }
+    #blog-posts a {
+        text-decoration: none;
+    }
+    .blog-post-preview {
+        padding: 10px;
+    }
+    .blog-post-preview-cover {
+        width: 100%;
+    }
+    .blog-post-preview-title {
+        font-size: 1.5em;
+        margin-top: 5px;
+        color: black;
+    }
+    .blog-post-preview-date {
+        font-style: italic;
+        color: grey;
+    }
+    .blog-post-preview-excerpt {
+        color: #333;
+    }
+</style>
 <div id="blog-posts">
     {{#each blog_posts}}
-        <a href="{{slug}}">
+        <a href="/blog/{{slug}}">
             <div class="blog-post-preview">
                 <img class="blog-post-preview-cover" src="{{cover_url}}"/>
                 <div class="blog-post-preview-title">
@@ -9,10 +37,11 @@
                 </div>
                 <div class="blog-post-preview-date">
                     {{post_date}}
-                </div>
+                </div><br>
                 <div class="blog-post-preview-excerpt">
                     {{excerpt}}
                 </div>
+                <div class="blog-post-read-more">Read More...</div>
             </div>
         </a>
     {{/each}}
