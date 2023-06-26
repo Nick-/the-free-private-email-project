@@ -1,5 +1,15 @@
 {{> header }}
-
+<style>
+  footer {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    color: white;
+}
+  footer a {
+    color: white;
+  }
+</style>
   <div id="forgot-password-screen">
     <div class="close-popup" onclick='closeForgotPassword()'><i class="fa-solid fa-circle-xmark"></i></div>
     <h2>Forgot Password?</h2>
@@ -109,20 +119,6 @@
 
   {{/ifeq}}
 
-  <div id="tos">
-    <div class="popup-header">
-    <div class="close-popup" onclick='closeTOS()'><i class="fa-solid fa-circle-xmark"></i></div>
-    <h2>Terms of Service</h2>
-    </div>
-    {{> tos }}
-  </div>
-  <div id="pp">
-    <div class="popup-header">
-  <div class="close-popup" onclick="closePP()"><i class="fa-solid fa-circle-xmark"></i></div>
-    <h2>Privacy Policy</h2>
-  </div>
-    {{> pp }}
-  </div>
   {{> footer }}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   {{> hbjs }}

@@ -92,7 +92,13 @@ app.post('/update-blog-post', upload.single("file"), (req, res) => {
 
             if(user_data.email == "nicholasconrad96@gmail.com") {
                 //console.log("File:", req)
-                var bp_res = await Util.updateBlogPost(DB.con, req.body, req.file.buffer)
+
+                var buffer = null;
+
+                if(req.file)
+                    buffer = req.file.buffer;
+
+                var bp_res = await Util.updateBlogPost(DB.con, req.body, buffer)
                 res.send(bp_res)
             } else {
                 res.send({ status: "failed", error: "You shouldn't be doing that..." })
@@ -136,6 +142,39 @@ app.get('/', (req, res) => {
         });
     })()
 });
+
+app.get('/terms-of-service', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+        res.render('tos', {
+            seo_keywords:"",
+            seo_description:"",
+            seo_title: "Terms of Service | Cheap Business Email",
+            user_data:user_data,
+            currentYear: new Date().getFullYear()
+        })
+    })()
+});
+
+app.get('/privacy-policy', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+        res.render('pp', {
+            seo_keywords:"",
+            seo_description:"",
+            seo_title: "Privacy Policy | Cheap Business Email",
+            user_data:user_data,
+            currentYear: new Date().getFullYear()
+        })
+    })()
+});
+
 
 app.get('/blog', (req, res) => {
     (async function () {

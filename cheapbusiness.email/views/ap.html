@@ -8,38 +8,50 @@
         cursor: pointer;
         text-decoration: underline;
     }
+    #blog-content-area {
+        height: 500px;
+        width: 75%;
+    }
+    .edit-post {
+        cursor: pointer;
+    }
 </style>
 <div class="ap-body">
     <h1>Admin Panel</h1>
     <div class="create-blog-post">
-        <h2>Create Blog Post</h2>
+        <h2 id="create-or-edit-post-title">Create Blog Post</h2>
         <form id="create-blog-post-form" enctype="multipart/form-data" method="post">
 
-        <input hidden name="edit_id"/>
-
-        <input required placeholder="Blog Post Slug" name="slug"/>
+        <input id='blog-slug-field' required placeholder="Blog Post Slug" name="slug"/>
         <br>
-        <input required placeholder="Blog Post Title" name="title"/>
+        <input id='blog-title-field' required placeholder="Blog Post Title" name="title"/>
         <br>
-        <textarea required placeholder="Blog Post Excerpt" name="excerpt"></textarea>
+        <textarea id='blog-excerpt-area' required placeholder="Blog Post Excerpt" name="excerpt"></textarea>
         <br>
-        <textarea required placeholder="Blog Post Content" name="content"></textarea>
+        <textarea id='blog-content-area' required placeholder="Blog Post Content" name="content"></textarea>
         <br>
-        <input required placeholder="Blog Post Keywords" name="seo_keywords"/>
+        <textarea id='blog-seokeywords-area' required placeholder="Blog Post Keywords" name="seo_keywords"></textarea>
         <br>
-        <input required placeholder="Blog Post Description" name="seo_description"/>
+        <textarea id='blog-seodescription-area' required placeholder="Blog Post Description" name="seo_description"></textarea>
         <br>
         <label for="file" >WebP (1080 x 500)</label>
         <br>
         <input required id='create-blog-post-image' name="file" type="file" accept="image/webp"/>
         <br><br>
-        <input type="submit" value="Create Post"/>
+        <input id='blog-post-submit-button' type="submit" value="Create Post"/>
     </form>
     </div>
     <div>
         <h2>Current Blog Posts:</h2>
         {{#each blog_posts}}
-            {{title}} <a class='delete-blog-post-a' onclick='deleteBlogPost("{{slug}}")'>(delete)</a> <a data-id="{{id}}" 
+            {{title}} <a class='delete-blog-post-a' onclick='deleteBlogPost("{{slug}}")'>(delete)</a> <a class='edit-post' 
+            data-id="{{id}}"  
+            data-content="{{{post_content}}}"
+            data-slug="{{slug}}"
+            data-title="{{title}}"
+            data-excerpt="{{excerpt}}"
+            data-seokeywords="{{seo_keywords}}"
+            data-seodescription="{{seo_description}}"
             onclick='editBlogPost(this)'>(edit)</a><br>
         {{/each}}
     </div>
@@ -49,16 +61,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 
-var editingPost = false;
+var edit_id = -1;
+
 
 function editBlogPost(elem) {
     console.log(elem.dataset)
     console.log("Editing", elem.dataset.id)
 
     //Set Status to Editing
-    editingPost = true;
+    edit_id = elem.dataset.id;
+
+    document.getElementById("create-or-edit-post-title").innerHTML = "Edit Blog Post"
 
     //Set Inputs, including the file to existing image?...
+    document.getElementById("blog-content-area").innerHTML = elem.dataset.content;
+    document.getElementById("blog-excerpt-area").innerHTML = elem.dataset.excerpt;
+
+    document.getElementById("blog-seokeywords-area").innerHTML = elem.dataset.seokeywords;
+    document.getElementById("blog-seodescription-area").innerHTML = elem.dataset.seodescription;
+
+    document.getElementById("blog-slug-field").value = elem.dataset.slug;
+    document.getElementById("blog-title-field").value = elem.dataset.title;
+
+    document.getElementById("create-blog-post-image").required = false;
+
+    document.getElementById("blog-post-submit-button").value = "Update Post"
 }
 
 var _URL = window.URL || window.webkitURL;
@@ -87,6 +114,9 @@ document.getElementById("create-blog-post-form").onsubmit = function(e) {
     function createBlogPost() {
         try {
         var formData = new FormData(document.getElementById("create-blog-post-form"))
+
+        if(edit_id == -1) {
+
     $.ajax({
         type: "POST",
         url: "/create-blog-post",
@@ -102,6 +132,26 @@ document.getElementById("create-blog-post-form").onsubmit = function(e) {
             alert(data.error)
         }
     });
+        } else {
+            formData.append("id", edit_id)
+            //Edit
+            $.ajax({
+        type: "POST",
+        url: "/update-blog-post",
+        data: formData,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+    }).done(function (data) {
+        if(data.status == "success") {
+            alert("Success")
+            window.location.reload();
+        } else {
+            alert(data.error)
+        }
+    });
+
+        }
 
 } catch(e) {
     alert(e)

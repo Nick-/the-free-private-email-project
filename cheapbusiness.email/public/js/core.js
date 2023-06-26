@@ -145,22 +145,6 @@ function showRegister() {
     document.getElementById("register-form").style.display = "block"
 }
 
-function showPP() {
-    document.getElementById("pp").style.display = "block";
-}
-
-function showTOS() {
-    document.getElementById("tos").style.display = "block";
-}
-
-function closePP() {
-    document.getElementById("pp").style.display = "none";
-}
-
-function closeTOS() {
-    document.getElementById("tos").style.display = "none";
-}
-
 function logout() {
     setCookie("email", "", -1)
     setCookie("auth_key", "", -1);

@@ -10,7 +10,7 @@ var nodemailer = require('nodemailer');
 const ejs = require("ejs")
 const fastFolderSizeSync = require('fast-folder-size/sync');
 const fs = require("fs");
-const { send } = require('process');
+const { send, report } = require('process');
 const path = require("path");
 
 
@@ -971,11 +971,50 @@ function timeSince(date) {
 
     });
   }
+
+  async function getBlogSlug(con, edit_id) {
+    return new Promise(resolve => {
+        var q = "SELECT slug FROM blog_posts WHERE id = ?";
+        con.query(q, [edit_id], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve(-1)
+            } else {
+                resolve(results[0].slug)
+            }
+        });
+    });
+  }
   
   async function updateBlogPost(con, body, file_buffer) {
+
+    var old_slug = await getBlogSlug(con, body.id)
+
     return new Promise(resolve => {
 
-        saveImageDataToFileSystemBuffer(file_buffer, body.slug)
+        if(file_buffer == null) {
+            console.log("Updating blog post, no new image")
+            if(old_slug != body.slug) {
+                console.log("But slug is updated")
+                var oldPath = path.join(__dirname, '../public/img/uploads/' + old_slug + ".webp")
+                var newPath = path.join(__dirname, '../public/img/uploads/' + body.slug + ".webp")
+                fs.rename(oldPath, newPath, function (err) {
+                    if (err) {
+                        reportError("Error updating blog post image from slug change")
+                    } else {
+                        console.log('Successfully renamed - AKA moved!')
+                    }
+                  })
+            }
+
+        } else {
+            saveImageDataToFileSystemBuffer(file_buffer, body.slug)
+            if(old_slug != body.slug) {
+                console.log("Deleting Old Slug Image")
+                var imgPath = path.join(__dirname, '../public/img/uploads/' + old_slug + ".webp")
+                fs.unlinkSync(imgPath)
+            }
+        }
 
         var edit_id = body.id;
         var slug = body.slug;

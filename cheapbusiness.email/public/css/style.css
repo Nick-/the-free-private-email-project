@@ -160,14 +160,12 @@ margin-bottom:10px;
     display: none;
 }
 footer {
-    position: fixed;
-    bottom: 5px;
-    left: 5px;
-    color:white;
+    margin-bottom: 5px;
+    margin-left: 5px;
 }
 
 footer a {
-    color: white;
+    color:black;
 }
 
 .my_domain {
@@ -181,7 +179,7 @@ footer a {
     cursor:pointer;
     color:red;
 }
-#tos, #pp, #forgot-password-screen {
+#forgot-password-screen {
     display: none;
     background: white;
     position: absolute;
@@ -432,13 +430,25 @@ header h1 img {
 margin-top: 10px;
 }
 
+#tos, #pp {
+    width: 50%;
+    margin: auto;
+    margin-top: 100px;
+}
+
 @media only screen and (max-width: 750px) {
+
+    #tos, #pp {
+        width: 90%;
+    }
+
     #account-summary {
         right: 0;
         text-align: center;
     }
     #login-screen {
         display: block;
+        
     }
     #login-form, #register-form {
         margin-bottom: 0px;
@@ -451,6 +461,8 @@ margin-top: 10px;
         border-radius: 0px;
         width: calc(100% - 40px);
         height:100vh;
+        background:#111;
+        color: white;
     }
     #features h2 {
         margin-top: 0;
