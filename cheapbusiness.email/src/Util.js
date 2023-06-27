@@ -1072,7 +1072,38 @@ function timeSince(date) {
         })
     });
 }
+
+async function getLeads(con) {
+    return new Promise(resolve => {
+        var q = "SELECT * FROM leads ORDER BY email DESC"
+        con.query(q, (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve([])
+            } else {
+                resolve(results)
+            }
+        })
+    });
+}
+
+async function getLeadEmailTemplates(con) {
+    return new Promise(resolve => {
+        var q = "SELECT * FROM lead_email_templates"
+        con.query(q, (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve([])
+            } else {
+                resolve(results)
+            }
+        })
+    });
+}
+
 module.exports = {
+    getLeadEmailTemplates,
+    getLeads,
     updateBlogPost,
     deleteBlogPost,
     loadBlogPost,

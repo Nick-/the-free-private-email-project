@@ -57,8 +57,13 @@ app.get('/ap', (req, res) => {
 
             var blog_post_previews = await Util.getBlogPostPreviews(DB.con)
 
+            var leads = await Util.getLeads(DB.con)
+            var lead_email_templates = await Util.getLeadEmailTemplates(DB.con)
+
             res.render('ap', {
                 seo_title: "Admin Panel",
+                leads:leads,
+                lead_email_templates:lead_email_templates,
                 blog_posts:blog_post_previews
             })
             

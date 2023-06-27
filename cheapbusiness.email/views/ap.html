@@ -15,6 +15,9 @@
     .edit-post {
         cursor: pointer;
     }
+    .lead-table td {
+        border:1px solid black;
+    }
 </style>
 <div class="ap-body">
     <h1>Admin Panel</h1>
@@ -54,6 +57,38 @@
             data-seodescription="{{seo_description}}"
             onclick='editBlogPost(this)'>(edit)</a><br>
         {{/each}}
+    </div>
+    <div id="lead-templates">
+        {{#each lead_email_templates}}
+            <div onclick="showEmailTemplatePreview(`{{{body}}}`)">{{subject}}</div>
+        {{/each}}
+    </div>
+    <div id="leads">
+        <h2>Leads</h2>
+        <table class="lead-table">
+            <tr>
+                <th>Unsubscribed?</th>
+                <th>Interactions</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Name</th>
+                <th>URL</th>
+                <th>Company</th>
+                <th>Position</th>
+            </tr>
+        {{#each leads}}
+        <tr>
+            <td>{{unsubscribed}}</td>
+            <td>{{interaction_data}}</td>
+            <td>{{first_name}}</td>
+            <td>{{last_name}}</td>
+            <td>{{email}}</td>
+            <td><a href='{{url}}' target="_blank">Click Here</a></td>
+            <td>{{company}}</td>
+            <td>{{position}}</td>
+        </tr>
+        {{/each}}
+    </table>
     </div>
 </div>
 {{> footer }}
@@ -181,6 +216,9 @@ document.getElementById("create-blog-post-form").onsubmit = function(e) {
 }
     }
 
+function showEmailTemplatePreview(body) {
+    
+}
 </script>
 </body>
 </html>
