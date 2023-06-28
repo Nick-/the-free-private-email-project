@@ -73,6 +73,70 @@ app.get('/ap', (req, res) => {
     })()
 });
 
+app.post('/contact-lead', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+               
+                var cl_res = await Util.contactLead(DB.con, req.body.lead_id)
+                res.send(cl_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
+app.post('/create-lead', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+               
+                var cl_res = await Util.createLead(DB.con, req.body)
+                res.send(cl_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
+app.post('/create-email-template', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+               
+                var cet_res = await Util.createEmailTemplate(DB.con, req.body.subject, req.body.body)
+                res.send(cet_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
+app.post('/update-email-template', (req, res) => {
+    (async function () {
+
+        user_data = await Util.getUserData(
+            req.cookies['email'], req.cookies['auth_key'], DB.con);
+
+            if(user_data.email == "nicholasconrad96@gmail.com") {
+               
+                var cet_res = await Util.updateEmailTemplate(DB.con, req.body.subject, req.body.body, req.body.id)
+                res.send(cet_res)
+            } else {
+                res.send({ status: "failed", error: "You shouldn't be doing that..." })
+            }
+    })()
+})
+
 app.post('/create-blog-post', upload.single("file"), (req, res) => {
     (async function () {
 

@@ -38,8 +38,10 @@ function hourDaemon() {
     var ka = "SELECT uid FROM users LIMIT 1"; //keepAlive
     DB.con.query(ka, (error, results) => {
         if (error) {
-            reportError(error.stack)
-        } 
+            Util.reportError(error.stack)
+        } else {
+            console.log("Heartbeat")
+        }
     });
 }
 

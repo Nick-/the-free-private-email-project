@@ -18,7 +18,38 @@
     .lead-table td {
         border:1px solid black;
     }
+    #email-template-preview-holder {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 500px;
+        height: 500px;
+        max-width: 90%;
+        max-height: 90%;
+        transform: translate(-50%,-50%);
+        background: lightgray;
+        display: none;
+    }
+    #email-template-preview {
+        height: 90%;
+        width: 100%;
+        background: white;
+        overflow: scroll;
+    }
+    #close-email-template-preview {
+        cursor: pointer;
+        color: red;
+    }
+    #email-template-preview-subject {
+        width:100%;
+    }
 </style>
+<div id="email-template-preview-holder">
+    <div id='close-email-template-preview' onclick="closeEmailTemplatePreview()">CLOSE</div>
+    <input id="email-template-preview-subject"/>
+<div contenteditable id="email-template-preview"></div>
+<button id='update-email-template-button' onclick="updateEmailTemplate()">CREATE</button>
+</div>
 <div class="ap-body">
     <h1>Admin Panel</h1>
     <div class="create-blog-post">
@@ -59,14 +90,24 @@
         {{/each}}
     </div>
     <div id="lead-templates">
+        <h2>Lead Templates</h2>
+        <button onclick="showEmailTemplatePreview('','', -1)">Create Lead Template</button>
         {{#each lead_email_templates}}
-            <div onclick="showEmailTemplatePreview(`{{{body}}}`)">{{subject}}</div>
+            <div onclick="showEmailTemplatePreview('{{subject}}',`{{body}}`, {{id}})">{{subject}}</div>
         {{/each}}
     </div>
     <div id="leads">
         <h2>Leads</h2>
+        <form>
+            <input id='new-lead-first-name' placeholder="First Name"/>
+            <input id='new-lead-last-name' placeholder="Last Name"/>
+            <input id='new-lead-email' placeholder="Email"/>
+            <input id='new-lead-url' placeholder="URL"/>
+            <button onclick="createLead()">Create Lead</button>
+        </form>
         <table class="lead-table">
             <tr>
+                <th>Action</th>
                 <th>Unsubscribed?</th>
                 <th>Interactions</th>
                 <th>First Name</th>
@@ -78,6 +119,7 @@
             </tr>
         {{#each leads}}
         <tr>
+            <td><button onclick="reachOut({{lead_id}})">Reach Out</button></td>
             <td>{{unsubscribed}}</td>
             <td>{{interaction_data}}</td>
             <td>{{first_name}}</td>
@@ -216,8 +258,107 @@ document.getElementById("create-blog-post-form").onsubmit = function(e) {
 }
     }
 
-function showEmailTemplatePreview(body) {
-    
+    var emailTemplateEditID = -1;
+
+function showEmailTemplatePreview(subject, body, id) {
+
+    if(id != -1) {
+        emailTemplateEditID = id;
+        document.getElementById('update-email-template-button').innerHTML = "UPDATE"
+    }
+
+    document.getElementById("email-template-preview-holder").style.display = "block";
+    document.getElementById("email-template-preview-subject").value = subject;
+    document.getElementById("email-template-preview").innerHTML = body;
+}
+function closeEmailTemplatePreview() {
+    document.getElementById("email-template-preview-holder").style.display = "none";    
+}
+
+function updateEmailTemplate() {
+    if(emailTemplateEditID == -1) {
+        //create
+        var formData = {subject: document.getElementById("email-template-preview-subject").value,
+                            body: document.getElementById("email-template-preview").innerHTML}
+        $.ajax({
+            type: "POST",
+            url: "/create-email-template",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                alert("Success")
+                window.location.reload();
+            } else {
+                alert(data.error)
+            }
+        });
+
+    } else {
+        //update
+        var formData = {subject: document.getElementById("email-template-preview-subject").value,
+                            body: document.getElementById("email-template-preview").innerHTML,
+                        id:emailTemplateEditID}
+        $.ajax({
+            type: "POST",
+            url: "/update-email-template",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                alert("Success")
+                window.location.reload();
+            } else {
+                alert(data.error)
+            }
+        });
+    }
+}
+
+function reachOut(lead_id) {
+    var formData = {
+        lead_id:lead_id
+    }
+    $.ajax({
+            type: "POST",
+            url: "/contact-lead",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                alert("Success")
+                window.location.reload();
+            } else {
+                alert(data.error)
+            }
+        });
+
+}
+function createLead() {
+    var formData = {
+        first_name: document.getElementById("new-lead-first-name").value,
+        last_name: document.getElementById("new-lead-last-name").value,
+        email: document.getElementById("new-lead-email").value,
+        url: document.getElementById("new-lead-url").value,
+    }
+
+        $.ajax({
+            type: "POST",
+            url: "/create-lead",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if(data.status == "success") {
+                alert("Success")
+                window.location.reload();
+            } else {
+                alert(data.error)
+            }
+        });
 }
 </script>
 </body>

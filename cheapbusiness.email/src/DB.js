@@ -37,7 +37,8 @@ function initMySQL() {
                 Util.reportError("Resetting DB.. OK")
                 initMySQL();
             } else { 
-                Util.reportError(err.stack)
+                console.log("MYOOPS", err.code)
+                Util.reportError("MYSQL ERROR: " + err.stack)
             }
         }
 

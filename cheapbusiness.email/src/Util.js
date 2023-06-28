@@ -12,6 +12,7 @@ const fastFolderSizeSync = require('fast-folder-size/sync');
 const fs = require("fs");
 const { send, report } = require('process');
 const path = require("path");
+const { convert } = require('html-to-text');
 
 
 function isStrJSON(str) {
@@ -1101,7 +1102,84 @@ async function getLeadEmailTemplates(con) {
     });
 }
 
+async function createEmailTemplate(con, subject, body) {
+    return new Promise(resolve => {
+        var q = "INSERT INTO lead_email_templates (subject, body) VALUES (?,?)"
+        con.query(q, [subject, body], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error creating email template..." })
+            } else {
+                resolve({ status: "success"})
+            }
+        })
+    });
+}
+
+async function updateEmailTemplate(con, subject, body, id) {
+    return new Promise(resolve => {
+        var q = "UPDATE lead_email_templates SET subject = ?, body = ? WHERE id = ?"
+        con.query(q, [subject, body, id], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error creating email template..." })
+            } else {
+                resolve({ status: "success"})
+            }
+        })
+    });
+}
+
+async function createLead(con, data) {
+    return new Promise(resolve => {
+        var q = "INSERT INTO leads (first_name, last_name, email, url) VALUES (?,?,?,?)"
+        con.query(q, [data.first_name, data.last_name, data.email, data.url], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error creating lead..." })
+            } else {
+                resolve({ status: "success"})
+            }
+        })
+    });
+}
+async function contactLead(con, lead_id) {
+    return new Promise(resolve => {
+        var q = "SELECT * FROM leads WHERE lead_id = ?"
+        con.query(q, [lead_id], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve({ status: "failed", error: "Error contacting lead..." })
+            } else {
+
+                //We can hardcode the templates for now..
+                //We want to send the email based on interaction data
+                var lead_data = results[0];
+                if(results[0].interaction_data == null) {
+                    console.log("Sending First Message")
+                    var template_id = 1;
+                    var etq = "SELECT * FROM lead_email_templates WHERE id = ?";
+                    con.query(etq, [template_id], (error, tresults) => {
+                        if (error) {
+                            console.log(error)
+                            resolve({ status: "failed", error: "Error contacting lead..." })
+                        } else {
+                            var body = convert(tresults[0].body, {wordwrap: false});
+                            body = body.replace(/first_name/g, lead_data.first_name)
+                            sendEmail(lead_data.email, tresults[0].subject, body)
+                            resolve({ status: "success"})
+                        }
+                    });
+                }
+            }
+        })
+    });
+}
 module.exports = {
+    contactLead,
+    createLead,
+    updateEmailTemplate,
+    createEmailTemplate,
     getLeadEmailTemplates,
     getLeads,
     updateBlogPost,
