@@ -1,3 +1,8 @@
+Deliverability:
+
+Please regularly check email deliverability using the following service:
+https://www.experte.com/spam-checker
+
 The purpose of this container is to quickly deploy a mail server for a given domain.
 
 Installation:
