@@ -758,6 +758,15 @@ var transporter = nodemailer.createTransport({
     }
   });
 
+  var lead_transporter = nodemailer.createTransport({
+    host: "cheapbusiness.email",
+    port: 587,
+    auth: {
+      user: process.env.NICK_EMAIL,
+      pass: process.env.NICK_PASSWORD
+    }
+  });
+
 function sendEmail(to_email, subject, message) {
     var mailOptions = {
         from: '"Cheap Business Email 💸" <' + process.env.NOREPLY_EMAIL + '>',
@@ -767,6 +776,23 @@ function sendEmail(to_email, subject, message) {
       };
       
       transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+}
+
+function sendLeadEmail(to_email, subject, message) {
+    var mailOptions = {
+        from: '"Cheap Business Email 💸" <' + process.env.NICK_EMAIL + '>',
+        to: to_email,
+        subject: subject,
+        text: message
+      };
+      
+      lead_transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
         } else {
@@ -1130,10 +1156,41 @@ async function updateEmailTemplate(con, subject, body, id) {
     });
 }
 
+async function leadExists(con, email) {
+    return new Promise(resolve => {
+        var q = "SELECT email FROM leads WHERE email = ?"
+        con.query(q, [email], (error, results) => {
+            if (error) {
+                console.log(error)
+                resolve(-1);
+            } else {
+                if(results.length == 0) {
+                    resolve(0)
+                } else {
+                    resolve(1)
+                }
+                
+            }
+        })
+    });
+}
+
+
 async function createLead(con, data) {
+
+    var email = data.email.toLowerCase();
+
+    var lead_exists = await leadExists(con, email)
+
+    if(lead_exists == -1) {
+        return { status: "failed", error: "Error checking lead existance..." }
+    } else if(lead_exists == 1) {
+        return { status: "failed", error: "That lead already exists" }
+    }
+
     return new Promise(resolve => {
         var q = "INSERT INTO leads (first_name, last_name, email, url) VALUES (?,?,?,?)"
-        con.query(q, [data.first_name, data.last_name, data.email, data.url], (error, results) => {
+        con.query(q, [data.first_name, data.last_name, email, data.url], (error, results) => {
             if (error) {
                 console.log(error)
                 resolve({ status: "failed", error: "Error creating lead..." })
@@ -1143,7 +1200,8 @@ async function createLead(con, data) {
         })
     });
 }
-async function contactLead(con, lead_id) {
+
+async function contactLead(con, lead_id, template_id) {
     return new Promise(resolve => {
         var q = "SELECT * FROM leads WHERE lead_id = ?"
         con.query(q, [lead_id], (error, results) => {
@@ -1151,26 +1209,56 @@ async function contactLead(con, lead_id) {
                 console.log(error)
                 resolve({ status: "failed", error: "Error contacting lead..." })
             } else {
-
-                //We can hardcode the templates for now..
-                //We want to send the email based on interaction data
                 var lead_data = results[0];
-                if(results[0].interaction_data == null) {
-                    console.log("Sending First Message")
-                    var template_id = 1;
-                    var etq = "SELECT * FROM lead_email_templates WHERE id = ?";
-                    con.query(etq, [template_id], (error, tresults) => {
-                        if (error) {
-                            console.log(error)
-                            resolve({ status: "failed", error: "Error contacting lead..." })
-                        } else {
-                            var body = convert(tresults[0].body, {wordwrap: false});
-                            body = body.replace(/first_name/g, lead_data.first_name)
-                            sendEmail(lead_data.email, tresults[0].subject, body)
-                            resolve({ status: "success"})
-                        }
-                    });
-                }
+                var lead_interaction_data = results[0].interaction_data;
+                var etq = "SELECT * FROM lead_email_templates WHERE id = ?";
+                con.query(etq, [template_id], (error, tresults) => {
+                    if (error) {
+                        console.log(error)
+                        resolve({ status: "failed", error: "Error contacting lead..." })
+                    } else {
+                        var body = convert(tresults[0].body, {wordwrap: false});
+                        body = body.replace(/first_name/g, lead_data.first_name)
+                        sendLeadEmail(lead_data.email, tresults[0].subject, body)
+
+                        //Lock the template
+                        var ltq = "UPDATE lead_email_templates SET locked = 1 WHERE id = ?"
+                        con.query(ltq, [template_id], (error, tresults) => {
+                            if (error) {
+                                console.log(error)
+                                resolve({ status: "failed", error: "Error locking lead template..." })
+                            } else {
+                                //console.log("Updating Interaction Data:", lead_interaction_data)
+                                //Add to interaction data
+                                if(lead_interaction_data == null) {
+                                    lead_interaction_data = {
+                                        interactions: [
+                                            {
+                                                template_id:template_id,
+                                                date: new Date()
+                                            }
+                                        ]
+                                    }
+                                } else {
+                                    lead_interaction_data = JSON.parse(lead_interaction_data);
+                                    lead_interaction_data.interactions.push({template_id:template_id,date: new Date()})
+                                }
+
+                                lead_interaction_data = JSON.stringify(lead_interaction_data);
+
+                                var uuiq = "UPDATE leads SET interaction_data = ? WHERE lead_id = ?"
+                                con.query(uuiq, [lead_interaction_data, lead_id], (error, tresults) => {
+                                    if (error) {
+                                        console.log(error)
+                                        resolve({ status: "failed", error: "Error updating lead interaction data..." })
+                                    } else {
+                                        resolve({ status: "success", lead_interaction_data: lead_interaction_data})
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             }
         })
     });

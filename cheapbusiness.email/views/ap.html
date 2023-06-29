@@ -91,9 +91,9 @@
     </div>
     <div id="lead-templates">
         <h2>Lead Templates</h2>
-        <button onclick="showEmailTemplatePreview('','', -1)">Create Lead Template</button>
+        <button onclick="showEmailTemplatePreview('','', -1, 0)">Create Lead Template</button>
         {{#each lead_email_templates}}
-            <div onclick="showEmailTemplatePreview('{{subject}}',`{{body}}`, {{id}})">{{subject}}</div>
+            <div onclick="showEmailTemplatePreview('{{subject}}',`{{body}}`, {{id}}, {{locked}})">{{subject}}</div>
         {{/each}}
     </div>
     <div id="leads">
@@ -107,7 +107,13 @@
         </form>
         <table class="lead-table">
             <tr>
-                <th>Action</th>
+                <th>Action<br>
+                <select id="contact-lead-template-select">
+                    <option value="-1" selected >Select a Template</option>
+                    {{#each lead_email_templates}}
+                        <option value="{{id}}">{{subject}}</option>
+                    {{/each}}
+                </select></th>
                 <th>Unsubscribed?</th>
                 <th>Interactions</th>
                 <th>First Name</th>
@@ -121,7 +127,7 @@
         <tr>
             <td><button onclick="reachOut({{lead_id}})">Reach Out</button></td>
             <td>{{unsubscribed}}</td>
-            <td>{{interaction_data}}</td>
+            <td class="lead-interaction-data" data-id="{{lead_id}}">{{interaction_data}}</td>
             <td>{{first_name}}</td>
             <td>{{last_name}}</td>
             <td>{{email}}</td>
@@ -260,16 +266,25 @@ document.getElementById("create-blog-post-form").onsubmit = function(e) {
 
     var emailTemplateEditID = -1;
 
-function showEmailTemplatePreview(subject, body, id) {
+function showEmailTemplatePreview(subject, body, id, locked) {
 
     if(id != -1) {
         emailTemplateEditID = id;
+
+        if(locked == 1) {
+            document.getElementById('update-email-template-button').innerHTML = "LOCKED"
+            document.getElementById('update-email-template-button').disabled = true;
+        } else {
         document.getElementById('update-email-template-button').innerHTML = "UPDATE"
+        }
     }
 
     document.getElementById("email-template-preview-holder").style.display = "block";
     document.getElementById("email-template-preview-subject").value = subject;
     document.getElementById("email-template-preview").innerHTML = body;
+
+
+
 }
 function closeEmailTemplatePreview() {
     document.getElementById("email-template-preview-holder").style.display = "none";    
@@ -318,7 +333,19 @@ function updateEmailTemplate() {
 }
 
 function reachOut(lead_id) {
+
+
+    var template_id = -1;
+
+    template_id = document.getElementById("contact-lead-template-select").value;
+
+    if(template_id == -1) {
+        alert("Select a contact template")
+        return;
+    }
+
     var formData = {
+        template_id: template_id,
         lead_id:lead_id
     }
     $.ajax({
@@ -330,13 +357,26 @@ function reachOut(lead_id) {
         }).done(function (data) {
             if(data.status == "success") {
                 alert("Success")
-                window.location.reload();
+                //TODO: MARK LEAD CONTACTED CLIENT SIDED WITHOUT RELOAD
+                updateLeadInteractions(lead_id, data.lead_interaction_data)
             } else {
                 alert(data.error)
             }
         });
 
 }
+
+var lead_interaction_tds = document.getElementsByClassName("lead-interaction-data")
+function updateLeadInteractions(lead_id, lead_interaction_data) {
+
+    for(var i = 0; i < lead_interaction_tds.length; i++) {
+        if(lead_interaction_tds[i].dataset.id == lead_id) {
+            lead_interaction_tds[i].innerHTML = lead_interaction_data;
+            break;
+        }
+    }
+}
+
 function createLead() {
     var formData = {
         first_name: document.getElementById("new-lead-first-name").value,

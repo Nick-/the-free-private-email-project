@@ -81,7 +81,7 @@ app.post('/contact-lead', (req, res) => {
 
             if(user_data.email == "nicholasconrad96@gmail.com") {
                
-                var cl_res = await Util.contactLead(DB.con, req.body.lead_id)
+                var cl_res = await Util.contactLead(DB.con, req.body.lead_id, req.body.template_id)
                 res.send(cl_res)
             } else {
                 res.send({ status: "failed", error: "You shouldn't be doing that..." })
