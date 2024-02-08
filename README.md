@@ -23,11 +23,15 @@ Installation:
 5. SPF TXT Record:
 	Name: @
 	Value: v=spf1 mx -all
-6. Run setup.sh
+6. `sudo bash setup.sh`
 	- TODO: DKIM - https://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
 	- Will Prompt for domain(s) / users
-	- Then rebuilds Docker File
-7. DMARC TXT Record:
+
+7. `sudo bash b.sh` to build local docker file.
+
+8. `sudo bash run.sh` to start the docker container.
+   
+9. DMARC TXT Record:
 	
 8. DKIM is installed during build
 	- Add TXT Record:
