@@ -5,6 +5,11 @@ https://www.experte.com/spam-checker
 
 The purpose of this container is to quickly deploy a mail server for a given domain.
 
+Pre-requisites:
+
+DOCKER
+https://docs.docker.com/engine/install/ubuntu/
+
 Installation:
 
 1. Point domain DNS A Record to IP Address
