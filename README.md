@@ -10,6 +10,12 @@ Pre-requisites:
 DOCKER
 https://docs.docker.com/engine/install/ubuntu/
 
+NODE
+```
+sudo apt install nodejs
+sudo apt install npm
+```
+
 Installation:
 
 1. Point domain DNS A Record to IP Address
