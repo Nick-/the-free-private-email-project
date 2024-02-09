@@ -38,16 +38,6 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS 
-INSERT INTO `users` VALUES (1,'test@gmail.com','pass','','','2024-05-29 13:50:15',0,1,0);
-!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `virtual_aliases`
 --
 
