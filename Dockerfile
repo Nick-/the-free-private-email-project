@@ -54,6 +54,7 @@ RUN chmod -R o-rwx /etc/dovecot
 
 RUN usermod -d /var/lib/mysql/ mysql
 
+RUN /etc/init.d/mysql start
 RUN mysql -u root -e "create database mailserver";
 
 COPY s.sh /s.sh
