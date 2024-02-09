@@ -44,5 +44,17 @@ RUN chown root:opendkim /etc/postfix/dkim.key
 
 RUN postconf -n
 
+## Used to be in s.sh
+
+RUN groupadd -g 5000 vmail
+RUN useradd -g vmail -u 5000 vmail -d /var/mail
+RUN chown -R vmail:vmail /var/mail
+RUN chown -R vmail:dovecot /etc/dovecot
+RUN chmod -R o-rwx /etc/dovecot
+
+RUN usermod -d /var/lib/mysql/ mysql
+
+##
+
 COPY s.sh /s.sh
 ENTRYPOINT ["bash", "s.sh" ]
