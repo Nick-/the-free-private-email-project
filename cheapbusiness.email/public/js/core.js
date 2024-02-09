@@ -330,7 +330,7 @@ if(user_plan == "1") {
 }
 
 var gb_used = parseInt(mailbox_gb_allocated);
-var gb_remaining = gb_used - gb_allowed;
+var gb_remaining = gb_allowed - gb_used;
 
 if(gb_remaining <= 0) {
     alert("Please upgrade for more storage.")
