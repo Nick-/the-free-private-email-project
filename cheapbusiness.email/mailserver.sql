@@ -113,6 +113,7 @@ CREATE TABLE `virtual_users` (
   `domain_id` int NOT NULL,
   `password` varchar(106) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `domain_id` int DEFAULT 1,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
@@ -122,15 +123,6 @@ CREATE TABLE `virtual_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `virtual_users`
---
-
-LOCK TABLES `virtual_users` WRITE;
-/*!40000 ALTER TABLE `virtual_users` DISABLE KEYS */;
-INSERT INTO `virtual_users` VALUES (6,22,'$6$Dd4RqJyEmBvR3vXb$5dr2cTwqSzW8oUOHTPoVRuyIs1WD.k4idgcuRmbYKxGE1NOddP1B0YtmhKc4jkgK4LM2O27f/VAecteDukacw/','2@v.com','2023-05-30 20:05:16'),(11,22,'$6$OjdzwJoyMho1W1j8$/g5EaLqaxGDfQJs/ou//Ftn/Fms88uG4yY7NALhYTx4a0wRlx1GSkKCZu6xC2z.stJI5/iVBfJQKKlaZ0P6pG/','1@v.com','2023-06-04 19:33:19');
-/*!40000 ALTER TABLE `virtual_users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
