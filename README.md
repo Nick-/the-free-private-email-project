@@ -1,11 +1,10 @@
-Deliverability:
+ABOUT
 
-Please regularly check email deliverability using the following service:
-https://www.experte.com/spam-checker
+This is an email content management system that can be manage domains and user accounts.
 
-The purpose of this container is to quickly deploy a mail server for a given domain.
+GETTING STARTED
 
-Pre-requisites:
+Software Pre-requisites:
 
 DOCKER
 https://docs.docker.com/engine/install/ubuntu/
@@ -16,35 +15,48 @@ sudo apt install nodejs
 sudo apt install npm
 ```
 
-Installation:
+CERTBOT
 
-1. Point domain DNS A Record to IP Address
-2. Setup Certbot SSL outside of container - Required to mount
-- mysql in container mounts to mailsql/ in current directory
+Setup Certbot SSL outside of container (mounted for container use).
 
-3. Ensure ports 587 (SMTP), 995 (POP3) & 993 (IMAP) are pinholed by provider
-4. MX Record:
+Network Pre-requisites:
+
+1. Point domain DNS A Record to IP Address.
+2. Ensure ports 587 (SMTP), 995 (POP3) & 993 (IMAP) are pinholed by provider
+3. MX Record:
 	Name: @
 	Value: @
-5. SPF TXT Record:
+4. SPF TXT Record:
 	Name: @
 	Value: v=spf1 mx -all
-6. `sudo bash setup.sh`
-	- TODO: DKIM - https://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
-	- Will Prompt for domain(s) / users
 
-7. `sudo bash b.sh` to build local docker file.
+INSTALL & RUN
 
-8. `sudo bash run.sh` to start the docker container.
+1. `sudo bash setup.sh` will prompt for the hosting domain (cheapbusiness.email).
+
+7. `sudo bash b.sh` will build the local docker file.
+
+8. `sudo bash run.sh` will start the docker container. You will be taken inside the container.
+
+9. `bash s.sh` will start the required services inside the container.
+
+10. You can now detatch from the Docker Container With `Ctrl+P` and `Ctrl+Q`.
+
+TODO
    
-9. DMARC TXT Record:
+- DMARC TXT Record:
 	
-8. DKIM is installed during build
+- DKIM (installed during build)
+https://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
 	- Add TXT Record:
 		Name: default._domainkey
 		Value: v=DKIM... (cat /etc/opendkim/keys/radd.tech/default.txt)
 
-NOTE: Outgoing SMTP is restricted on AWS servers.. you must request to have the
-restriction lifted here:
+DELIVERABILITY
+
+Please regularly check email deliverability using the following service:
+https://www.experte.com/spam-checker
+
+Outgoing SMTP on port 25 is restricted on AWS servers. Request Unblock Here:
 https://aws-portal.amazon.com/gp/aws/html-forms-controller/contactus/ec2-email-limit-rdns-request
 
