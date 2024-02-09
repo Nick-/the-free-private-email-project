@@ -57,6 +57,7 @@ RUN usermod -d /var/lib/mysql/ mysql
 #RUN /etc/init.d/mysql start
 RUN /etc/init.d/mysql start && echo 'CREATE DATABASE mailserver;' | mysql -u root
 #RUN mysql -u root -e "create database mailserver";
+COPY cheapbusiness.email/mailserver.sql /cheapbusiness.email/mailserver.sql
 RUN mysql -u root mailserver < cheapbusiness.email/mailserver.sql
 #RUN "${mysql[@]}" -e "CREATE DATABASE mailserver"
 
