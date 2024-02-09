@@ -1,4 +1,4 @@
-/etc/init.d/mysql start
+
 #mysql < mailDB.sql
 postfix start
 dovecot
