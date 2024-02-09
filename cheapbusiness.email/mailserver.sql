@@ -91,6 +91,15 @@ CREATE TABLE `virtual_domains` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `virtual_domains`
+--
+
+LOCK TABLES `virtual_domains` WRITE;
+/*!40000 ALTER TABLE `virtual_domains` DISABLE KEYS */;
+INSERT INTO `virtual_domains` VALUES (23, 'cheapbusiness.email',13,1,'chacachaemailwooowoo0o898ooo!!');
+/*!40000 ALTER TABLE `virtual_domains` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `virtual_users`
