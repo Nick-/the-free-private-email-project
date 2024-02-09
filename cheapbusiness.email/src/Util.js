@@ -160,6 +160,11 @@ async function loginUser(e, p, c) {
                 resolve({ status: "failed", error: clientErrorMessage })
             } else {
 
+                if(result.length == 0) {
+                    resolve({ status: "failed", error: "Invalid Username / Password" })
+                    return;
+                }
+
                 bcrypt.compare(p, result[0].password).then(res => {
                     if (res == false) {
                         resolve({ status: "failed", error: "Invalid Username / Password" })
