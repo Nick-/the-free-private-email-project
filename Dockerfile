@@ -54,12 +54,10 @@ RUN chmod -R o-rwx /etc/dovecot
 
 RUN usermod -d /var/lib/mysql/ mysql
 
-#RUN /etc/init.d/mysql start
-RUN /etc/init.d/mysql start && echo 'CREATE DATABASE mailserver;' | mysql -u root
-#RUN mysql -u root -e "create database mailserver";
 COPY cheapbusiness.email/mailserver.sql /cheapbusiness.email/mailserver.sql
-RUN mysql -u root mailserver < cheapbusiness.email/mailserver.sql
-#RUN "${mysql[@]}" -e "CREATE DATABASE mailserver"
+
+RUN /etc/init.d/mysql start && echo 'CREATE DATABASE mailserver;' | mysql -u root
+RUN /etc/init.d/mysql start && mysql -u root mailserver < cheapbusiness.email/mailserver.sq
 
 COPY s.sh /s.sh
 #ENTRYPOINT ["bash", "s.sh" ]
