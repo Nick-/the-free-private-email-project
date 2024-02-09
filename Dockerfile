@@ -57,4 +57,4 @@ RUN usermod -d /var/lib/mysql/ mysql
 ##
 
 COPY s.sh /s.sh
-ENTRYPOINT ["bash", "s.sh" ]
+#ENTRYPOINT ["bash", "s.sh" ]
