@@ -58,6 +58,7 @@ COPY cheapbusiness.email/mailserver.sql /cheapbusiness.email/mailserver.sql
 
 RUN /etc/init.d/mysql start && echo 'CREATE DATABASE mailserver;' | mysql -u root
 RUN /etc/init.d/mysql start && mysql -u root mailserver < cheapbusiness.email/mailserver.sql
+RUN /etc/init.d/mysql start && echo 'CREATE USER "mailuser"@"127.0.0.1" IDENTIFIED BY "mailuserpass"; GRANT ALL ON mailserver.* TO "mailuser"@"127.0.0.1";' | mysql -u root
 
 COPY s.sh /s.sh
 #ENTRYPOINT ["bash", "s.sh" ]
