@@ -61,10 +61,10 @@ process.on('unhandledRejection', (err) => {
 });
 
 function reportError(m) {
-    if (process.env.DEV)
-        console.log("[ERROR]: " + m)
-    else
+    if (process.env.REPORT_ERROR_TO_EMAIL)
         sendEmail(process.env.ADMIN_EMAIL, process.env.APP_NAME + ": ERROR", m)
+    else
+        console.log("[ERROR]: " + m)
 }
 
 function isValidDate(date) {

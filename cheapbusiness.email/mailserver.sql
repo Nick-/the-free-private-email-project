@@ -91,15 +91,6 @@ CREATE TABLE `virtual_domains` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `virtual_domains`
---
-
-LOCK TABLES `virtual_domains` WRITE;
-/*!40000 ALTER TABLE `virtual_domains` DISABLE KEYS */;
-INSERT INTO `virtual_domains` VALUES (8,'rise-game.com',1,1,'97b66f0466a772d939025a0557f75eb42634b8eada7e5d31b3ac900e7198d3163aea167492cd708113262ebf42bad8f951901e07bceacab843ae9faab976dfa7'),(19,'cheapbusiness.email',6,0,'21bc363de0f51221a3479ab77a621b0a9bf439fa4c52f7672d7c5039f453ae54a594d0264df7aa0ce6ed2b1bda21764bc80df928f82597c23e6236a3fce89a0f'),(22,'v.com',11,1,'3c78209d0330601c3f5b70e67c442ddb78406f8128f2456ecbd46b43d8c5b210b931845668217d3d380070f9c754c41440bf32f5d721760152a0fa53a13b7f30');
-/*!40000 ALTER TABLE `virtual_domains` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `virtual_users`
