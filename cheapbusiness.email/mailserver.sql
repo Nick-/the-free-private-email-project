@@ -113,7 +113,7 @@ CREATE TABLE `virtual_users` (
   `domain_id` int NOT NULL,
   `password` varchar(106) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `domain_id` int DEFAULT 1,
+  `mailbox_size_gb` int DEFAULT 1,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
