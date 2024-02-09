@@ -61,4 +61,4 @@ RUN /etc/init.d/mysql start && mysql -u root mailserver < cheapbusiness.email/ma
 RUN /etc/init.d/mysql start && echo 'CREATE USER "mailuser"@"127.0.0.1" IDENTIFIED BY "mailuserpass"; GRANT ALL ON mailserver.* TO "mailuser"@"127.0.0.1";' | mysql -u root
 
 COPY s.sh /s.sh
-ENTRYPOINT ["bash", "s.sh" ]
+#ENTRYPOINT ["bash", "s.sh" ]
