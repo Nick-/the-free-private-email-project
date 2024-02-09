@@ -37,8 +37,14 @@ sudo apt install npm
 ```
 
 CERTBOT
+(mounted for container use)
 
-Setup Certbot SSL outside of container (mounted for container use).
+```
+sudo systemctl stop apache2
+sudo certbot certonly --standalone -d cheapbusiness.email --staple-ocsp -m support@cheapbusiness.email --agree-tos
+sudo systemctl start apache2
+```
+
 
 Network Pre-requisites:
 
