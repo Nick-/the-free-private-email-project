@@ -21,14 +21,14 @@ Add Site entry in /etc/apache2/sites-enabled/000-default.conf
 	ServerName cheapbusiness.email
 	ServerAlias www.cheapbusiness.email
 	ServerAdmin support@cheapbusiness.email
-	SSL Engine on
+	SSLEngine on
 	SSLCertificateFile /etc/letsencrypt/live/cheapbusiness.email/fullchain.pem
 	SSLCertificateKeyFile /etc/letsencrypt/live/cheapbusiness.email/privkey.pem
 	ProxyPreserveHost On
 	ProxyPass / http://localhost:8080/
 	ProxyPassReverse / http://localhost:8080/
 	ErrorLog ${APACHE_LOG_DIR}/cheapbusiness.email.error.log
-	CustomLog ${APACHE_LOG_DIR}/cheapbusiness.email.access.log
+	CustomLog ${APACHE_LOG_DIR}/cheapbusiness.email.access.log common
 </VirtualHost>
 ```
 
@@ -60,8 +60,7 @@ sudo apt install nodejs
 sudo apt install npm
 ```
 
-CERTBOT
-(mounted for container use)
+CERTBOT (mounted for container use)
 
 ```
 sudo systemctl stop apache2
