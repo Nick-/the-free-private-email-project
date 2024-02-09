@@ -8,6 +8,30 @@ GETTING STARTED
 
 Software Pre-requisites:
 
+APACHE2
+Add Site entry in /etc/apache2/sites-enabled/000-default.conf
+
+```
+<VirtualHost *:80>
+	ServerName cheapbusiness.email
+	ServerAlias www.cheapbusiness.email
+	Redirect permanent / https://cheapbusiness.email/
+</VirtualHost>
+<VirtualHost *:443>
+	ServerName cheapbusiness.email
+	ServerAlias www.cheapbusiness.email
+	ServerAdmin support@cheapbusiness.email
+	SSL Engine on
+	SSLCertificateFile /etc/letsencrypt/live/cheapbusiness.email/fullchain.pem
+	SSLCertificateKeyFile /etc/letsencrypt/live/cheapbusiness.email/privkey.pem
+	ProxyPreserveHost On
+	ProxyPass / http://localhost:8080/
+	ProxyPassReverse / http://localhost:8080/
+	ErrorLog ${APACHE_LOG_DIR}/cheapbusiness.email.error.log
+	CustomLog ${APACHE_LOG_DIR}/cheapbusiness.email.access.log
+</VirtualHost>
+```
+
 DOCKER
 https://docs.docker.com/engine/install/ubuntu/
 ```
