@@ -25,7 +25,7 @@ Add Site entry in /etc/apache2/sites-enabled/000-default.conf
 	SSLCertificateFile /etc/letsencrypt/live/cheapbusiness.email/fullchain.pem
 	SSLCertificateKeyFile /etc/letsencrypt/live/cheapbusiness.email/privkey.pem
 	ProxyPreserveHost On
-	ProxyPass / http://localhost:8080/
+	ProxyPass / http://localhost:8080/ retry=1 acquire=3000 timeout=600 Keepalive=On
 	ProxyPassReverse / http://localhost:8080/
 	ErrorLog ${APACHE_LOG_DIR}/cheapbusiness.email.error.log
 	CustomLog ${APACHE_LOG_DIR}/cheapbusiness.email.access.log common
