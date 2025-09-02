@@ -27,6 +27,7 @@ checkMSQL() {
             echo -e "\e[32mMySQL service is running.\e[0m"
       else
             echo "MySQL service is NOT running."
+            #Install if not installed
       fi
 }
 
@@ -49,6 +50,7 @@ checkCertbot() {
 checkRequirements() {
       echo "Checking Requirements"
       checkMSQL
+      checkMSQLUser
       checkApache
       checkCertbot
 }
