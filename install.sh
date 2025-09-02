@@ -2,7 +2,7 @@
 checkMSQLUser() {
       #Check if user exists, if not then create one with a random password
 NEW_USER="fpepu"
-
+      echo "Setting up DB user, Enter Mysql Root Password:"
 # Check if user exists
 USER_EXISTS=$(mysql -u "root" -sse \
     "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user='$NEW_USER');")
