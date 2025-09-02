@@ -61,7 +61,7 @@ getDomain() {
       then
             getDomain
       else
-            echo $domain
+            echo "$domain"
       fi
 }
 
