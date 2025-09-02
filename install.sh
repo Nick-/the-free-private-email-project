@@ -9,18 +9,19 @@ USER_EXISTS=$(mysql -u "root" -sse \
 
 if [ "$USER_EXISTS" -eq 1 ]; then
     echo "MySQL user '$NEW_USER' already exists."
-else
-    # Generate a random password
+    mysql -u root -e "DROP USER 'fpepu'@'localhost'; FLUSH PRIVILEGES;"
+fi
+   # Generate a random password
     PASSWORD=$(openssl rand -base64 16)
 
     # Create the user and grant privileges
-    mysql -u "root" -e \
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -e \
     "CREATE USER '$NEW_USER'@'localhost' IDENTIFIED BY '$PASSWORD';
      GRANT ALL PRIVILEGES ON *.* TO '$NEW_USER'@'localhost';
      FLUSH PRIVILEGES;"
 
     echo "MySQL user '$NEW_USER' created with password: $PASSWORD"
-fi
+
 }
 checkMSQL() {
       if systemctl is-active --quiet mysql; then
