@@ -36,10 +36,6 @@ COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 COPY opendkim /etc/default/opendkim
 COPY opendkim.conf /etc/opendkim.conf
 
-COPY dkim.key /etc/postfix/dkim.key
-RUN chmod 660 /etc/postfix/dkim.key
-RUN chown root:opendkim /etc/postfix/dkim.key
-
 RUN postconf -n
 
 ## Used to be in s.sh
