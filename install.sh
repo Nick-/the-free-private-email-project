@@ -14,7 +14,7 @@ else
     PASSWORD=$(openssl rand -base64 16)
 
     # Create the user and grant privileges
-    mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -e \
+    mysql -u "root" -e \
     "CREATE USER '$NEW_USER'@'localhost' IDENTIFIED BY '$PASSWORD';
      GRANT ALL PRIVILEGES ON *.* TO '$NEW_USER'@'localhost';
      FLUSH PRIVILEGES;"
