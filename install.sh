@@ -15,7 +15,7 @@ fi
     PASSWORD=$(openssl rand -base64 16)
 
     # Create the user and grant privileges
-    mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -e \
+    mysql -u "root" -e \
     "CREATE USER '$NEW_USER'@'localhost' IDENTIFIED BY '$PASSWORD';
      GRANT ALL PRIVILEGES ON *.* TO '$NEW_USER'@'localhost';
      FLUSH PRIVILEGES;"
@@ -52,6 +52,7 @@ checkRequirements() {
       echo "Checking Requirements"
       checkMSQL
       checkMSQLUser
+      mysql -u root -e "CREATE DATABASE IF NOT EXISTS fpep;"
       checkApache
       checkCertbot
 }
@@ -75,16 +76,14 @@ checkForDomainCert() {
             echo "The Domain Cert does NOT exist."
       fi
 }
+
 #### Start Process ####
 checkRequirements
 
 domain_name=$(getDomain)
 echo "Replacing strings from example.com to $domain_name"
-
+find . -type f -print0 | xargs -0 sed -i -e "s|example\.com|$domain_name|g"
 checkForDomainCert $domain_name
-
-#echo "Setting Up Dockerfile for $domain"
-#find . -name '*' -type f -exec sed -i -e "s/cms/$domain/g" {} \;
 #cd cms
 #npm install --save
 #touch install_flag
