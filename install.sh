@@ -54,16 +54,16 @@ checkRequirements() {
 }
 
 getDomain() {
-      local domain
-      read -p "Enter Email Domain (example.com): " domain
-
-      if [ -z "$domain" ]
-      then
-            getDomain
-      else
-            echo "$domain"
-      fi
+    local domain=""
+    while [ -z "$domain" ]; do
+        read -p "Enter Email Domain (example.com): " domain
+        if [ -z "$domain" ]; then
+            echo "Domain cannot be empty. Please try again."
+        fi
+    done
+    echo "$domain"
 }
+
 
 checkForDomainCert() {
       if [ -f "/etc/letsencrypt/live/$1/fullchain.pem" ]; then
