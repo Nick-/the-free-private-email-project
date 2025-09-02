@@ -75,8 +75,8 @@ checkForDomainCert() {
 #### Start Process ####
 checkRequirements
 
-domain = $(getDomain)
-echo "Replacing strings from example.com to $domain"
+domain_name = $(getDomain)
+echo "Replacing strings from example.com to $domain_name"
 
 checkForDomainCert $domain
 
