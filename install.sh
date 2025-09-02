@@ -1,5 +1,27 @@
 
+checkMSQLUser() {
+      #Check if user exists, if not then create one with a random password
+NEW_USER="fpepu"
 
+# Check if user exists
+USER_EXISTS=$(mysql -u "root" -sse \
+    "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user='$NEW_USER');")
+
+if [ "$USER_EXISTS" -eq 1 ]; then
+    echo "MySQL user '$NEW_USER' already exists."
+else
+    # Generate a random password
+    PASSWORD=$(openssl rand -base64 16)
+
+    # Create the user and grant privileges
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -e \
+    "CREATE USER '$NEW_USER'@'localhost' IDENTIFIED BY '$PASSWORD';
+     GRANT ALL PRIVILEGES ON *.* TO '$NEW_USER'@'localhost';
+     FLUSH PRIVILEGES;"
+
+    echo "MySQL user '$NEW_USER' created with password: $PASSWORD"
+fi
+}
 checkMSQL() {
       if systemctl is-active --quiet mysql; then
             echo -e "\e[32mMySQL service is running.\e[0m"
@@ -32,6 +54,7 @@ checkRequirements() {
 }
 
 getDomain() {
+      local domain
       read -p "Enter Email Domain (example.com): " domain
 
       if [ -z "$domain" ]
