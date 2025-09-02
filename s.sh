@@ -1,9 +1,7 @@
-/etc/init.d/mysql start
-#mysql < mailDB.sql
 postfix start
 dovecot
 opendkim
-cd example.com
+cd cms
 nohup node WebServer.js 2> /dev/null &
 
 #This keeps the container running in -d mode.
