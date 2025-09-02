@@ -50,5 +50,5 @@ userdb_fields {
   quota_rule = *:storage=%{dict:quota}
 
   # dict:<key>.<objkey> refers to the objkey inside (JSON) object
-  mail = maildir:/cheapbusiness.email/mailbox
+  mail = maildir:/example.com/mailbox
 }

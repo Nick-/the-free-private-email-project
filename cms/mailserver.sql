@@ -88,7 +88,7 @@ CREATE TABLE `virtual_domains` (
 
 LOCK TABLES `virtual_domains` WRITE;
 /*!40000 ALTER TABLE `virtual_domains` DISABLE KEYS */;
-INSERT INTO `virtual_domains` VALUES (23, 'cheapbusiness.email',13,1,'chacachaemailwooowoo0o898ooo!!');
+INSERT INTO `virtual_domains` VALUES (23, 'example.com',13,1,'chacachaemailwooowoo0o898ooo!!');
 /*!40000 ALTER TABLE `virtual_domains` ENABLE KEYS */;
 UNLOCK TABLES;
 

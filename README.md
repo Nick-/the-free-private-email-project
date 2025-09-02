@@ -13,22 +13,22 @@ Add Site entry in /etc/apache2/sites-enabled/000-default.conf
 
 ```
 <VirtualHost *:80>
-	ServerName cheapbusiness.email
-	ServerAlias www.cheapbusiness.email
-	Redirect permanent / https://cheapbusiness.email/
+	ServerName example.com
+	ServerAlias www.example.com
+	Redirect permanent / https://example.com/
 </VirtualHost>
 <VirtualHost *:443>
-	ServerName cheapbusiness.email
-	ServerAlias www.cheapbusiness.email
-	ServerAdmin support@cheapbusiness.email
+	ServerName example.com
+	ServerAlias www.example.com
+	ServerAdmin support@example.com
 	SSLEngine on
-	SSLCertificateFile /etc/letsencrypt/live/cheapbusiness.email/fullchain.pem
-	SSLCertificateKeyFile /etc/letsencrypt/live/cheapbusiness.email/privkey.pem
+	SSLCertificateFile /etc/letsencrypt/live/example.com/fullchain.pem
+	SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
 	ProxyPreserveHost On
 	ProxyPass / http://localhost:8080/ retry=1 acquire=3000 timeout=600 Keepalive=On
 	ProxyPassReverse / http://localhost:8080/
-	ErrorLog ${APACHE_LOG_DIR}/cheapbusiness.email.error.log
-	CustomLog ${APACHE_LOG_DIR}/cheapbusiness.email.access.log common
+	ErrorLog ${APACHE_LOG_DIR}/example.com.error.log
+	CustomLog ${APACHE_LOG_DIR}/example.com.access.log common
 </VirtualHost>
 ```
 
@@ -64,7 +64,7 @@ CERTBOT (mounted for container use)
 
 ```
 sudo systemctl stop apache2
-sudo certbot certonly --standalone -d cheapbusiness.email --staple-ocsp -m support@cheapbusiness.email --agree-tos
+sudo certbot certonly --standalone -d example.com --staple-ocsp -m support@example.com --agree-tos
 sudo systemctl start apache2
 ```
 
@@ -82,7 +82,7 @@ Network Pre-requisites:
 
 INSTALL & RUN
 
-1. `sudo bash setup.sh` will prompt for the hosting domain (cheapbusiness.email).
+1. `sudo bash setup.sh` will prompt for the hosting domain (example.com).
 
 7. `sudo bash b.sh` will build the local docker file.
 

@@ -333,7 +333,7 @@ async function verifyEmailDomain(user_data, domain, c) {
                                     var mx_record_exists = false;
                                     for (var i = 0; i < mx_records.length; i++) {
                                         console.log(mx_records[i])
-                                        if (mx_records[i].exchange == "cheapbusiness.email") {
+                                        if (mx_records[i].exchange == "example.com") {
                                             mx_record_exists = true;
                                             break;
                                         }
@@ -755,7 +755,7 @@ async function resetEmailUserPass(user_data, full_email, c) {
 
 
 var transporter = nodemailer.createTransport({
-    host: "cheapbusiness.email",
+    host: "example.com",
     port: 587,
     auth: {
       user: process.env.NOREPLY_EMAIL,
@@ -764,7 +764,7 @@ var transporter = nodemailer.createTransport({
   });
 
   var lead_transporter = nodemailer.createTransport({
-    host: "cheapbusiness.email",
+    host: "example.com",
     port: 587,
     auth: {
       user: process.env.NICK_EMAIL,

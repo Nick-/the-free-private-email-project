@@ -3,7 +3,7 @@
 postfix start
 dovecot
 opendkim
-cd cheapbusiness.email
+cd example.com
 nohup node WebServer.js 2> /dev/null &
 
 #This keeps the container running in -d mode.

@@ -33,8 +33,6 @@ COPY postfix_config/ /etc/postfix/
 COPY dovecot_config/ /etc/dovecot/
 COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
-COPY msmtprc /etc/msmtprc
-
 COPY opendkim /etc/default/opendkim
 COPY opendkim.conf /etc/opendkim.conf
 
@@ -54,10 +52,10 @@ RUN chmod -R o-rwx /etc/dovecot
 
 RUN usermod -d /var/lib/mysql/ mysql
 
-COPY cheapbusiness.email/mailserver.sql /cheapbusiness.email/mailserver.sql
+COPY example.com/mailserver.sql /example.com/mailserver.sql
 
 RUN /etc/init.d/mysql start && echo 'CREATE DATABASE mailserver;' | mysql -u root
-RUN /etc/init.d/mysql start && mysql -u root mailserver < cheapbusiness.email/mailserver.sql
+RUN /etc/init.d/mysql start && mysql -u root mailserver < example.com/mailserver.sql
 RUN /etc/init.d/mysql start && echo 'CREATE USER "mailuser"@"127.0.0.1" IDENTIFIED BY "mailuserpass"; GRANT ALL ON mailserver.* TO "mailuser"@"127.0.0.1";' | mysql -u root
 
 COPY s.sh /s.sh
