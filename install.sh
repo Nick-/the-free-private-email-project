@@ -75,6 +75,7 @@ checkRequirements() {
       mysql -u root -e "CREATE DATABASE IF NOT EXISTS fpep;"
       checkApache
       checkCertbot
+      checkDocker
 }
 
 getDomain() {
