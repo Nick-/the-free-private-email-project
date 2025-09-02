@@ -78,7 +78,7 @@ checkRequirements
 domain_name=$(getDomain)
 echo "Replacing strings from example.com to $domain_name"
 
-checkForDomainCert $domain
+checkForDomainCert $domain_name
 
 #echo "Setting Up Dockerfile for $domain"
 #find . -name '*' -type f -exec sed -i -e "s/cms/$domain/g" {} \;
